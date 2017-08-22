@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/siteScripts")
+    <style>
+        .menuItemLink img:nth-child(2){display:none}
+        .menuItemLink:hover img:first-child{display:none}
+        .menuItemLink:hover img:nth-child(2){display:inline-block; width:60%; height:60%;}
+    </style>
+</head>
+<body>
+    <div id="header" style="width: 1000px;" class="menu">
+        <div id="projects" class="topMenuItem">
+            <a href="../Projects" class="menuItemLink">
+                <img src="~/Images/project.svg" class="menuItemGraphic" />
+                <img src="~/Images/project_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Projects
+                </div>
+            </a>
+        </div>
+        <div id="alerts" class="topMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/alerts.svg" class="menuItemGraphic" />
+                <img src="~/Images/alerts_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Alerts
+                </div>
+            </a>
+        </div>
+        <div id="colleagues" class="topMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/colleagues.svg" class="menuItemGraphic" />
+                <img src="~/Images/colleagues_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Colleagues
+                </div>
+            </a>
+        </div>
+        <div id="tasks" class="topMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/tasks.svg" class="menuItemGraphic" />
+                <img src="~/Images/tasks_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Tasks
+                </div>
+            </a>
+        </div>
+        <div id="settings" class="topMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/settings.svg" class="menuItemGraphic" />
+                <img src="~/Images/settings_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Settings
+                </div>
+            </a>
+        </div>
+    </div>
+    <div id="content" style="width: 1000px;">
+        @RenderBody()
+    </div>
+    <div id="footer" style="width: 1000px;" class="menu">
+        <div id="overview" class="bottomMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/overview.svg" class="menuItemGraphic" />
+                <img src="~/Images/overview_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Overview
+                </div>
+            </a>
+        </div>
+        <div id="products" class="bottomMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/product.svg" class="menuItemGraphic" />
+                <img src="~/Images/product_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Products
+                </div>
+            </a>
+        </div>
+        <div id="stakeholders" class="bottomMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/stakeholders.svg" class="menuItemGraphic" />
+                <img src="~/Images/stakeholders_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Stakeholders
+                </div>
+            </a>
+        </div>
+        <div id="commerce" class="bottomMenuItem">
+            <a href="#" class="menuItemLink">
+                <img src="~/Images/commerce.svg" class="menuItemGraphic" />
+                <img src="~/Images/commerce_hover.svg" class="menuItemGraphicHover" />
+                <div id="menuText">
+                    Commerce
+                </div>
+            </a>
+        </div>
+
+    </div>
+    
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

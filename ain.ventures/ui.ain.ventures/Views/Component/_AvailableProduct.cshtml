@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AvailableProduct>
+@{ 
+    Layout = null;
+}
+
+@if(Model != null && Model.Count() > 0)
+{
+    foreach (var ap in Model){
+        var url = string.Concat("_Commerce");
+        <div id='@string.Concat("Product", ap.OrderID)' class='AvailableProduct'>
+            @*call AssignToSource in Component Controller where itemKey = OrderID*@
+            <a href='@ap.Url' target='_blank'>
+                @ap.Name <br />
+            </a>
+            @*Sku: @ap.SKU <br />*@
+            @ap.Manufacturer <br />
+            $@ap.Price <br />
+            <a  data-action='addProductToBasket' data-params='{
+                                        "ParentGUID" :"@TempData["ParentGUID"]",
+                                        "ObjectGUID" : "@TempData["ObjectGUID"]",
+                                        "SourceName" : "@ap.Source.Name",
+                                        "OrderID" : "@ap.OrderID"}'>
+                Add To Basket
+            </a>
+            @*@using (Ajax.BeginForm(url,
+                "Component",
+                new { },
+                new AjaxOptions { HttpMethod = "Post",
+                    UpdateTargetId = string.Concat("SearchIcon", TempData["ObjectGUID"]),
+                    InsertionMode = InsertionMode.Replace },
+                new Dictionary<string, string> { { "id", string.Concat("OrderForm", ap.OrderID) }, { "data-action", "closeModals" } }))
+            {
+                <input type='submit' class='@string.Concat("OrderButton", ap.OrderID)' value='Add to Basket' />
+                <input type='hidden' name='ParentGUID' value='@TempData["ParentGUID"]' />
+                <input type='hidden' name='ObjectGUID' value='@TempData["ObjectGUID"]' />
+                <input type='hidden' name='SourceName' value='@ap.Source.Name' />
+                <input type='hidden' name='OrderID' value='@ap.OrderID' />
+                //Html.Hidden("ParentGUID", TempData["ParentGUID"]);
+                //Html.Hidden("ObjectGUID", TempData["ObjectGUID"]);
+                //Html.Hidden("SourceName", ap.Source.Name);
+                //Html.Hidden("OrderID", ap.OrderID);
+            }*@
+        </div>
+        <hr />
+    }
+}
+else
+{
+    <div>
+        Sorry we can't find that product right now, but we'll look for it and get back to you!
+    </div>
+}
+

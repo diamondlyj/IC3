@@ -1,0 +1,54 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<style>
+    div.ModuleList, div.ProductList {
+        position: relative;
+        left: 20px;
+        padding: 10px;
+    }
+    div.ModuleListItems, div.ProductListItems {
+        position: relative;
+        left: 20px;
+        padding: 0px;
+    }
+
+</style>
+
+<div>
+    @Html.Partial("_LoginPartial")
+</div>9
+@{String[] prodlist = { "27ACBB7C-075A-49BD-9B43-000EAE3E6B6F", "05C4D90D-AD46-4940-BC5B-0006190CCF56",
+                        "30FC90C8-CE40-4A29-9212-000F6A36E137", "2B2D5A69-F3FC-4456-BA9D-002F5398BD2B",
+                        "5FFC9801-89EA-4EDF-B2FD-008C0E3BBE7D", "5308BCA5-1095-4B13-9D7B-00C3637A2300",
+                        "9D88C011-4478-4EB4-B278-00D0FAAA1262", "6D225DF5-634F-4FD3-A0C9-00D6C56A7897",
+                        "E53F90B3-E0F5-41C5-A42A-00F7A44FF86F", "EC0A998F-5E68-4332-BCE8-012408C39AC6",
+                        "2590B0FF-F51A-4AE4-89F7-012B2F50A18A", "DA642374-9C02-4CE3-ADB0-0138FC0D994E",
+                        "AF8CDA98-0085-427A-AB55-014932552251", "E327895C-5FB5-4919-8BD1-0154C126C514",
+                        "1CA5E032-88D3-4591-96A3-017229A93033", "90C03C61-3BEC-4B15-8B70-017827531184",
+                        "8BD9F809-C01B-43E0-986D-018855B6A542", "26EB3091-872E-48C0-86A5-01B2DF17F6E1",
+                        "AE6B990A-F9EB-4AFD-BCEE-01C1ED38E504", "CBD129F1-FE82-4260-A72E-01D0BDC3EB8F" };}
+<div>
+    <form action="form.php" method="post">
+        Search: <input type="text" name="term" /><br />
+        <input type="submit" value="Submit" />
+    </form> 
+    <div class="ModuleList">
+        <p style="font-size:20px;">Modules</p>
+        <div class="ModuleListItems">
+            @for (int n = 0; n < prodlist.Length; n++)
+            {
+                @Html.RouteLink("Product " + n, new { controller = "Module", action = null + prodlist[n] }) <br />
+            }
+        </div>
+    </div>
+    <div class="ProductList">
+        <p style="font-size:20px;">Products</p>
+        <div class="ProductListItems">
+            @Html.RouteLink("Project 1", new { controller = "Product", action = "Index/820bf26f-4d0b-4630-9cc0-16205ed93759" }) <br />
+            @Html.RouteLink("Project 2", new { controller = "Product", action = "Index/978bc038-cd0b-46ca-9b8d-2c5236c58358" }) <br />
+            @Html.RouteLink("Prpject 3", new { controller = "Product", action = "Index/0d44f4ef-0901-4c71-a358-3ddf2e906baa" }) <br />
+        </div>
+    </div>
+</div>

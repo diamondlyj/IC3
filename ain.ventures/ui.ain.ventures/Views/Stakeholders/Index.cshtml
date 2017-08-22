@@ -1,0 +1,51 @@
+﻿@model Project
+@{
+    ViewBag.Title = "Index";
+}
+@{ double shares = Model.Shares != null ? (double)Model.Shares : 0; }
+<h2>Index</h2>
+<div class='StakeholdersListTable'>
+    <div class='StakeholderProjectHeaderRow'>
+        <div class='EmptyCell'></div>
+        <div class='EmptyCell'></div>
+        <div class='EmptyCell'></div>
+        <div class='ShareLabelCell'>Shares</div>
+        <div class='TotalShareTextBoxCell'>
+            @Html.TextBox("TotalShareInput", shares != 0 ? ((double)Model.Shares).ToString("N") : "")
+        </div>
+    </div>
+
+    @foreach (var st in Model.Stakeholders.Where(s => s.IsUser))
+    {
+            <div class='StakeholderHeaderRow'>
+                <div class='StakeholderBulletCell'><img src='~/Images/stakeholders_icon.png' /></div>
+                <div class='StakeholderNameCell'>
+                    <div>@st.Name</div>
+                    <div>@st.Description</div>
+                </div>
+                <div class='EditIconCell'><a href='#'><img src='~/Images/edit_icon.png' /></a></div>
+                <div class='SharePercentCell'>
+                    @if (st.Shares > 0 && shares > 0)
+                    {
+                        Math.Round((double)st.Shares * 100 / shares).ToString("p");
+                    }
+                </div>
+                <div class='SharesTextBoxCell'>
+                    @Html.TextBox(String.Concat(@st.Name, "ShareInput"), st.Shares > 0 ? st.Shares.ToString("N") : "")
+                </div>
+            </div>
+    }
+</div>
+<div class='AbstractStakeholderDivTable'>
+    @foreach(var ast in Model.Stakeholders.Where(a => !a.IsUser))
+    {
+        <div class='AbstractStakeholderRow'>
+            <div class='StakeholderBulletCell'><img src='~/Images/stakeholders_icon.png' /></div>
+            <div class='AbstractStakeholderDetailsCell'>
+                <div>@ast.Name</div>
+                <div>@ast.Description</div>
+            </div>
+            <div class='EditIconCell'><a href='#'><img src='~/Images/edit_icon.png' /></a></div>
+        </div>
+    }
+</div>

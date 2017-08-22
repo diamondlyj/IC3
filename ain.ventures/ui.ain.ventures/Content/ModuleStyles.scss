@@ -1,0 +1,424 @@
+﻿        @import "Site.scss";
+        /******************************************/
+        /*This is the section for the modules page*/
+
+        $total-width:750px;
+
+        @mixin tbl {
+            display: block;
+            position: relative;
+            width: $total-width;
+
+        }
+
+        @mixin tr ($column-widths) {
+            display: flex;
+            position:relative;
+            margin: 0px;
+            padding: 0px;
+            border:0px;
+            div {
+                position: relative;
+                
+            }
+            @for $i from 1 through length($column-widths){
+                div:nth-child(#{$i}){
+                    flex-basis: nth($column-widths, $i) * $total-width;
+                    flex-grow: nth($column-widths, $i) * 100;
+                    flex-shrink: nth($column-widths, $i) * 100;
+                    align-self: center;
+                }
+            }
+
+        }
+
+        @mixin moduleTr {
+    
+            @include tr($column-widths:(0.1, 0.35, 0.1, 0.35, 0.1 ));
+        }
+        
+
+
+        @mixin CommerceIcon {
+            /*The shopping cart*/
+            /*Inside the .ModuleTransactionData and .RawComponentTransactionData*/
+            position: relative;
+            width: 40px;
+            display:block;
+        }
+
+        
+        html{
+            margin:0px;
+            padding:0px;
+            position: relative;
+        }
+        body{
+            margin:0px;
+            padding:0px;
+            position: relative;
+        }
+        #content{
+            overflow-y:scroll;
+            overflow-x:hidden;
+            padding: 0px 0px 0px 5px;
+            position: relative;
+            width: $total-width+50;
+        }
+        #modules {
+            /*Wrapper for everything in the modules page*/
+            @include tbl;
+            margin:15px 0px 0px 0px;
+            padding: 0px;
+            border:0px;
+        }
+
+        #ProductHeader {
+            /*The header of the product with the amount and cost*/
+            /*Inside #Modules*/
+            @include moduleTr;
+            position: relative;
+            left: 0px;
+            top: 2px;
+            background-color: #999999;
+            width: inherit;
+            height: 64px;
+        }
+        .ProductBullet {
+            @include ExpandableListBullet;
+        }
+        .ProductEmptyLeftCell {
+        }
+        .ProductCostAndIconsWrapper {
+            /*Contains the amount and cost of the whole product*/
+            /*Inside .ProductHeader*/
+            top: 0px;
+        }
+
+
+            /*EditIcon here*/
+            .TotalProjectCost {
+                /*The cost of the whole project*/
+                /*Inside .ProductCostAndIconsWrapper*/
+                @include abs(0px,50px,150px,40px,0px);
+                background: #ffffff;
+                padding: 8px;
+            }
+            /*CommerceIcon here*/
+        .ModuleWrapper {
+            text-align: center;
+            padding: 10px;
+            display: block;
+        }
+        .ModuleHeader {
+            /*The part that lists the name and amount of modules*/
+            /*Inside #module*/
+            @include moduleTr;
+            position: relative;
+            left: 0px;
+            top: 2px;
+        }
+
+            .ModulesTagDiv {
+            }
+            .ModuleName {
+                /*Has the name of the module in it. */
+                /*Inside .moduleHeaderRow*/
+                margin:0px;
+                padding: 0px;
+                border:0px;
+                font-size: 25px;
+                font-weight: bold;
+                position: relative;
+                top: 6px;
+            }
+
+            .ModuleTransactionData {
+                /*Has the box with the number and cost of the module*/
+                /*Inside .moduleHeaderRow*/
+                position: relative;
+                margin:0px;
+                padding: 0px;
+                border:0px;
+                right: 0px;
+                top: -15px;
+            }
+            /*Edit Icon here*/
+            .ModuleAmountAndCost {
+                /*The amount textbox and cost div of the module*/
+                /*Inside .moduleTransactionData*/
+                @include abs(0px,0px,202px,42px,0px);
+                border: 1px solid #000000;
+                padding: 5px;
+            }
+
+                .AmountTextBoxWrapper {
+                    @include abs(0px, 0px, 50px, auto, 0px);
+                    padding: 0px;
+                    /*Wraps the text box with the amount in it*/
+                    /*Inside the ModuleAmountAndCost and RawComponentAmountAndCost*/
+                }
+
+                    input.AmountInput {
+                        /*Input for amount of Raw Components and Modules*/
+                        /*Inside the AmountTextBoxWrapper*/
+                        @include abs(0px, 0px, 50px, 40px, 0px);
+                        padding: 0px 0px 0px 18px;
+                        border:0px;
+                    }
+
+                    .ScrubberArrows {
+                        @include abs(1px, 0px,auto,auto,0px);
+                        padding: 0px;
+                        border:0px;
+                        /*Arrows to increase and decrease the number in the amount box*/
+                        /*Inside the AmountTextBoxWrapper*/
+                    }
+                    div.ScrubberUpArrow {
+                        @include abs(0px,0px,auto,auto,0px);
+                    }
+                    div.ScrubberDownArrow{
+                        @include abs(0px,0px,auto, auto, 0px);
+                    }
+                        a.ScrubberUpArrow {
+                            @include abs(0px, 0px,auto,auto,0px);
+                            padding: 5px;
+                            border:0px;
+                            font-size:12px;
+                            /*The arrow pointing up*/
+                            /*Inside .ScrubberArrows*/
+                        }
+
+                        a.ScrubberDownArrow {
+                            @include abs(10px, 0px, auto, auto,0px);
+                            padding: 5px;
+                            border:0px;
+                            font-size:12px;
+                            /*The arrow pointing down*/
+                            /*Inside .ScrubberArrows*/
+                        }
+                
+                .TotalModuleCost {
+                    @include abs(0px, 50px, 150px, 40px, 0px);
+                    background: #ffffff;
+                    padding: 8px;
+                    /*The cost of a whole module*/
+                    /*Inside .ModuleTAmountAndCost*/
+                }
+                /*Commerce Icon here*/
+        .RawComponent {
+            /*Wraps a raw component element*/
+            /*Inside the Module element*/
+            @include moduleTr;
+            margin:0px;
+            padding: 5px;
+            border:0px;
+        }
+
+        
+
+            img.RawComponentIcon {
+                /*The icon to left of RawComponent*/
+                /*Inside .ModulesTagDiv*/
+                position: relative;
+                width: 50px;
+                height: 50px;
+            }
+
+        .RawComponentDetails {
+            /*Contains the name, manufacturer, sku and stuff like that*/
+            /*Inside .RawComponent*/
+            margin: 0px;
+            padding: 0px 5px;
+        }
+
+        .RawComponentEmptyEditCell {
+        }
+        .RawComponentAmountAndCost {
+            /*The amount textbox and cost div*/
+            /*Inside .RawComponent*/
+            margin: 0px;
+            padding: 0px 5px;
+        }
+        /*AmountInput is here too*/
+        /*AmountTextBoxWrapper and Scrubbers in here too*/
+        .RawComponentCost {
+            /*The cost of the raw component*/
+            position: absolute;
+            top: 0px;
+            left: 50px;
+            height: 40px;
+            width: 135px;
+            margin: 0px;
+            padding: 0px;
+            background-color:#ffffff;
+        }
+        .SubModule {
+            /*Wraps a sub-module element*/
+            /*Inside .Module*/
+            @include moduleTr;
+        }
+
+        /*ModulesTagDiv is here*/
+            img.ProductsIcon {
+                width:40px;
+            }
+        .SubModuleName {
+            /*The name of the submodule*/
+            /*Inside .Submodule*/
+            margin: 0px;
+            padding: 0px 5px;
+        }
+        /*ModulesTagDiv is also here*/
+        .SubModuleAmountAndCost {
+            /*Contains the amount and cost of the Submodule*/
+            /*Inside .Submodule*/
+            /*The amount textbox and cost div*/
+            /*Inside .RawComponent*/
+            margin: 0px;
+            padding: 0px 5px;
+        }
+        /*AmountTextBoxWrapper also here*/
+        /*TimesSymbol also here*/
+        .SubModuleCost {
+            /*Contains the cost of the SubModule*/
+            /*inside SubmoduleAmountAndCost*/
+                    @include abs(0px, 50px, 150px, 40px, 0px);
+                    background: #ffffff;
+                    padding: 8px;
+        }
+
+        .TimesSymbol {
+            /*The times symbol*/
+            /*Inside .moduleAmountAndCost and .rawComponentAmoundAndCost*/
+            @include abs(2px,30px,25px,auto,0px);
+            padding: 5px;
+            font-size: 18px;
+        }
+
+        .EditIcon {
+            /*The edit icon image*/
+            /*Inside module header and moduleTransactionData */
+            position: relative;
+            width: 40px;
+            display:table-cell;
+        }
+
+
+        .ModuleCommerceIcon{
+            @include CommerceIcon;
+            visibility: hidden;
+        }
+
+        .ComponentCommerceIcon {
+            @include CommerceIcon;
+
+        }
+        .addIcon {
+            font-size: 40px;
+            position: relative;
+            top: 6px;
+        }
+
+        #CreateComponentMenu{
+            $width:200px; 
+            $height:200px;
+            @include modal($width,$height);
+            a{
+                display:block;
+                width:$width - 30;
+                height:$height / 2-15;
+                text-align: center;
+                padding-top:30px;
+                text-decoration:none;
+                color:#ffffff;
+                &:link{
+                    color:#ffffff;
+                }
+                &:visited{
+                    color:#ffffff;
+                }
+                &:hover{
+                    background-color:#808080;
+                    color:#ffffff;
+                }
+                &:active{
+                    background-color:#ffffff;
+                    color:#000000;
+                }
+            
+            }
+        }
+
+        #CreateModuleModal{
+            @include modal(400px, 300px);
+        }
+
+        #AddComponentModal {
+             @include modal(600px, 400px);
+             a{
+                 color:white;
+             }
+             a:visited{
+                 color: #cccccc;
+             }
+        }
+
+        #QPointList {
+            position: relative;
+            width: 390px;
+            height: 200px;
+            overflow-y:scroll;
+        }
+        #QPointModalInput{
+             @include abs(20px,20px,200px,auto,0);
+        }
+        #QPointModalOutput {
+            @include abs(20px,300px,200px,auto,0);
+        }
+        input.minMax{
+            width: 175px;
+        }
+        #CategoryListTextArea {
+            width:250px;
+            height:200px;
+            font-size: 12px;
+
+        }
+
+        #SelectComponentModal{
+            @include modal(200px,400px);
+        }
+        div.form-group {
+            text-align: center;
+        }
+
+        #ComponentList {
+            overflow-y:scroll;
+            height: 370px;
+        }
+        .SourceProductIcon{
+            div {
+               position:absolute;
+               width: 15px;
+               height:15px;
+               background-color: #ffffff;
+               visibility:hidden;
+               border: 1px solid black;
+               img{
+                   width: 15px;
+                   height:15px;
+                   display: inline;
+               }
+            }
+            .Edit{
+                left:40px;
+                top: 5px;
+            }
+            .Delete {
+                left: 40px;
+                top: 25px;
+            }
+        }
+        /*End section for modules page*/
+        /******************************************/

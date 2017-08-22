@@ -1,0 +1,35 @@
+﻿@model AIn.Ventures.BaseLibrary.Component
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>SecureTest</title>
+    
+</head>
+<body>
+    <div style="display:table;">
+        <div style="display:table-row;">
+            <div style="display:table-cell;">GUID: </div>
+            <div style="display:table-cell;">@Model.ObjectGUID</div>
+        </div>
+        <div style="display:table-row;">
+            <div style="display:table-cell;">Name: </div>
+            <div style="display:table-cell;">@Model.Name</div>
+        </div>
+        <div style="display:table-row;">
+            <div style="display:table-cell;">Manufacturer: </div>
+            <div style="display:table-cell;">@Model.Manufacturer</div>
+        </div>
+        <div style="display:table-row;">
+            <div style="display:table-cell;">Description: </div>
+            <div style="display:table-cell;">@Model.Description</div>
+        </div>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,730 @@
+﻿html {
+  position: relative;
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  width: 100%;
+  max-width: 700px;
+  position: relative;
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+/************************Begin header section***************************************************/
+#header {
+  position: relative; }
+
+/************************End header section***************************************************/
+/************************Begin Content section***************************************************/
+#content {
+  height: 80%;
+  background-color: #dddddd; }
+
+/************************End header section***************************************************/
+/************************Begin footer section***************************************************/
+#footer {
+  position: relative; }
+
+/************************End footer section***************************************************/
+/************************Begin Menu Class section***************************************************/
+.menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  height: 10%;
+  align-items: center; }
+
+.topMenuItem {
+  position: relative;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+.bottomMenuItem {
+  position: relative;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+.menuItemGraphic {
+  position: relative;
+  height: 60%;
+  margin: 0;
+  padding: 0; }
+
+.menuItemLink {
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+/************************End Menu Class section***************************************************/
+/***********************************Begin Content Section********************************************/
+/*[tk] I want this to only do this inside another expandable list item I think.
+    Or maybe not. I want to create a general expandable list item I can use with
+    different pages and different classes
+*/
+/***********************************End Content Section********************************************/
+/******************************************/
+/*This is the section for the modules page*/
+html {
+  margin: 0px;
+  padding: 0px;
+  position: relative; }
+
+body {
+  margin: 0px;
+  padding: 0px;
+  position: relative; }
+
+#content {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  padding: 0px 0px 0px 5px;
+  position: relative;
+  width: 800px; }
+
+#modules {
+  /*Wrapper for everything in the modules page*/
+  display: block;
+  position: relative;
+  width: 750px;
+  margin: 15px 0px 0px 0px;
+  padding: 0px;
+  border: 0px; }
+
+#ProductHeader {
+  /*The header of the product with the amount and cost*/
+  /*Inside #Modules*/
+  display: flex;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  position: relative;
+  left: 0px;
+  top: 2px;
+  background-color: #999999;
+  width: inherit;
+  height: 64px; }
+  #ProductHeader div {
+    position: relative; }
+  #ProductHeader div:nth-child(1) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  #ProductHeader div:nth-child(2) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  #ProductHeader div:nth-child(3) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  #ProductHeader div:nth-child(4) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  #ProductHeader div:nth-child(5) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+
+.ProductBullet {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+  position: relative;
+  left: 50px; }
+
+.ProductCostAndIconsWrapper {
+  /*Contains the amount and cost of the whole product*/
+  /*Inside .ProductHeader*/
+  top: 0px; }
+
+/*EditIcon here*/
+.TotalProjectCost {
+  /*The cost of the whole project*/
+  /*Inside .ProductCostAndIconsWrapper*/
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 50px;
+  width: 150px !important;
+  height: 40px !important;
+  margin: 0px !important;
+  background: #ffffff;
+  padding: 8px; }
+
+/*CommerceIcon here*/
+.ModuleWrapper {
+  text-align: center;
+  padding: 10px;
+  display: block; }
+
+.ModuleHeader {
+  /*The part that lists the name and amount of modules*/
+  /*Inside #module*/
+  display: flex;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  position: relative;
+  left: 0px;
+  top: 2px; }
+  .ModuleHeader div {
+    position: relative; }
+  .ModuleHeader div:nth-child(1) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  .ModuleHeader div:nth-child(2) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  .ModuleHeader div:nth-child(3) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  .ModuleHeader div:nth-child(4) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  .ModuleHeader div:nth-child(5) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+
+.ModuleName {
+  /*Has the name of the module in it. */
+  /*Inside .moduleHeaderRow*/
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  font-size: 25px;
+  font-weight: bold;
+  position: relative;
+  top: 6px; }
+
+.ModuleTransactionData {
+  /*Has the box with the number and cost of the module*/
+  /*Inside .moduleHeaderRow*/
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  right: 0px;
+  top: -15px; }
+
+/*Edit Icon here*/
+.ModuleAmountAndCost {
+  /*The amount textbox and cost div of the module*/
+  /*Inside .moduleTransactionData*/
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 202px !important;
+  height: 42px !important;
+  margin: 0px !important;
+  border: 1px solid #000000;
+  padding: 5px; }
+
+.AmountTextBoxWrapper {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 50px !important;
+  height: auto !important;
+  margin: 0px !important;
+  padding: 0px;
+  /*Wraps the text box with the amount in it*/
+  /*Inside the ModuleAmountAndCost and RawComponentAmountAndCost*/ }
+
+input.AmountInput {
+  /*Input for amount of Raw Components and Modules*/
+  /*Inside the AmountTextBoxWrapper*/
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 50px !important;
+  height: 40px !important;
+  margin: 0px !important;
+  padding: 0px 0px 0px 18px;
+  border: 0px; }
+
+.ScrubberArrows {
+  position: absolute !important;
+  display: block !important;
+  top: 1px;
+  left: 0px;
+  width: auto !important;
+  height: auto !important;
+  margin: 0px !important;
+  padding: 0px;
+  border: 0px;
+  /*Arrows to increase and decrease the number in the amount box*/
+  /*Inside the AmountTextBoxWrapper*/ }
+
+div.ScrubberUpArrow {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: auto !important;
+  height: auto !important;
+  margin: 0px !important; }
+
+div.ScrubberDownArrow {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: auto !important;
+  height: auto !important;
+  margin: 0px !important; }
+
+a.ScrubberUpArrow {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: auto !important;
+  height: auto !important;
+  margin: 0px !important;
+  padding: 5px;
+  border: 0px;
+  font-size: 12px;
+  /*The arrow pointing up*/
+  /*Inside .ScrubberArrows*/ }
+
+a.ScrubberDownArrow {
+  position: absolute !important;
+  display: block !important;
+  top: 10px;
+  left: 0px;
+  width: auto !important;
+  height: auto !important;
+  margin: 0px !important;
+  padding: 5px;
+  border: 0px;
+  font-size: 12px;
+  /*The arrow pointing down*/
+  /*Inside .ScrubberArrows*/ }
+
+.TotalModuleCost {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 50px;
+  width: 150px !important;
+  height: 40px !important;
+  margin: 0px !important;
+  background: #ffffff;
+  padding: 8px;
+  /*The cost of a whole module*/
+  /*Inside .ModuleTAmountAndCost*/ }
+
+/*Commerce Icon here*/
+.RawComponent {
+  /*Wraps a raw component element*/
+  /*Inside the Module element*/
+  display: flex;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  border: 0px;
+  margin: 0px;
+  padding: 5px;
+  border: 0px; }
+  .RawComponent div {
+    position: relative; }
+  .RawComponent div:nth-child(1) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  .RawComponent div:nth-child(2) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  .RawComponent div:nth-child(3) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  .RawComponent div:nth-child(4) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  .RawComponent div:nth-child(5) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+
+img.RawComponentIcon {
+  /*The icon to left of RawComponent*/
+  /*Inside .ModulesTagDiv*/
+  position: relative;
+  width: 50px;
+  height: 50px; }
+
+.RawComponentDetails {
+  /*Contains the name, manufacturer, sku and stuff like that*/
+  /*Inside .RawComponent*/
+  margin: 0px;
+  padding: 0px 5px; }
+
+.RawComponentAmountAndCost {
+  /*The amount textbox and cost div*/
+  /*Inside .RawComponent*/
+  margin: 0px;
+  padding: 0px 5px; }
+
+/*AmountInput is here too*/
+/*AmountTextBoxWrapper and Scrubbers in here too*/
+.RawComponentCost {
+  /*The cost of the raw component*/
+  position: absolute;
+  top: 0px;
+  left: 50px;
+  height: 40px;
+  width: 135px;
+  margin: 0px;
+  padding: 0px;
+  background-color: #ffffff; }
+
+.SubModule {
+  /*Wraps a sub-module element*/
+  /*Inside .Module*/
+  display: flex;
+  position: relative;
+  margin: 0px;
+  padding: 0px;
+  border: 0px; }
+  .SubModule div {
+    position: relative; }
+  .SubModule div:nth-child(1) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  .SubModule div:nth-child(2) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  .SubModule div:nth-child(3) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+  .SubModule div:nth-child(4) {
+    flex-basis: 262.5px;
+    flex-grow: 35;
+    flex-shrink: 35;
+    align-self: center; }
+  .SubModule div:nth-child(5) {
+    flex-basis: 75px;
+    flex-grow: 10;
+    flex-shrink: 10;
+    align-self: center; }
+
+/*ModulesTagDiv is here*/
+img.ProductsIcon {
+  width: 40px; }
+
+.SubModuleName {
+  /*The name of the submodule*/
+  /*Inside .Submodule*/
+  margin: 0px;
+  padding: 0px 5px; }
+
+/*ModulesTagDiv is also here*/
+.SubModuleAmountAndCost {
+  /*Contains the amount and cost of the Submodule*/
+  /*Inside .Submodule*/
+  /*The amount textbox and cost div*/
+  /*Inside .RawComponent*/
+  margin: 0px;
+  padding: 0px 5px; }
+
+/*AmountTextBoxWrapper also here*/
+/*TimesSymbol also here*/
+.SubModuleCost {
+  /*Contains the cost of the SubModule*/
+  /*inside SubmoduleAmountAndCost*/
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 50px;
+  width: 150px !important;
+  height: 40px !important;
+  margin: 0px !important;
+  background: #ffffff;
+  padding: 8px; }
+
+.TimesSymbol {
+  /*The times symbol*/
+  /*Inside .moduleAmountAndCost and .rawComponentAmoundAndCost*/
+  position: absolute !important;
+  display: block !important;
+  top: 2px;
+  left: 30px;
+  width: 25px !important;
+  height: auto !important;
+  margin: 0px !important;
+  padding: 5px;
+  font-size: 18px; }
+
+.EditIcon {
+  /*The edit icon image*/
+  /*Inside module header and moduleTransactionData */
+  position: relative;
+  width: 40px;
+  display: table-cell; }
+
+.ModuleCommerceIcon {
+  /*The shopping cart*/
+  /*Inside the .ModuleTransactionData and .RawComponentTransactionData*/
+  position: relative;
+  width: 40px;
+  display: block;
+  visibility: hidden; }
+
+.ComponentCommerceIcon {
+  /*The shopping cart*/
+  /*Inside the .ModuleTransactionData and .RawComponentTransactionData*/
+  position: relative;
+  width: 40px;
+  display: block; }
+
+.addIcon {
+  font-size: 40px;
+  position: relative;
+  top: 6px; }
+
+#CreateComponentMenu {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 200px !important;
+  height: 200px !important;
+  margin: 10px !important;
+  visibility: hidden;
+  background: #A0A0A0;
+  border-radius: 15px;
+  padding: 15px;
+  z-index: 10; }
+  #CreateComponentMenu div {
+    display: block; }
+  #CreateComponentMenu .close-modal {
+    display: block;
+    position: absolute !important;
+    display: block !important;
+    top: 15px;
+    left: 175px;
+    width: 15px !important;
+    height: 25px !important;
+    margin: 0px !important;
+    background-color: #808080;
+    padding: 0px 5px;
+    color: #ffffff; }
+  #CreateComponentMenu a {
+    display: block;
+    width: 170px;
+    height: 85px;
+    text-align: center;
+    padding-top: 30px;
+    text-decoration: none;
+    color: #ffffff; }
+    #CreateComponentMenu a:link {
+      color: #ffffff; }
+    #CreateComponentMenu a:visited {
+      color: #ffffff; }
+    #CreateComponentMenu a:hover {
+      background-color: #808080;
+      color: #ffffff; }
+    #CreateComponentMenu a:active {
+      background-color: #ffffff;
+      color: #000000; }
+
+#CreateModuleModal {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 400px !important;
+  height: 300px !important;
+  margin: 10px !important;
+  visibility: hidden;
+  background: #A0A0A0;
+  border-radius: 15px;
+  padding: 15px;
+  z-index: 10; }
+  #CreateModuleModal div {
+    display: block; }
+  #CreateModuleModal .close-modal {
+    display: block;
+    position: absolute !important;
+    display: block !important;
+    top: 15px;
+    left: 375px;
+    width: 15px !important;
+    height: 25px !important;
+    margin: 0px !important;
+    background-color: #808080;
+    padding: 0px 5px;
+    color: #ffffff; }
+
+#AddComponentModal {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 600px !important;
+  height: 400px !important;
+  margin: 10px !important;
+  visibility: hidden;
+  background: #A0A0A0;
+  border-radius: 15px;
+  padding: 15px;
+  z-index: 10; }
+  #AddComponentModal div {
+    display: block; }
+  #AddComponentModal .close-modal {
+    display: block;
+    position: absolute !important;
+    display: block !important;
+    top: 15px;
+    left: 575px;
+    width: 15px !important;
+    height: 25px !important;
+    margin: 0px !important;
+    background-color: #808080;
+    padding: 0px 5px;
+    color: #ffffff; }
+  #AddComponentModal a {
+    color: white; }
+  #AddComponentModal a:visited {
+    color: #cccccc; }
+
+#QPointList {
+  position: relative;
+  width: 390px;
+  height: 200px;
+  overflow-y: scroll; }
+
+#QPointModalInput {
+  position: absolute !important;
+  display: block !important;
+  top: 20px;
+  left: 20px;
+  width: 200px !important;
+  height: auto !important;
+  margin: 0 !important; }
+
+#QPointModalOutput {
+  position: absolute !important;
+  display: block !important;
+  top: 20px;
+  left: 300px;
+  width: 200px !important;
+  height: auto !important;
+  margin: 0 !important; }
+
+input.minMax {
+  width: 175px; }
+
+#CategoryListTextArea {
+  width: 250px;
+  height: 200px;
+  font-size: 12px; }
+
+#SelectComponentModal {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 200px !important;
+  height: 400px !important;
+  margin: 10px !important;
+  visibility: hidden;
+  background: #A0A0A0;
+  border-radius: 15px;
+  padding: 15px;
+  z-index: 10; }
+  #SelectComponentModal div {
+    display: block; }
+  #SelectComponentModal .close-modal {
+    display: block;
+    position: absolute !important;
+    display: block !important;
+    top: 15px;
+    left: 175px;
+    width: 15px !important;
+    height: 25px !important;
+    margin: 0px !important;
+    background-color: #808080;
+    padding: 0px 5px;
+    color: #ffffff; }
+
+div.form-group {
+  text-align: center; }
+
+#ComponentList {
+  overflow-y: scroll;
+  height: 370px; }
+
+.SourceProductIcon div {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  background-color: #ffffff;
+  visibility: hidden;
+  border: 1px solid black; }
+  .SourceProductIcon div img {
+    width: 15px;
+    height: 15px;
+    display: inline; }
+
+.SourceProductIcon .Edit {
+  left: 40px;
+  top: 5px; }
+
+.SourceProductIcon .Delete {
+  left: 40px;
+  top: 25px; }
+
+/*End section for modules page*/
+/******************************************/
+

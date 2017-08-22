@@ -1,0 +1,278 @@
+﻿@using AIn.Ventures.Models
+@model Component
+
+@helper DrawComponent(Component mdl, int depth)
+{
+int padSize = 20;
+string indent = String.Concat(depth * padSize, "px");
+bool visible = depth == 0;
+string display = visible ? "" : "display:none";
+string id = "ListItem" + mdl.GUID;
+if (mdl.ComponentType == "Module")
+    {
+        <div class='ModuleWrapper' id='@id' style='@display' data-visible='False'>
+            <div class='ModuleHeader' >
+                <div class="ModuleBullet" style='padding-left: @indent '>
+                    <a data-action='toggleComponentDisplay' data-params='@id' class='HideArrow'>
+                        <svg width='40' height='40'>
+                            <polygon points='10,20 30,30 10,40' style='fill:white' />
+                        </svg>
+                    </a>
+                </div>
+                <div class='ModuleName'>
+                    @mdl.Name
+                </div>
+                <div class='addIcon' id='@string.Concat("addIcon", mdl.GUID)' data-action='newComponentMenu' data-params='@mdl.GUID'>+</div>
+                <div class='ModuleTransactionData'>
+                    <!--white outline black border 1px and somehow get rid of border around textbox-->
+                    <div class='ModuleAmountAndCost'>
+                        <div class='AmountTextBoxWrapper'>
+                            @Html.TextBox(String.Concat("Item", mdl.GUID, "Amount"), mdl.AmountInParent, new { @class = "AmountInput", id = @String.Concat("Item", mdl.GUID, "amountInputDiv") })
+                            <div class='ScrubberUpArrow'>
+                                <a class='ScrubberUpArrow'>
+                                    &#9650;
+                                </a>
+                            </div>
+                            <div class='ScrubberDownArrow'>
+                                <a class='ScrubberDownArrow'>
+                                    &#9660;
+                                </a>
+                            </div>
+                        </div>
+                        <div class='TimesSymbol'>
+                            &times;
+                        </div>
+                        <div class='TotalModuleCost' id='@String.Concat("Item", mdl.GUID, "TotalCost")'>
+                            $0.00
+                        </div>
+                    </div>
+                </div>
+                <div data-action='searchComponentMenu' id='@string.Concat("searchIcon", mdl.GUID)' >
+                    <img  class='ModuleCommerceIcon' src='~/Images/commerce_icon.png' />
+                </div>            
+            </div>
+
+            @{ 
+                List<Component> Children = mdl.Children;
+                foreach (var child in Children)
+                {
+                    @DrawComponent(child, depth + 1);
+                }
+            }
+        </div>
+
+    }
+    else
+    {
+        var searchId = @String.Concat("SearchIcon", mdl.GUID);
+        <div class='ModuleWrapper' style='@display' id='@id' data-visible='False'>
+            <div class='ModuleHeader' id='@id'>
+                <div id='ModulesTagDiv' style='padding-left: @indent'>
+                    <img src='~/Images/rawcomponent_icon.png' class='RawComponentIcon' />
+                </div>
+                <div class='RawComponentDetails' id='@String.Concat(mdl.Name, "DetailsDiv")'>
+                    <div class='ModuleComponentName'>
+                        @mdl.Name
+                    </div>
+                    Manufacturer: @mdl.Manufacturer
+                    SKU: @mdl.SKU
+                </div>
+                <div class='RawComponentEmptyEditCell'>
+                    &nbsp;
+                </div>
+                <div class='ModuleTransactionData'>
+                    <div class='ModuleAmountAndCost'>
+                        <div class='AmountTextBoxWrapper'>
+                            @Html.TextBox(@String.Concat(mdl.Name, "AmountInput"), @mdl.AmountInParent, new { @class = "AmountInput", id = @String.Concat(mdl.Name, "amountInputDiv") });
+                            <div class='ScrubberUpArrow'>
+                                <a class='ScrubberUpArrow'>
+                                    &#9650;
+                                </a>
+                            </div>
+                            <div class='ScrubberDownArrow'>
+                                <a class='ScrubberDownArrow'>
+                                    &#9660;
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class='TimesSymbol'>
+                        &times;
+                    </div>
+                    <div class='TotalModuleCost' id='@String.Concat(mdl.Name, "priceDiv")'>
+                        @mdl.Price
+                    </div>
+
+                </div>
+                <div class='CommerceElement'  id='@searchId'>
+                    @if (mdl.SourceProduct == null)
+                    {
+                        <div data-action='showModal' data-params='{
+                                                    "modalId":"SelectComponentModal", 
+                                                    "triggerId":"@searchId", 
+                                                    "leftOffset":-50,"topOffset":0, 
+                                                    "callBack":"populateOrderList", 
+                                                    "qPointGUID":"@mdl.GUID", 
+                                                    "parentGUID": "@mdl.ParentGUID"
+                             }'>
+                            <img class='ComponentCommerceIcon' src='~/Images/search.svg'>
+                        </div>
+                    } else
+                    {
+                        @*<div>mdl.ParengGUID = @mdl.ParentGUID<br /> Model.GUID = @Model.GUID<br /> ObjectGUID = @mdl.GUID<br />Source = @mdl.SourceProduct.Source.Name<br />OrderID = @mdl.SourceProduct.ItemKey</div>*@
+
+                    Html.RenderAction(String.Concat("_GetProduct"),
+                                                new
+                                                {
+                                                    ParentGUID = mdl.ParentGUID,
+                                                    ObjectGUID = mdl.GUID,
+                                                });
+                    }
+                </div>
+            </div>
+            
+        </div>
+    }
+}
+
+    @{
+        ViewBag.Title = String.Concat("Product: ", Model.Name, " - View");
+    }
+
+    <div id='modules'>
+        <div id='ProductHeader' class='ProductHeader'>
+            <div class='ProductBullet'>
+                &gt;&gt;
+            </div>
+            <div class='ProductEmptyLeftCell'>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+            <div class='addIcon' id='@string.Concat("addIcon", Model.GUID)' data-action='newComponentMenu' data-params='@Model.GUID'>+</div>
+            <div class='ProductCostAndIconsWrapper'>
+                @Html.TextBox("ProductAmount", "1", new { @class = "AmountInput", id = @"ProductAmountInputDiv" })
+                <div class='TimesSymbol'>
+                    &times;
+                </div>
+                <div class='ScrubberArrows'>
+                    <div class='ScrubberUpArrow'>
+                        <a class='ScrubberUpArrow'>
+                            &#9650;
+                        </a>
+                    </div>
+                    <div class='ScrubberDownArrow'>
+                        <a class='ScrubberDownArrow'>
+                            &#9660;
+                        </a>
+                    </div>
+                </div>
+                <div class='TotalProjectCost' id="TotalProjectCost">
+                    $0.00
+                </div>
+            </div>
+            <div>
+                <img class='ModuleCommerceIcon' src='~/Images/commerce_icon.png' />
+            </div>
+        </div>
+
+        @{
+
+            List<Component> Children = Model.Children;
+            foreach (var child in Children)
+            {
+                @DrawComponent(child, 0);
+            }
+        }
+    </div>
+
+                        <div id='CreateComponentMenu' class='modal'>
+                            <a id='NewModuleOption' data-showmodule='CreateModuleModal' data-moduleguid=''>
+                                New Module
+                            </a>
+                            <a id='NewComponentOption' data-showmodule='AddComponentModal' data-moduleguid=''>
+                                New Component
+                            </a>
+                            <div class='close-modal'>
+                                x
+                            </div>
+                        </div>
+
+                        <div id="CreateModuleModal" class='modal'>
+                            @using (Html.BeginForm("", "Module", FormMethod.Post))
+                            {
+                                @Html.AntiForgeryToken()
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <div class="form-header"></div>
+                                @*@Html.LabelFor(m=>m.Name)*@
+                                <span>Name</span>
+                                <div class="form-group">
+                                    @Html.TextBox("Name", "", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(m=>m.Name)*@
+                                </div>
+                                @*@Html.LabelFor(m=>m.Description)*@
+                                <span>Description</span>
+                                <div class="form-group">
+                                    @Html.TextBox("Description", "", new { @class = "form-control" })
+                                    @*@Html.ValidationMessageFor(m=>m.Description)*@
+                                </div>
+                                <div class="form-group">
+                                    <div>
+                                        <input type="submit" value="Create" class="btn btn-default" />
+                                    </div>
+                                </div>
+
+                                @Html.Hidden("AmountInParent", 1)
+                                @Html.Hidden("ParentGUID", Model.GUID, new { @class = "FormParentGUID" })
+
+                            }
+                            <div class="close-modal">
+                                x
+                            </div>
+                        </div>
+
+                        <div id="AddComponentModal" class='modal'>
+                            <div id='QPointModalInput'>
+                                <div>
+                                    Catalog
+                                </div>
+                                <div id='CategoryList'>
+                                    @Html.Action("_Category")
+                                </div>
+                            </div>
+                            @{ var formName = "CategoryForm"; }
+                            <div id='QPointModalOutput'>
+                                <a data-action='clearQPointFilter'>Clear Filter</a>
+                                @using (Ajax.BeginForm("_QPoint", "Component", new { }, new AjaxOptions { HttpMethod = "Post", UpdateTargetId = "QPointList", InsertionMode = InsertionMode.Replace }, new { id = formName }))
+        {
+                                    <div id='CategoryList'>
+                                        <textarea name='CategoryListTextArea' id='CategoryListTextArea'></textarea>
+                                    </div>
+                                    @Html.Hidden("ParentGUID", Model.GUID, new { @class = "FormParentGUID" })
+                                }
+                                <div id='QPointList'>
+                                    @Html.Action("_QPoint", new List<QPoint>());
+                                </div>
+
+                            </div>
+                            <div class='close-modal'>
+                                x
+                            </div>
+                        </div>
+                        <div id='SelectComponentModal' class='modal'>
+                            <div id='ComponentList'>
+                            </div>
+                            <div class='close-modal'>
+                                x
+                            </div>
+                        </div>
+
+                        <script>
+                            var updateForm = function () {
+                                // Will be called on load and when the number of items
+                                // in an order changes
+
+                                // Go through each item in each raw component and
+                                // multiply the cost times amount and add them up
+                                // do the same for each submodule and so on
+                            }
+                        </script>

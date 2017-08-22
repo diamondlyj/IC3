@@ -1,0 +1,65 @@
+﻿@model List<Category>
+@*@using AIn.Ventures.UI.App_Code*@
+@helper MakeCategoryList(List<Category> cats, bool topLevel) {
+    var listClass = "CategoryList";
+    var ulDisplay = "none";
+    var liDisplay = "block";
+
+    if (topLevel)
+    {
+        listClass = "TopCategoryList";
+        ulDisplay = "block";
+        liDisplay = "none";
+    }
+    <ul class='@listClass' style='display:@ulDisplay'>
+        @foreach (var c in cats)
+        {
+        var DivID = CategoryListMaker.sanitizeString(c.Name);
+        <li class='CategoryListChildren' id='@DivID' style='display:@liDisplay'>
+            <a data-action='revealChildren' data-params='@DivID'>
+                +
+            </a>
+            <a data-action='addCategory' , data-params='@DivID'>
+                @c.Name
+            </a>
+            @if (c.Categories.Count() > 0)
+            {
+                @MakeCategoryList(c.Categories, false);
+            }
+        </li>
+        }
+    </ul>
+
+}
+        <div>
+            @using (Html.BeginForm())
+            {
+                <select data-change='revealTopLevelCategory' id='CategorySelect'>
+                    <option value=''></option>
+                    @foreach (var c in Model)
+                    {
+                        <option value='@CategoryListMaker.sanitizeString(c.Name)'>@c.Name</option>
+                    }
+                </select>
+            }
+        </div>
+        @MakeCategoryList(Model, true)
+        @*<ul id='TopCategoryList'>
+            @foreach (Category c in Model)
+            {
+                var DivID = CategoryListMaker.sanitizeString(c.Name);
+                <li class='CategoryListChildren' id='@DivID' style='display:none'>
+                    <a data-action='revealChildren' data-params='@DivID'>
+                        +
+                    </a>
+                    <a data-action='addCategory' , data-params='@DivID'>
+                        @c.Name
+                    </a>
+                    @if (c.Categories.Count() > 0)
+                    {
+
+                        CategoryListMaker.MakeList(c.Categories);
+                    }
+                </li>
+            }
+        </ul>*@

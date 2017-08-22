@@ -1,0 +1,35 @@
+﻿@model List<QPoint>
+
+    @if (Model!=null && Model.Count() > 0)
+    {
+        <hr />
+
+        int itemNum = 0;
+        foreach (var item in Model)
+        {
+        <ul class='QPointListItem'>
+            <li class='QPointListItemName'>
+                @Html.DisplayFor(modelItem => item.Name)
+            </li>
+        </ul>
+
+            itemNum++;
+            String ParentGUID;
+            if (TempData["ParentGUID"] != null) {
+                ParentGUID = TempData["ParentGUID"].ToString();
+            }
+            else
+            {
+                ParentGUID = Guid.NewGuid().ToString();
+            }
+            int amountInParent = 1;
+            using (Html.BeginForm(String.Concat( ParentGUID, "/", item.GUID, "/", amountInParent), "Component", FormMethod.Post, new { @class = "EnterQPointForm", id = "EnterQPointForm" }))
+            {
+                <input type = 'submit' value = 'Add to module' class='AddModuleButton' />
+            }
+        <hr />
+        }
+    }
+
+
+

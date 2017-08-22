@@ -1,0 +1,25 @@
+﻿@model QPoint
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+
+<body style="font-family: verdana;">
+    <form action="~/Data/label/new">
+        <div style="position:absolute; left:100px; width:400px;top:150px;bottom:200px;height:75px; border:solid 1px silver;border-collapse:collapse;">
+            <a>@Model.Name</a>
+
+        </div>
+        <div style="position:absolute; left:501px; width:400px;top:150px;bottom:200px;height:75px; border:solid 1px silver;border-collapse:collapse;">
+            <input type="hidden" name="GUID" value="@Model.GUID" />
+            <input type="text" name="LabelName"><br>
+        </div>
+        <input type="submit" formmethod="post" value="submit">
+    </form>
+
+</body>
+</html>

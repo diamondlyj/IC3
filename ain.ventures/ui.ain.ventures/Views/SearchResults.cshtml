@@ -1,0 +1,43 @@
+﻿@model List<AIn.Ventures.Models.QPoint>
+    @{
+        Layout = null;
+    }
+
+    <!DOCTYPE html>
+
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>SearchResults</title>
+        <style>
+            th, td {
+                padding: 5px;
+            }
+            tr:nth-child(even) {
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>
+        <table cellspacing="0" style="border: 1px solid black;">
+            <tr>
+                <td style="background: #808080">Names</td>
+                <td style="background: #808080">Categories</td>
+                <td style="background: #808080"></td>
+                <td style="background: #808080"></td>
+                <td style="background: #808080"></td>
+            </tr>
+            @foreach (AIn.Ventures.Models.QPoint qpo in Model)
+            {
+                <tr>
+                    <td style="background: #c0c0c0;">@qpo.Name</td>
+                    @foreach (string str in qpo.Categories)
+                    {
+                        <td>@str</td>
+                    }
+                    <td>@qpo.Description</td>
+                </tr>
+            }
+        </table>
+    </body>
+</html>

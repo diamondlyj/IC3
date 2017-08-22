@@ -1,0 +1,43 @@
+﻿@import "Site.scss";
+#Projects{
+    .Project {
+        .List {
+            @include ExpandableListItem;
+            .Collaborators {
+                @include ExpandableListItem;
+            }
+            .Products {
+                @include ExpandableListItem;
+            }
+            .AddCollaborator {
+                @extend .Collaborators;
+            }
+            .AddProduct {
+                @extend .Products;
+            }
+        }
+        .ListHeader {
+            div {
+                    display:inline-block;
+                 }
+            .Details {
+            }
+        }
+        .Bullet {
+            vertical-align: top;
+            a img { 
+                    width:15px;
+                    height:15px;
+            
+            }
+        }
+        .Details {
+        }
+    }
+    #AddCollaboratorModal {
+        @include modal(200px,75px);
+    }
+    #AddProductModal{
+        @include modal(300px,300px);
+    }
+}

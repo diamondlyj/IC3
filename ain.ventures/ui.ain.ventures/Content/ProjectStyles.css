@@ -1,0 +1,151 @@
+﻿html {
+  position: relative;
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  width: 100%;
+  max-width: 700px;
+  position: relative;
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+/************************Begin header section***************************************************/
+#header {
+  position: relative; }
+
+/************************End header section***************************************************/
+/************************Begin Content section***************************************************/
+#content {
+  height: 80%;
+  background-color: #dddddd; }
+
+/************************End header section***************************************************/
+/************************Begin footer section***************************************************/
+#footer {
+  position: relative; }
+
+/************************End footer section***************************************************/
+/************************Begin Menu Class section***************************************************/
+.menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  height: 10%;
+  align-items: center; }
+
+.topMenuItem {
+  position: relative;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+.bottomMenuItem {
+  position: relative;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+.menuItemGraphic {
+  position: relative;
+  height: 60%;
+  margin: 0;
+  padding: 0; }
+
+.menuItemLink {
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+/************************End Menu Class section***************************************************/
+/***********************************Begin Content Section********************************************/
+/*[tk] I want this to only do this inside another expandable list item I think.
+    Or maybe not. I want to create a general expandable list item I can use with
+    different pages and different classes
+*/
+/***********************************End Content Section********************************************/
+#Projects .Project .List {
+  margin-left: 40px; }
+  #Projects .Project .List .Collaborators, #Projects .Project .List .AddCollaborator {
+    margin-left: 40px; }
+  #Projects .Project .List .Products, #Projects .Project .List .AddProduct {
+    margin-left: 40px; }
+
+#Projects .Project .ListHeader div {
+  display: inline-block; }
+
+#Projects .Project .Bullet {
+  vertical-align: top; }
+  #Projects .Project .Bullet a img {
+    width: 15px;
+    height: 15px; }
+
+#Projects #AddCollaboratorModal {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 200px !important;
+  height: 75px !important;
+  margin: 10px !important;
+  visibility: hidden;
+  background: #A0A0A0;
+  border-radius: 15px;
+  padding: 15px;
+  z-index: 10; }
+  #Projects #AddCollaboratorModal div {
+    display: block; }
+  #Projects #AddCollaboratorModal .close-modal {
+    display: block;
+    position: absolute !important;
+    display: block !important;
+    top: 15px;
+    left: 175px;
+    width: 15px !important;
+    height: 25px !important;
+    margin: 0px !important;
+    background-color: #808080;
+    padding: 0px 5px;
+    color: #ffffff; }
+
+#Projects #AddProductModal {
+  position: absolute !important;
+  display: block !important;
+  top: 0px;
+  left: 0px;
+  width: 300px !important;
+  height: 300px !important;
+  margin: 10px !important;
+  visibility: hidden;
+  background: #A0A0A0;
+  border-radius: 15px;
+  padding: 15px;
+  z-index: 10; }
+  #Projects #AddProductModal div {
+    display: block; }
+  #Projects #AddProductModal .close-modal {
+    display: block;
+    position: absolute !important;
+    display: block !important;
+    top: 15px;
+    left: 275px;
+    width: 15px !important;
+    height: 25px !important;
+    margin: 0px !important;
+    background-color: #808080;
+    padding: 0px 5px;
+    color: #ffffff; }
+

@@ -1,0 +1,171 @@
+﻿@model ComponentModel
+
+@{
+    ViewBag.Title = "Product:" + Model.Name + " View";
+}
+
+
+
+<div id="modules">
+    <div id="ProductHeader">
+        <div class='ProductBullet'>
+            >>
+        </div>
+        <div class='ProductEmptyLeftCell'>&nbsp;&nbsp;&nbsp;&nbsp;</div>
+        <img class='EditIcon' src='~/Images/edit_icon.png' />
+        <div class='ProductCostAndIconsWrapper'>
+            @Html.TextBox("ProductAmount", "1", new { @class = "AmountInput", id = @"ProductAmountInputDiv" })
+            <div class='TimesSymbol'>
+                &times;
+            </div>
+            <div class='ScrubberArrows'>
+                <div class='ScrubberUpArrow'>
+                    <a class='ScrubberUpArrow'>
+                        &#9650;
+                    </a>
+                </div>
+                <div class='ScrubberDownArrow'>
+                    <a class='ScrubberDownArrow'>
+                        &#9660;
+                    </a>
+                </div>
+            </div>
+            <div class='TotalProjectCost' id="TotalProjectCost">
+                $0.00
+            </div>
+        </div>
+        <img class='CommerceIcon' src='~/Images/commerce_icon.png' />
+
+    </div>
+
+    @{
+        Dictionary<ComponentModel, int> Modules = Model.Elements.Where(m => m.ComponentType == "Module").ToDictionary(item => item, item => item.AmountInParent);
+        foreach (var mdl in Modules)
+        {
+            <div class='ModuleHeader'>
+                <div class="ModulesTagDiv">
+                    &nbsp;
+                </div>
+                <div class='ModuleName'>
+                    @mdl.Key.Name
+                </div>
+                <img class='EditIcon' src='~/Images/edit_icon.png' />
+                <div class='ModuleTransactionData'>
+                    <!--white outline black border 1px and somehow get rid of border around textbox-->
+                    <div class='ModuleAmountAndCost'>
+                        <div class='AmountTextBoxWrapper'>
+                            @Html.TextBox(String.Concat(mdl.Key.Name, "Amount"), mdl.Value, new { @class = "AmountInput", id = @String.Concat(mdl.Key.Name, "amountInputDiv") })
+                            <div class='ScrubberUpArrow'>
+                                <a class='ScrubberUpArrow'>
+                                    &#9650;
+                                </a>
+                            </div>
+                            <div class='ScrubberDownArrow'>
+                                <a class='ScrubberDownArrow'>
+                                    &#9660;
+                                </a>
+                            </div>
+                        </div>
+                        <div class='TimesSymbol'>
+                            &times;
+                        </div>
+                        <div class='TotalModuleCost' id='@String.Concat(mdl.Key.Name, "TotalCost")'>
+                            $0.00
+                        </div>
+                    </div>
+                </div>
+                <img class='CommerceIcon' src='~/Images/commerce_icon.png' />
+            </div>
+
+            Dictionary<ComponentModel, int> RawComponents = Model.Elements.Where(m => m.ComponentType == "RawComponent").ToDictionary(item => item, item => item.AmountInParent);
+
+            foreach (var rc in RawComponents)
+            {
+                <div class='RawComponent'>
+                    <div id="ModulesTagDiv">
+                        <img src='~/Images/rawcomponent_icon.png' class='RawComponentIcon' />
+                    </div>
+                    <div class='RawComponentDetails' id='@String.Concat(rc.Key.Name, "DetailsDiv")'>
+                        <div class='ModuleComponentName'>
+                            @rc.Key.Name
+                        </div>
+                        Manufacturer: @rc.Key.Manufacturer
+                        SKU: @rc.Key.SKU
+                    </div>
+                    <div class='RawComponentEmptyEditCell'>
+                        &nbsp;
+                    </div>
+                    <div class='RawComponentAmountAndCost'>
+                        <div class='AmountTextBoxWrapper'>
+                            @Html.TextBox(@String.Concat(rc.Key.Name, "AmountInput"), @rc.Value, new { @class = "AmountInput", id = @String.Concat(rc.Key.Name, "amountInputDiv") });
+                            <div class='ScrubberUpArrow'>
+                                <a class='ScrubberUpArrow'>
+                                    &#9560;
+                                </a>
+                            </div>
+                            <div class='ScrubberDownArrow'>
+                                <a class='ScrubberDownArrow'>
+                                    &#9660;
+                                </a>
+                            </div>
+                        </div>
+                        <div class='timesSymbol'>
+                            &times;
+                        </div>
+                        <div class='RawComponentCost' id='@String.Concat(rc.Key.Name, "priceDiv")'>
+                            @rc.Key.Price
+                        </div>
+
+                    </div>
+                    <img class='CommerceIcon' src='~/Images/commerce_icon.png' />
+                </div>
+            }
+
+            Dictionary<ComponentModel, int> SubModules = mdl.Key.Elements.Where(m => m.ComponentType == "Module").ToDictionary(item => item, item => item.AmountInParent);
+
+            foreach (var sm in SubModules)
+            {
+                <div class='SubModule' id='@String.Concat(sm.Key.Name,"SubmoduleDiv")'>
+                    <div class='SubModuleName' id='@String.Concat(sm.Key.Name,"SubModuleNameDiv")'>
+                        <div id="ModulesTagDiv">
+                            <img src='~/Images/products_icon.png' class='ProductsIcon' />
+                        </div>
+                        <div class='SubModuleAmountAndCost'>
+                            <div class='AmountTextBoxWrapper'>
+                                @Html.TextBox(@String.Concat(sm.Key.Name, "AmountInput"), @sm.Value, new { @class = "AmountInput", id = @String.Concat(sm.Key.Name, "AmountInputDiv") })
+                                <div class='ScrubberArrows'>
+                                    <div class='ScrubberUpArrow'>
+                                        &#9650;
+                                    </div>
+                                    <div class='ScrubberUpArrow'>
+                                        &#9660;
+                                    </div>
+                                </div>
+                            </div>
+                            <div class='timesSymbol'>
+                                &times;
+                            </div>
+                            <div class='SubModuleCost' id='@String.Concat(sm.Key.Name, "priceDiv")'>
+                                @sm.Key.Price
+                            </div>
+                            <img class='CommerceIcon' src='~/Images/commerce_icon.png' />
+                        </div>
+                        @sm.Key.Name
+                    </div>
+
+                </div>
+            }
+
+        }
+    }
+</div>
+<script>
+            var updateForm = function () {
+                // Will be called on load and when the number of items
+                // in an order changes
+
+                // Go through each item in each raw component and
+                // multiply the cost times amount and add them up
+                // do the same for each submodule and so on
+            }
+</script>

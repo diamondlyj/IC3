@@ -1,0 +1,84 @@
+﻿$total-width: 800px;
+
+@mixin tbl {
+    display: table;
+}
+
+@mixin tr ($column-widths) {
+    display: table-row;
+    div {
+        display:table-cell;
+    }
+    @for $i from 1 through length($column-widths){
+        div:nth-child(#{$i}){
+            width: nth($column-widths, $i) * $total-width;
+        }
+    }
+
+}
+
+@mixin stakeholderTr {
+    
+    @include tr($column-widths:(0.1, 0.35, 0.1, 0.1, 0.35 ));
+}
+
+@mixin descriptionCell {
+    div:nth-child(1){
+        font-size: 2.5em;
+        font-weight:bold;
+    }
+    div:nth-child(2){
+        font-size:1em;
+    }
+
+}
+
+
+body {
+    
+}
+
+div.StakeholderDivTable {
+    @include tbl;   
+}
+
+div.AbstractStakeholderDivTable{
+    @include tbl;
+}
+
+div.StakeholderProjectHeaderRow {
+    @include stakeholderTr;
+}
+
+div.AbstractStakeholderRow {
+    @include tr($column-widths:(0.1, 0.8, 0.1 ));
+}
+
+div.StakeholderTrGrp {
+    display: table-row-group;
+}
+
+div.StakeholderHeaderRow {
+    @include stakeholderTr;
+}
+
+div.StakeholderNameCell {
+    @include descriptionCell;
+
+}
+
+div.AbstractStakeholderDetailsCell {
+    @include descriptionCell;
+}
+
+div.TotalShareTextBoxCell {
+    input {
+        font-size:2em;
+    }
+}
+
+div.SharesTextBoxCell {
+    input {
+        font-size: 1.5em;
+    }
+}

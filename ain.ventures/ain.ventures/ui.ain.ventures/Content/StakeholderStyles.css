@@ -1,0 +1,70 @@
+﻿div.StakeholderDivTable {
+  display: table; }
+
+div.AbstractStakeholderDivTable {
+  display: table; }
+
+div.StakeholderProjectHeaderRow {
+  display: table-row; }
+  div.StakeholderProjectHeaderRow div {
+    display: table-cell; }
+  div.StakeholderProjectHeaderRow div:nth-child(1) {
+    width: 80px; }
+  div.StakeholderProjectHeaderRow div:nth-child(2) {
+    width: 280px; }
+  div.StakeholderProjectHeaderRow div:nth-child(3) {
+    width: 80px; }
+  div.StakeholderProjectHeaderRow div:nth-child(4) {
+    width: 80px; }
+  div.StakeholderProjectHeaderRow div:nth-child(5) {
+    width: 280px; }
+
+div.AbstractStakeholderRow {
+  display: table-row; }
+  div.AbstractStakeholderRow div {
+    display: table-cell; }
+  div.AbstractStakeholderRow div:nth-child(1) {
+    width: 80px; }
+  div.AbstractStakeholderRow div:nth-child(2) {
+    width: 640px; }
+  div.AbstractStakeholderRow div:nth-child(3) {
+    width: 80px; }
+
+div.StakeholderTrGrp {
+  display: table-row-group; }
+
+div.StakeholderHeaderRow {
+  display: table-row; }
+  div.StakeholderHeaderRow div {
+    display: table-cell; }
+  div.StakeholderHeaderRow div:nth-child(1) {
+    width: 80px; }
+  div.StakeholderHeaderRow div:nth-child(2) {
+    width: 280px; }
+  div.StakeholderHeaderRow div:nth-child(3) {
+    width: 80px; }
+  div.StakeholderHeaderRow div:nth-child(4) {
+    width: 80px; }
+  div.StakeholderHeaderRow div:nth-child(5) {
+    width: 280px; }
+
+div.StakeholderNameCell div:nth-child(1) {
+  font-size: 2.5em;
+  font-weight: bold; }
+
+div.StakeholderNameCell div:nth-child(2) {
+  font-size: 1em; }
+
+div.AbstractStakeholderDetailsCell div:nth-child(1) {
+  font-size: 2.5em;
+  font-weight: bold; }
+
+div.AbstractStakeholderDetailsCell div:nth-child(2) {
+  font-size: 1em; }
+
+div.TotalShareTextBoxCell input {
+  font-size: 2em; }
+
+div.SharesTextBoxCell input {
+  font-size: 1.5em; }
+

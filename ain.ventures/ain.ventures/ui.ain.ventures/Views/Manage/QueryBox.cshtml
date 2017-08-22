@@ -1,0 +1,26 @@
+﻿@model QPoint
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+
+<body style="font-family: verdana;">
+    <div style="position:absolute; left:100px; right: 100px;top:150px;bottom:200px;height:75px; border:solid 1px silver;border-collapse:collapse;">
+        <a>@Model.Name</a>
+        
+    </div>
+    <div style="position:absolute; left:100px; right: 100px;top:225px;bottom:125px;height:150px; border:solid 1px silver;border-collapse:collapse;">
+        <form action="~/Data/update">
+            Query:<br>
+            <input type="text" name="Query"><br> 
+            <input type="submit" formmethod="post" value="submit">
+            <input type="hidden" name="GUID" value="@Model.GUID" />
+            <input type="hidden" name="Description" value="@Model.Description" />
+        </form>
+    </div>
+</body>
+</html>

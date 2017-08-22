@@ -1,0 +1,61 @@
+﻿html {
+  position: relative;
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+body {
+  padding-top: 50px;
+  padding-bottom: 20px;
+  width: 800px;
+  position: relative;
+  height: 100%;
+  margin: 0px;
+  padding: 0px; }
+
+.content {
+  position: absolute;
+  width: 100%; }
+
+/************************Begin Menu Class section***************************************************/
+.menu {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  height: 10%;
+  align-items: center; }
+
+.topMenuItem {
+  position: relative;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+.bottomMenuItem {
+  position: relative;
+  height: 100%;
+  width: 25%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+.menuItemGraphic {
+  position: relative;
+  height: 60%;
+  margin: 0;
+  padding: 0; }
+
+.menuItemLink {
+  position: relative;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  align-items: center; }
+
+/************************End Menu Class section***************************************************/
+

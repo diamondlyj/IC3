@@ -1,0 +1,27 @@
+﻿@model Category
+@using Newtonsoft.Json
+@{
+    Layout = null;
+}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>D3</title>
+    <script src="~/Scripts/d3/d3.js"></script>
+    <script>
+        var cat = @Json.Encode(Model);
+
+    </script>
+</head>
+<body>
+    <div> 
+        <form name='SearchForm'>
+            <input name='Keyword' id='KeywordInput' />
+
+        </form>
+    </div>
+</body>
+</html>

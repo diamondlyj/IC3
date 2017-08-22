@@ -1,0 +1,30 @@
+﻿[
+  {
+    "outputFile": "Content/CommerceStyles.css",
+    "inputFile": "Content/CommerceStyles.scss"
+  },
+  {
+    "outputFile": "Content/LayoutStyles.css",
+    "inputFile": "Content/LayoutStyles.scss"
+  },
+  {
+    "outputFile": "Content/ModuleStyles.css",
+    "inputFile": "Content/ModuleStyles.scss"
+  },
+  {
+    "outputFile": "Content/ProductStyles.css",
+    "inputFile": "Content/ProductStyles.scss"
+  },
+  {
+    "outputFile": "Content/StakeholderStyles.css",
+    "inputFile": "Content/StakeholderStyles.scss"
+  },
+  {
+    "outputFile": "Content/ProjectStyles.css",
+    "inputFile": "Content/ProjectStyles.scss"
+  },
+  {
+    "outputFile": "Content/Site.css",
+    "inputFile": "Content/Site.scss"
+  }
+]

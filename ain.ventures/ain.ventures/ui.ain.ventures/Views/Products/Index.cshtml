@@ -1,0 +1,47 @@
+﻿@using AIn.Ventures.Models
+@using AIn.Ventures.UI.App_Code
+@model Project
+@{
+    ViewBag.Title = "Index";
+}
+<ul>
+    <li>
+        @Model.Name
+    </li>
+    @foreach (var child in Model.Components)
+    {
+        <li>
+            @ProductListMaker.MakeList(child)
+        </li>
+    }
+</ul>
+
+
+@*<div>-------------------------</div>
+    <ul class='ProductList'>
+        <li class='ProductList'>
+            @Model.Name
+            @if (Model.Children.Count > 0)
+            {
+                <ul class='ProductList'>
+                    @foreach (var item in Model.Children)
+                    {
+                        <li class='ProductList'>
+                            @item.Name - @item.ComponentType
+                            @if (item.Children.Count > 0)
+                            {
+                                <ul>
+                                    @foreach (var subItem in item.Children)
+                                    {
+                                        <li>@subItem.Name - @subItem.ComponentType</li>
+                                    }
+                                </ul>
+                            }
+                        </li>
+                    }
+                </ul>
+            }
+        </li>
+    </ul>
+*@
+

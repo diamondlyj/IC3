@@ -1,0 +1,179 @@
+﻿html{
+    position:relative;
+    height:100%;
+    margin:0px;
+    padding:0px;
+}
+
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 700px;
+    position:relative;
+    height:100%;
+    margin:0px;
+    padding:0px;
+}
+
+
+/************************Begin header section***************************************************/
+#header{
+    position: relative;
+}
+
+#projects{
+
+}
+
+#alerts{
+
+}
+
+#colleagues{
+
+}
+
+#tasks {
+
+}
+
+#settings{
+
+}
+
+/************************End header section***************************************************/
+
+/************************Begin Content section***************************************************/
+
+#content{
+    height:80%;
+    background-color:#dddddd;
+
+}
+/************************End header section***************************************************/
+
+/************************Begin footer section***************************************************/
+
+#footer{
+    position:relative;
+}
+
+#overview{
+
+}
+
+#products{
+
+}
+
+#stakeholders {
+
+}
+
+#commerce {
+
+}
+/************************End footer section***************************************************/
+
+/************************Begin Menu Class section***************************************************/
+.menu{
+    width:100%;
+    display:flex;
+    justify-content:space-around;
+    height:10%;
+    align-items:center;
+}
+.topMenuItem{
+    position: relative;
+    height:100%;
+    width: 25%;
+    display:flex;
+    justify-content:space-around;
+    flex-direction:column;
+    align-items:center;
+}
+
+.bottomMenuItem{
+    position: relative;
+    height:100%;
+    width:25%;
+    display: flex;
+    justify-content:space-around;
+    flex-direction:column;
+    align-items:center;
+}
+.menuItemGraphic{
+    position:relative;
+    height:60%;
+    margin:0;
+    padding:0;
+}
+
+.menuItemLink{
+    position:relative;
+    height:100%;
+    display:flex;
+    justify-content:space-around;
+    flex-direction:column;
+    align-items:center;
+
+}
+
+
+
+/************************End Menu Class section***************************************************/
+
+/***********************************Begin Content Section********************************************/
+/*[tk] I want this to only do this inside another expandable list item I think.
+    Or maybe not. I want to create a general expandable list item I can use with
+    different pages and different classes
+*/
+@mixin ExpandableListItem {
+
+    margin-left: 40px;
+}
+
+@mixin Bullet {
+
+}
+@mixin ExpandableListBullet {
+            font-size:40px;
+            width: 40px;
+            height: 40px;
+            position: relative;
+            left: 50px;
+
+}
+
+    @mixin abs($top, $left, $width, $height, $margins) {
+        position: absolute !important;
+        display: block !important;
+        top: $top;
+        left: $left;
+        width: $width !important;
+        height: $height !important;
+        margin: $margins !important;
+    }
+
+
+@mixin modal($width, $height){
+            @include abs(0px, 0px, $width, $height, 10px);
+            visibility: hidden;
+            background: #A0A0A0;
+            border-radius: 15px;
+            padding:15px;
+            z-index:10;
+            div {
+                display: block;
+            }
+            .close-modal{
+                display:block;
+                @include abs(15px,$width - 25px,15px,25px,0px);
+                background-color: #808080;
+                padding:0px 5px;
+                color: #ffffff;
+            }
+        }
+
+/***********************************End Content Section********************************************/

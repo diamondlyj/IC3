@@ -1,0 +1,102 @@
+﻿@model IEnumerable<Project> 
+
+@{
+    ViewBag.Title = "Projects";
+}
+
+<div id='Projects'>
+    <div id='ProjectList'>
+        @foreach (Project p in Model)
+        {
+            <div class='Project' id='@string.Concat("Project", p.GUID)'>
+                <div class='ListHeader'>
+                    <div class='Bullet'>
+                        <a data-action='toggleComponentDisplay' data-params='@p.GUID'>
+                            <img src='~/Images/ShowArrow.svg' />
+                        </a>
+                    </div>
+                    <div class='Details'>
+                        Project: @p.Name <br />
+                        Shares: @p.Shares
+                    </div>
+                </div>
+                <div class="List">
+                    <div class='SubHeader'>Collaborators</div>
+                    @if (p.Collaborators.Count() > 0)
+                {
+
+                        <div class='Collaborators'>
+                            @foreach (var col in p.Collaborators)
+                            {
+                                <div class='Collaborator' id='@string.Concat("Collaborator", col.GUID)'>
+                                    <div class='CollaboratorName'>
+                                        <a href='@string.Concat("Collaborator/",col.GUID)'>
+                                            @col.GivenNames @col.Surname
+                                        </a>
+                                    </div>
+
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class='AddCollaborator' id='AddCollaborator'>
+                        <a data-action='addCollaboratorToProject' data-params='{"ProjectID":@p.GUID}'>
+                            Add a Collaborator
+                        </a>
+                    </div>
+                    <div class='SubHeader'>Components</div>
+
+                    @if (p.Components.Count() > 0)
+                    {
+                        <div class='Products'>
+                            @foreach (var prod in p.Components)
+                            {
+                                <div class='Product'>
+                                    <div class='ProductName'>
+                                        <a href='@string.Concat("Module/", prod.GUID)'>
+                                            @prod.Name
+                                        </a>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    <div class='AddProduct' id='AddProduct'>
+                        <a data-action='addProductToProject' data-params='{"ProjectID":@p.GUID}'>
+                            Add a Product
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div id='AddCollaboratorModal'>
+        @using (Html.BeginForm("",
+            "Collaborator",
+            FormMethod.Post,
+            new Dictionary<string, string> {
+                { "name", "AddCollaboratorForm" },
+                { "id","AddCollaboratorForm" },
+                { "data-action","closeModal"} })
+        )
+        {
+            @*This is actually going to have to search through their friends*@
+            <span>Collaborator Name: </span> @Html.TextBox("Name","",new { id="Name" });<br />
+
+        }
+    </div>
+    <div id='AddProductModal'>
+        @using (Html.BeginForm("",
+                        "Product",
+                        FormMethod.Post,
+                        new Dictionary<string, string> {
+                            { "name", "AddCollaboratorForm" },
+                            { "id","AddCollaboratorForm" },
+                            { "data-action","closeModal"} })
+                    )
+        {
+            <span>Product name:</span> @Html.TextBox("Product Name")
+        }
+    </div>
+</div>

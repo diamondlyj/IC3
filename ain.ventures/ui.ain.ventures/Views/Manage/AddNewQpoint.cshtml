@@ -1,0 +1,33 @@
+﻿@model QPoint
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+
+<html>
+
+<body style="font-family: verdana;">
+    <form action="~/Data/qpoint/new">
+        <div style="position:absolute; left:100px; width:400px;top:150px;bottom:200px;height:75px; border:solid 1px silver;border-collapse:collapse;">
+            <a>Name</a>
+
+        </div>
+        <div style="position:absolute; left:501px; width:400px;top:150px;bottom:200px;height:75px; border:solid 1px silver;border-collapse:collapse;">
+
+            <input type="text" name="QpointName"><br>
+    </div>
+    <div style="position:absolute; left:100px; width:400px;top:225px;bottom:200px;height:75px; border:solid 1px silver;border-collapse:collapse;">
+        <a>Description</a>
+
+    </div>
+    <div style="position:absolute; left:501px; width:400px;top:225px;bottom:200px;height:75px; border:solid 1px silver;border-collapse:collapse;">
+      
+            <input type="text" name="QpointDescription"><br>   
+    </div>
+        <input type="submit" formmethod="post" value="submit">
+    </form>
+
+</body>
+</html>
