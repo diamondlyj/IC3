@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api.ain.ventures", "api.ain.ventures\api.ain.ventures.csproj", "{79CA5F18-6619-4AD9-B187-204D39664873}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api.Little.Pony", "api.ain.ventures\api.Little.Pony.csproj", "{79CA5F18-6619-4AD9-B187-204D39664873}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIn.Ventures.BaseLibrary", "AIn.Ventures.BaseLibrary\AIn.Ventures.BaseLibrary.csproj", "{36E83DDD-4335-4645-B669-908C20885F91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little.Pony.BaseLibrary", "AIn.Ventures.BaseLibrary\Little.Pony.BaseLibrary.csproj", "{36E83DDD-4335-4645-B669-908C20885F91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ui.ain.ventures", "ui.ain.ventures\ui.ain.ventures.csproj", "{348CC1C0-CD81-4460-A082-CC49CCCCB891}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ui.Little.Pony", "ui.ain.ventures\ui.Little.Pony.csproj", "{348CC1C0-CD81-4460-A082-CC49CCCCB891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIn.Ventures.DataSources", "AIn.Ventures.DataSources\AIn.Ventures.DataSources\AIn.Ventures.DataSources\AIn.Ventures.DataSources.csproj", "{EC3E7DD3-47DF-4910-BD65-2BBE7F6974C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Little.Pony.DataSources", "AIn.Ventures.DataSources\AIn.Ventures.DataSources\AIn.Ventures.DataSources\Little.Pony.DataSources.csproj", "{EC3E7DD3-47DF-4910-BD65-2BBE7F6974C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EbayConsole", "EbayConsole\EbayConsole.csproj", "{7356562B-3A2F-4AC5-89A5-F721A7560135}"
 EndProject
@@ -47,33 +47,5 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = http://tfs.ain.systems:8081/tfs/genone
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = api.ain.ventures\\api.ain.ventures.csproj
-		SccProjectName1 = api.ain.ventures
-		SccLocalPath1 = api.ain.ventures
-		SccProjectUniqueName2 = AIn.Ventures.BaseLibrary\\AIn.Ventures.BaseLibrary.csproj
-		SccProjectName2 = AIn.Ventures.BaseLibrary
-		SccLocalPath2 = AIn.Ventures.BaseLibrary
-		SccProjectUniqueName3 = ui.ain.ventures\\ui.ain.ventures.csproj
-		SccProjectName3 = ui.ain.ventures
-		SccLocalPath3 = ui.ain.ventures
-		SccProjectUniqueName4 = AIn.Ventures.DataSources\\AIn.Ventures.DataSources\\AIn.Ventures.DataSources\\AIn.Ventures.DataSources.csproj
-		SccProjectName4 = AIn.Ventures.DataSources/AIn.Ventures.DataSources/AIn.Ventures.DataSources
-		SccLocalPath4 = AIn.Ventures.DataSources\\AIn.Ventures.DataSources\\AIn.Ventures.DataSources
-		SccProjectUniqueName5 = EbayConsole\\EbayConsole.csproj
-		SccProjectName5 = EbayConsole
-		SccLocalPath5 = EbayConsole
-		SccProjectUniqueName6 = Documentation\\Documentation.shproj
-		SccProjectName6 = Documentation
-		SccLocalPath6 = Documentation
-		SccProjectUniqueName7 = Documentation\\Documentation.projitems
-		SccProjectTopLevelParentUniqueName7 = Documentation\\Documentation.shproj
-		SccProjectName7 = Documentation
-		SccLocalPath7 = Documentation
 	EndGlobalSection
 EndGlobal

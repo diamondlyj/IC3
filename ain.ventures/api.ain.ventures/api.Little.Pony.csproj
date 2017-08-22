@@ -277,9 +277,9 @@
     <Folder Include="Views\Stakeholders\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AIn.Ventures.BaseLibrary\AIn.Ventures.BaseLibrary.csproj">
+    <ProjectReference Include="..\AIn.Ventures.BaseLibrary\Little.Pony.BaseLibrary.csproj">
       <Project>{36e83ddd-4335-4645-b669-908c20885f91}</Project>
-      <Name>AIn.Ventures.BaseLibrary</Name>
+      <Name>Little.Pony.BaseLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
