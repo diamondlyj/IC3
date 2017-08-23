@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="Tivoli" Period="3.0:0:0">
+  <ObjectClass Domain ="IPNetworking" Name="Node" Period="0.6:0:0" ChunkSize="2500" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="object">
+      <Query>
+        (id of it) of (bes computers)
+      </Query>
+      <Property Name="DomainName">
+        <Query>
+          (id of it, hostnames of it) 
+            of ( bes computers 
+              whose (id of it 
+                is greater than or equal to [$First] 
+                and id of it is less than [$Last])
+            ) 
+            whose ( exists hostnames of it  )
+        </Query>
+      </Property>
+      <Property Name="HostName">
+        <Query>
+          (id of it, name of it) 
+            of ( bes computers 
+              whose (id of it 
+                is greater than or equal to [$First] 
+                and id of it is less than [$Last])
+            ) 
+            whose ( exists name of it  )
+        </Query>
+      </Property>
+      <Property Name="IPAddress">
+        <Query>
+          (id of it, ip addresses of it)
+            of ( bes computers
+              whose (id of it
+              is greater than or equal to [$First]
+              and id of it is less than [$Last])
+          )
+          whose ( exists ip addresses of it  )
+        </Query>
+      </Property>
+    </Map>
+  </ObjectClass>
+
+  <!--ObjectClass Domain ="IPNetworking" Name="NodeInformation" Period="0.6:0:0" ChunkSize="500" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="object">
+      <Query>
+        (id of it) of (bes computers)
+      </Query>
+      <Parent ObjectClass="Node">
+        <Query>
+          (id of it, id of it)
+            of ( bes computers
+              whose (id of it
+                is greater than or equal to [$First]
+                and id of it is less than [$Last])
+          )
+        </Query>       
+      </Parent>
+      <Property Name="Owner">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "User Name"))) 
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Manufacturer">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Computer Manufacturer - Windows")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Model">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Computer Model - Windows")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Type">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Computer Type")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Uptime">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Uptime")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Location">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Location By Subnet")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property> 
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="RequiredPatch" Period="0.6:0:0" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map>
+      <Query Properties="Name,Severity,Category,CVE" LocalID="Name" ValueDelimiter=",">
+        ((id of it) of (applicable computers of it), name of it, source severities of it, category of it, cve id lists of it) of (bes fixlets) whose (type of it is "Fixlet")
+      </Query>
+      <Parent ObjectClass="Node"/>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="InstalledSoftware" Properties="Name,Version,Build" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query Properties="Name,Version,Build" ValueDelimiter="|">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Installed Applications - Windows")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+    </Map>
+  </ObjectClass-->
+
+  <!--whose (id of it is [$LocalID] or id of it is [$LocalID]-->
+
+</DataSource>

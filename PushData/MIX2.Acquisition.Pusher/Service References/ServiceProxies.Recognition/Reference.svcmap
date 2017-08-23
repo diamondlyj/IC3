@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="88127ec1-c91c-4db5-b93d-14e0e8d71fbb" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>false</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="https://localhost:9143/Recognition.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="Recognition.disco" MetadataType="Disco" ID="3505a415-5aba-4566-8dff-0fde7e6df44f" SourceId="1" SourceUrl="https://localhost:9143/Recognition.svc?disco" />
+    <MetadataFile FileName="Recognition.wsdl" MetadataType="Wsdl" ID="92cb55ab-fcdc-44fd-a53d-b6acaecf78e5" SourceId="1" SourceUrl="https://localhost:9143/Recognition.svc?wsdl" />
+    <MetadataFile FileName="Recognition1.xsd" MetadataType="Schema" ID="491d60dd-6725-4103-9b85-c2555c3092aa" SourceId="1" SourceUrl="https://localhost:9143/Recognition.svc?xsd=xsd0" />
+    <MetadataFile FileName="Recognition2.xsd" MetadataType="Schema" ID="600bffeb-b75b-4bf3-b2db-57d4cd524004" SourceId="1" SourceUrl="https://localhost:9143/Recognition.svc?xsd=xsd1" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

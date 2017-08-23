@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="RequestTest" Period="3.0:0:0">
+  
+  <ObjectClass Domain ="IPNetworking" Name="Node" Period="0.6:0:0" FactoryType="MIX2.Acquisition.Rapid7.ObjectFactory"/>
+
+</DataSource>

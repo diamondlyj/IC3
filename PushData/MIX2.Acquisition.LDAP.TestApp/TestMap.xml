@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="SourceX" Period="3.0:0:0">
+
+  <ObjectClass Domain="IPNetworking" Name="User" FactoryType="MIX2.Acquisition.LDAP.ObjectFactory" Period="0.6:0:0">
+		<Map>
+			<Query>
+				&amp;(objectCategory=person)
+			</Query>
+			<LocalID>
+				<Query>@objectGUID</Query>
+			</LocalID>      
+			<Property Name="AccountName">
+				<Query>@sAMAccountName</Query>
+			</Property>
+			<Property Name="PrincipalName">
+				<Query>@userPrincipalName</Query>
+			</Property>
+			<Property Name="Location">
+				<Query>../@ou</Query>
+			</Property>
+			<Property Name="GivenNames">
+				<Query>@givenName</Query>
+			</Property>
+			<Property Name="Surname">
+				<Query>@sn</Query>
+			</Property>
+			<Property Name="EmailAddress">
+				<Query>@mail</Query>
+			</Property>
+			<Property Name="LDAPName">
+				<Query>@distinguishedName</Query>
+			</Property>
+			<Property Name="UniqueIdentifier">
+				<Query>@objectGUID</Query>
+			</Property>
+			<Property Name="Domain">
+				<Query>substring(extract(@userPrincipalName,'@.+$'),1)</Query>
+			</Property>
+		</Map>
+	</ObjectClass>
+
+
+	<!--ObjectClass Domain="IPNetworking" Name="UserInformation" FactoryType="MIX2.Acquisition.LDAP.ObjectFactory" Period="0.6:0:0">
+		<Map>
+			<Query>
+				&amp;(objectCategory=person)(cn=olssoan)
+			</Query>
+			<LocalID>
+				<Query>@objectGUID</Query>
+			</LocalID>      
+			<Parent ObjectClass="User">
+				<Query>@cn</Query>
+			</Parent>
+			<Property Name="LastLogonTime">
+				<Query>convert(@lastLogon,FileTime)</Query>
+			</Property>
+			<Property Name="Domain">
+				<Query>substring(extract(@userPrincipalName,'@.+$'),1)</Query>
+			</Property>
+			<Property Name="BadPasswortTime">
+				<Query>convert(@badPasswordTime,FileTime)</Query>
+			</Property>
+		</Map>
+	</ObjectClass-->
+
+  <!--
+	<ObjectClass Domain="IPNetworking" Name="GroupMembership" FactoryType="MIX2.Acquisition.LDAP.ObjectFactory" Period="0.6:0:0">
+		<Map>
+			<Query>
+				&amp;(objectCategory=person)(memberOf=*)@memberOf
+			</Query>
+			<Parent ObjectClass="User">
+				<Query>@distinguishedName</Query>
+			</Parent>
+			<Property Name="Name">
+				<Query>substring(extract(@memberOf,'CN=[^,]+'),3)</Query>
+			</Property>
+			<Property Name="LDAPPath">
+				<Query>@memberOf</Query>
+			</Property>
+		</Map>
+	</ObjectClass>
+
+  <ObjectClass Domain="IPNetworking" Name="Node" FactoryType="MIX2.Acquisition.LDAP.ObjectFactory" Period="0.6:0:0">
+    <Map>
+      <Query>
+        &amp;(objectCategory=computer)
+      </Query>
+      <Property Name="HostName">
+        <Query>@cn</Query>
+      </Property>
+      <Property Name="LDAPName">
+        <Query>@distinguishedName</Query>
+      </Property>
+    </Map>
+  </ObjectClass>
+  -->
+
+  <!--ObjectClass Domain="IPNetworking" Name="OperatingSystem" FactoryType="MIX2.Acquisition.LDAP.ObjectFactory" Period="0.6:0:0">
+    <Map>
+      <Query>
+        &amp;(objectCategory=computer)(|(operatingSystem=*)(operatingSystemVersion=*))(!(operatingSystem=*Windows*))
+      </Query>
+      <LocalID>
+        <Query>@objectGUID</Query>
+      </LocalID>
+      <Parent ObjectClass="Node">
+        <Query>@objectGUID</Query>
+      </Parent>
+      <Property Name="Name">
+        <Query>@operatingSystem</Query>
+      </Property>
+      <Property Name="Version">
+        <Query>@operatingSystemVersion</Query>
+      </Property>
+    </Map>
+  </ObjectClass-->
+
+  <!--
+  <ObjectClass Domain="IPNetworking" Name="InstalledSoftware" FactoryType="MIX2.Acquisition.LDAP.ObjectFactory" Period="0.6:0:0">
+    <Map>
+      <Query>
+        &amp;(objectCategory=computer)(|(operatingSystem=*)(operatingSystemVersion=*))(operatingSystem=Samba)
+      </Query>
+			<LocalID>
+				<Query>@objectGUID</Query>
+			</LocalID>      
+      <Parent ObjectClass="Node">
+        <Query>@objectGUID</Query>
+      </Parent>
+      <Property Name="Name">
+        <Query>@operatingSystem</Query>
+      </Property>
+      <Property Name="Version">
+        <Query>@operatingSystemVersion</Query>
+      </Property>
+    </Map>
+  </ObjectClass>
+  -->
+
+
+</DataSource>

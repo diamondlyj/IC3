@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<definitions xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://schemas.bigfix.com/Relevance" targetNamespace="http://schemas.bigfix.com/Relevance" xmlns="http://schemas.xmlsoap.org/wsdl/">
+  <types>
+    <schema elementFormDefault="qualified" targetNamespace="http://schemas.bigfix.com/Relevance" xmlns="http://www.w3.org/2001/XMLSchema">
+      <element name="RequestHeaderElement" type="tns:RequestHeader" />
+      <complexType name="RequestHeader" />
+      <complexType name="AuthenticateHeader">
+        <complexContent mixed="false">
+          <extension base="tns:RequestHeader">
+            <sequence>
+              <element name="username" type="string" />
+              <element name="sessionToken" type="string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <complexType name="LoginHeader">
+        <complexContent mixed="false">
+          <extension base="tns:RequestHeader">
+            <sequence>
+              <element name="username" type="string" />
+              <element name="password" type="string" />
+            </sequence>
+          </extension>
+        </complexContent>
+      </complexType>
+      <element name="ResponseHeaderElement" type="tns:ResponseHeader" />
+      <complexType name="ResponseHeader">
+        <sequence>
+          <element name="sessionToken" type="string" />
+        </sequence>
+      </complexType>
+      <complexType name="UserAccount">
+        <sequence>
+          <element name="logonName" type="string" />
+          <element name="fullName" type="string" />
+          <element name="password" type="string" />
+          <element name="role" type="string" />
+        </sequence>
+      </complexType>
+      <complexType name="StructuredRelevanceResult">
+        <sequence>
+          <element name="results" type="tns:ResultList" />
+          <element minOccurs="0" maxOccurs="1" name="plural" type="boolean" />
+          <element minOccurs="0" maxOccurs="1" name="type" type="string" />
+          <element minOccurs="0" maxOccurs="1" name="evaltime" type="integer" />
+          <element minOccurs="0" maxOccurs="1" name="error" type="string" />
+        </sequence>
+      </complexType>
+      <complexType name="ResultList">
+        <sequence>
+          <choice minOccurs="0" maxOccurs="unbounded">
+            <element name="Boolean" type="boolean" />
+            <element name="Integer" type="integer" />
+            <element name="String" type="string" />
+            <element name="DateTime" type="dateTime" />
+            <element name="FloatingPoint" type="double" />
+            <element name="Tuple" type="tns:ResultList" />
+          </choice>
+        </sequence>
+      </complexType>
+      <complexType name="DashboardVariableIdentifier">
+        <sequence>
+          <element name="dashboardID" type="string" />
+          <element name="variableName" type="string" />
+          <element minOccurs="0" maxOccurs="1" name="databaseID" type="long" />
+        </sequence>
+      </complexType>
+      <element name="GetRelevanceResult">
+        <complexType>
+          <sequence>
+            <element name="relevanceExpr" type="string" />
+            <element name="username" type="string" />
+            <element name="password" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetStructuredRelevanceResult">
+        <complexType>
+          <sequence>
+            <element name="relevanceExpr" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateUser">
+        <complexType>
+          <sequence>
+            <element name="user" type="tns:UserAccount" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="DeleteSharedVariable">
+        <complexType>
+          <sequence>
+            <element name="dashboardVariableIdentifier" type="tns:DashboardVariableIdentifier" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="StoreSharedVariable">
+        <complexType>
+          <sequence>
+            <element name="dashboardVariableIdentifier" type="tns:DashboardVariableIdentifier" />
+            <element name="variableValue" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetRelevanceResultResponse">
+        <complexType>
+          <sequence>
+            <element minOccurs="0" maxOccurs="unbounded" name="a" type="string" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="GetStructuredRelevanceResultResponse">
+        <complexType>
+          <sequence>
+            <element name="StructuredRelevanceResult" type="tns:StructuredRelevanceResult" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="CreateUserResponse">
+        <complexType>
+          <sequence>
+            <element name="success" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="StoreSharedVariableResponse">
+        <complexType>
+          <sequence>
+            <element name="success" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+      <element name="DeleteSharedVariableResponse">
+        <complexType>
+          <sequence>
+            <element name="success" type="boolean" />
+          </sequence>
+        </complexType>
+      </element>
+    </schema>
+  </types>
+  <message name="Headers">
+    <part name="RequestHeader" element="tns:RequestHeaderElement" />
+    <part name="ResponseHeader" element="tns:ResponseHeaderElement" />
+  </message>
+  <message name="GetRelevanceResultRequest">
+    <part name="parameters" element="tns:GetRelevanceResult" />
+  </message>
+  <message name="GetStructuredRelevanceResultRequest">
+    <part name="parameters" element="tns:GetStructuredRelevanceResult" />
+  </message>
+  <message name="CreateUserRequest">
+    <part name="parameters" element="tns:CreateUser" />
+  </message>
+  <message name="StoreSharedVariableRequest">
+    <part name="parameters" element="tns:StoreSharedVariable" />
+  </message>
+  <message name="DeleteSharedVariableRequest">
+    <part name="parameters" element="tns:DeleteSharedVariable" />
+  </message>
+  <message name="GetRelevanceResultResponse">
+    <part name="parameters" element="tns:GetRelevanceResultResponse" />
+  </message>
+  <message name="GetStructuredRelevanceResultResponse">
+    <part name="parameters" element="tns:GetStructuredRelevanceResultResponse" />
+  </message>
+  <message name="CreateUserResponse">
+    <part name="parameters" element="tns:CreateUserResponse" />
+  </message>
+  <message name="StoreSharedVariableResponse">
+    <part name="parameters" element="tns:StoreSharedVariableResponse" />
+  </message>
+  <message name="DeleteSharedVariableResponse">
+    <part name="parameters" element="tns:DeleteSharedVariableResponse" />
+  </message>
+  <portType name="RelevancePortType">
+    <operation name="GetRelevanceResult">
+      <input message="tns:GetRelevanceResultRequest" />
+      <output message="tns:GetRelevanceResultResponse" />
+    </operation>
+    <operation name="GetStructuredRelevanceResult">
+      <input message="tns:GetStructuredRelevanceResultRequest" />
+      <output message="tns:GetStructuredRelevanceResultResponse" />
+    </operation>
+  </portType>
+  <portType name="UserManagementPortType">
+    <operation name="CreateUser">
+      <input message="tns:CreateUserRequest" />
+      <output message="tns:CreateUserResponse" />
+    </operation>
+  </portType>
+  <portType name="DashboardVariablePortType">
+    <operation name="DeleteSharedVariable">
+      <input message="tns:DeleteSharedVariableRequest" />
+      <output message="tns:DeleteSharedVariableResponse" />
+    </operation>
+    <operation name="StoreSharedVariable">
+      <input message="tns:StoreSharedVariableRequest" />
+      <output message="tns:StoreSharedVariableResponse" />
+    </operation>
+  </portType>
+  <binding name="RelevanceBinding" type="tns:RelevancePortType">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="GetRelevanceResult">
+      <wsdlsoap:operation soapAction="http://schemas.bigfix.com/Relevance/soapaction" />
+      <input>
+        <wsdlsoap:body use="literal" />
+      </input>
+      <output>
+        <wsdlsoap:body use="literal" />
+      </output>
+    </operation>
+    <operation name="GetStructuredRelevanceResult">
+      <wsdlsoap:operation soapAction="http://schemas.bigfix.com/Relevance/soapaction" />
+      <input>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="RequestHeader" use="literal" />
+      </input>
+      <output>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="ResponseHeader" use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="UserManagementBinding" type="tns:UserManagementPortType">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="CreateUser">
+      <wsdlsoap:operation soapAction="http://schemas.bigfix.com/Relevance/soapaction" />
+      <input>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="RequestHeader" use="literal" />
+      </input>
+      <output>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="ResponseHeader" use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <binding name="DashboardVariableBinding" type="tns:DashboardVariablePortType">
+    <wsdlsoap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <operation name="DeleteSharedVariable">
+      <wsdlsoap:operation soapAction="http://schemas.bigfix.com/Relevance/soapaction" />
+      <input>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="RequestHeader" use="literal" />
+      </input>
+      <output>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="ResponseHeader" use="literal" />
+      </output>
+    </operation>
+    <operation name="StoreSharedVariable">
+      <wsdlsoap:operation soapAction="http://schemas.bigfix.com/Relevance/soapaction" />
+      <input>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="RequestHeader" use="literal" />
+      </input>
+      <output>
+        <wsdlsoap:body use="literal" />
+        <wsdlsoap:header message="tns:Headers" part="ResponseHeader" use="literal" />
+      </output>
+    </operation>
+  </binding>
+  <service name="WebReportsService">
+    <port name="RelevancePort" binding="tns:RelevanceBinding">
+      <wsdlsoap:address location="http://bigfix.revlon.com:80/soap" />
+    </port>
+    <port name="UserManagementPort" binding="tns:UserManagementBinding">
+      <wsdlsoap:address location="http://bigfix.revlon.com:80/soap" />
+    </port>
+    <port name="DashboardVariablePort" binding="tns:DashboardVariableBinding">
+      <wsdlsoap:address location="http://bigfix.revlon.com:80/soap" />
+    </port>
+  </service>
+</definitions>

@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="Novadigm" Period="3.0:0:0">
+
+  <ObjectClass Name="Software" Period="0.6:0:0" MapType="SingleSQLTable">
+    <BaseQuery>
+      SELECT     MTIME, USERID, WCMINTERNALVERSION, WCMNATIVE, WCMSTPEXTENSIONDLL, WCOMMENTS, WCOMPANYNAME, WDEFAULT,
+      WFILEDESCRIPTION, WFILEVERSION, WHIVE, WINTERNALNAME, WLANGUAGE, WLEGALCOPYRIGHT, WLEGALTRADEMARKS,
+      WLEGALTRADEMARKS1, WLEGALTRADEMARKS2, WNAMESPACE, WORIGINALFILENAME, WPATH, WPRODUCTNAME, WPRODUCTVERSION,
+      WSUBKEY
+      FROM         RADIAOWNER.RNVD_INSTALLED_APPS
+      WHERE     ROWNUM &lt; 100
+    </BaseQuery>
+    
+    <ParentID>
+      <Property>USERID</Property>
+    </ParentID>
+    
+    <LocalID>
+      <Property>WPATH</Property>
+      <Property>WORIGINALFILENAME</Property>
+    </LocalID>
+    
+    <Property Name="Name">
+      <Query>WPRODUCTNAME</Query>
+    </Property>
+    <Property Name="Version">
+      <Query>WPRODUCTVERSION</Query>
+    </Property>
+    <Property Name="Language">
+      <Query>WLANGUAGE</Query>
+    </Property>
+    
+  </ObjectClass>
+    
+</DataSource>
+

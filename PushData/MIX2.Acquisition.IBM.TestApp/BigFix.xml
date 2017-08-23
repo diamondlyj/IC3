@@ -1,0 +1,262 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="BigFix" Period="3.0:0:0">
+  <!--ObjectClass Domain="IPNetworking" Name="Firmware" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Query Properties="Version">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "BIOS Version")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+      <Parent ObjectClass="Node">
+        <Query>
+          (id of it) of (bes computers)
+        </Query>
+      </Parent>      
+      <Property Name="Type">
+        <Value Action="set">BIOS</Value>
+      </Property>
+      <Property Name="ReleaseDate">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "BIOS")))
+          of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+    </Map>
+  </ObjectClass-->
+
+  <ObjectClass Domain ="IPNetworking" Name="Node" Period="0.6:0:0" ChunkSize="1000" FactoryType="MIX2.Acquisition.IBM.BigFix.Factory">
+    <Map Locus="object">
+      <Query>
+        (id of it) of (bes computers)
+      </Query>
+      <Property Name="DomainName">
+        <Query>
+          (id of it, hostnames of it) 
+            of ( bes computers 
+              whose (id of it 
+                is greater than or equal to [$First] 
+                and id of it is less than [$Last])
+            ) 
+            whose ( exists hostnames of it  )
+        </Query>
+      </Property>
+      <Property Name="HostName">
+        <Query>
+          (id of it, name of it) 
+            of ( bes computers 
+              whose (id of it 
+                is greater than or equal to [$First] 
+                and id of it is less than [$Last])
+            ) 
+            whose ( exists name of it  )
+        </Query>
+      </Property>
+      <Property Name="IPAddress">
+        <Query>
+          (id of it, ip addresses of it)
+            of ( bes computers
+              whose (id of it
+              is greater than or equal to [$First]
+              and id of it is less than [$Last])
+          )
+          whose ( exists ip addresses of it  )
+        </Query>
+      </Property>
+    </Map>
+  </ObjectClass>
+
+  <!--ObjectClass Domain ="IPNetworking" Name="IPInterface" Period="0.6:0:0" ChunkSize="2500" FactoryType="MIX2.Acquisition.IBM.BigFix.Factory">
+    <Map Locus="object">
+      <Query>
+        (id of it) of (bes computers)
+      </Query>
+      <Parent ObjectClass="Node"/>
+      <Property Name="IPAddress">
+        <Query>
+          (id of it, ip addresses of it)
+            of ( bes computers
+              whose (id of it
+              is greater than or equal to [$First]
+              and id of it is less than [$Last])
+          )
+          whose ( exists ip addresses of it  )
+        </Query>
+      </Property>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain ="IPNetworking" Name="NodeInformation" Period="0.6:0:0" ChunkSize="500" FactoryType="MIX2.Acquisition.IBM.BigFix.Factory">
+    <Map Locus="object">
+      <Query>
+        (id of it) of (bes computers)
+      </Query>
+      <Parent ObjectClass="Node"/>
+      <Property Name="Owner">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "User Name"))) 
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Manufacturer">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Computer Manufacturer - Windows")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Model">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Computer Model - Windows")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Type">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Computer Type")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Uptime">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Uptime")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property>
+      <Property Name="Location">
+        <Query>
+          (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Location By Subnet")))
+            of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+        </Query>
+      </Property> 
+    </Map>
+  </ObjectClass-->
+
+
+  <!--ObjectClass Domain="IPNetworking" Name="RequiredPatch" Period="0.6:0:0" FactoryType="MIX2.Acquisition.IBM.BigFix.Factory">
+    <Map>
+      <Query Properties="Name,Severity,Category,CVE" LocalID="Name">
+        ((id of it) of (applicable computers of it), name of it, source severities of it, category of it, cve id lists of it) of (bes fixlets) whose (type of it is "Fixlet")
+      </Query>
+      <Parent ObjectClass="Node"/>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="InstalledSoftware" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.BigFix.Factory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query Properties="Name,Version,Build" ValueDelimiter="|">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Installed Applications - Windows")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="InstalledSoftware" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query Properties="Name,Version,Build" ValueDelimiter="|">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Installed Applications - Mac OS X")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="LogicalDisk" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query Properties="MountPoint,MediaType,Capacity" ValueDelimiter="-">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Drive Info")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="Service" Period="0.6:0:0" ChunkSize="500" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query Properties="Name,State">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Services - Windows")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="OperatingSystem" Period="0.6:0:0" ChunkSize="-1" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="object">
+      <Parent ObjectClass="Node"/>
+      <Query>
+        (id of it, operating system of it) of (bes computers) whose (exists operating system of it)
+      </Query>
+      <Property Name="Name">
+        <Value Action="extract">\w*\d*</Value>
+      </Property>
+      <Property Name="Version">
+        <Value Action="extract">\s\d+\.*\d+</Value>
+      </Property>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain="IPNetworking" Name="Processor" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query>
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "CPU")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+      <Property Name="Model">
+        <Value Action="extract"><![CDATA[(?<=MHz).+]]></Value>
+      </Property>
+      <Property Name="Speed">
+        <Value Action="extract">\d+\s*MHz</Value>
+      </Property>
+    </Map>
+  </ObjectClass-->
+  
+  <!--ObjectClass Domain="IPNetworking" Name="VideoAdapter" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query Properties="Name" ValueDelimiter="|">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "Video Controller - Windows")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+    </Map>
+  </ObjectClass-->
+
+
+
+  <!--ObjectClass Domain="IPNetworking" Name="Processor" Period="0.6:0:0" ChunkSize="100" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map Locus="parent">
+      <Parent ObjectClass="Node">
+        <Query>(id of it) of (bes computers)</Query>
+      </Parent>
+      <Query Properties="Processor,Speed" ValueDelimiter="|">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "CPU")))
+        of ( bes computers whose (id of it is greater than or equal to [$First] and id of it is less than [$Last]))
+      </Query>
+    </Map>
+  </ObjectClass-->
+
+  <!--ObjectClass Domain ="IPNetworking" Name="NetworkAddressingService" Period="0.6:0:0" FactoryType="MIX2.Acquisition.IBM.Tivoli.EndpointFactory">
+    <Map>
+      <Query Properties="IPAddress">
+        (id of it,(values of it) of ((property results of it) whose (((name of it) of property of it) = "DHCP Servers - Windows"))) of (bes computers)
+      </Query>
+      <Parent ObjectClass="Node"/>
+      <Property Name="Type">
+        <Value Action="set">DHCP</Value>
+      </Property>
+    </Map>
+  </ObjectClass-->
+  <!--whose (id of it is [$LocalID] or id of it is [$LocalID]-->
+  
+</DataSource>

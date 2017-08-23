@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="BigFix" Period="3.0:0:0">
+  
+  <!--ObjectClass Name="Node" Period="0.6:0:0" MapType="SQLTables">
+    
+    <BaseQuery>
+      select distinct null, ComputerID
+      from QUESTIONRESULTS
+    </BaseQuery>
+    
+    <Property Name="HostName">
+      <Query>
+        select distinct Q1.ComputerID, cast(ResultsText as nvarchar(256))
+        from QUESTIONRESULTS Q1
+        where Q1.ID = 12    
+      </Query>
+    </Property>
+    
+    <Property Name="IPAddress">      
+      <ValueDelimiter>&#10;</ValueDelimiter>      
+      <Query>
+        select Q1.ComputerID, Q1.ResultsText as [INST]
+        from QUESTIONRESULTS as Q1
+        where Q1.ID = 67
+      </Query>    
+    </Property>
+  
+  </ObjectClass-->
+
+  <ObjectClass Domain ="IPNetworking" Name="Software" Period="0.6:0:0" FactoryType="MIX2.Acquisition.ObjectFactoryOnFieldOfParent">
+	  <Map>
+		<Query>
+		  select Parent, Children
+			from AttributeOnFOP
+		</Query>
+		  
+		<Parent ObjectClass="Node"/>		  
+		
+		<Delimiters>
+		  <Instance>&#10;</Instance>
+		  <Property>|</Property>
+		</Delimiters>
+	    
+		<Property Name="First"/>
+		<Property Name="Second"/>
+		<Property Name="Third"/>
+		<Property Name="Fourth"/>
+		<Property Name="Fifth"/>
+	  </Map>
+  </ObjectClass>
+
+</DataSource>

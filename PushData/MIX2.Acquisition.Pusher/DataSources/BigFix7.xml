@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="BigFix" Period="3.0:0:0">
+	<ObjectClass Domain ="IPNetworking" Name="Node" Period="0.0:1:0" FactoryType="MIX2.Acquisition.BigFix.ObjectFactory">
+		<Map>
+			<Query>
+				(id of it) of (bes computers)
+			</Query>
+			<Property Name="DomainName">
+				<Query>
+					(id of it, hostnames of it) of (bes computers) whose ( exists hostnames of it  )
+				</Query>
+			</Property>
+			<Property Name="HostName">
+				<Query>
+					(id of it, name of it) of (bes computers) whose ( exists name of it  )
+				</Query>
+			</Property>
+			<Property Name="IPAddress">
+				<Query>
+					(id of it, ip addresses of it) of (bes computers)
+				</Query>
+			</Property>
+		</Map>
+	</ObjectClass>
+	<ObjectClass Domain="IPNetworking" Name="OperatingSystem" Period="0.0:2:0" FactoryType="MIX2.Acquisition.BigFix.OFOnConcatenatedProperties">
+		<Map>
+			<Query ExtractionMethod="MIX2.Acquisition.BigFix.Extractor.ExtractOperatingSystem">
+				(id of it, operating system of it) of (bes computers) whose (exists operating system of it)
+			</Query>
+		</Map>
+	</ObjectClass>
+</DataSource>

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="SourceX" Period="3.0:0:0">
+
+	<ObjectClass Domain="IPNetworking" Name="Node" FactoryType="MIX2.Acquisition.ObjectFactoryOnTables" Period="0.6:0:0">	  			
+		<Map>			
+			<Query>
+				select distinct ID
+				from Node where ObjectClassID = 1
+				and Node.Name = 'dasourwebp1'
+			</Query>
+			<Property Name="HostName">
+				<Query>
+					select distinct ID, Name
+					from Node where ObjectClassID = 1
+					and Node.Name = 'dasourwebp1'
+				</Query>
+			</Property>
+			<Property Name="IPAddress">
+				<Query>
+					select Node.ID, IPAddress.[Value]
+					from Node, NodeHasIPAddress, IPAddress
+					where Node.ID = NodeHasIPAddress.NodeID
+					and NodeHasIPAddress.IPAddressID = IPAddress.ID
+					and Node.ObjectClassID = 1
+					and Node.Name = 'dasourwebp1'
+				</Query>
+			</Property>		
+		</Map>  
+	</ObjectClass>	
+
+	
+	<ObjectClass Domain="IPNetworking" Name="IPInterface" FactoryType="MIX2.Acquisition.ObjectFactoryOnTables" Period="0.6:0:0">
+		<Map>
+			<Query>
+				/*select IPAddress.ID
+				from IPAddress*/
+				select IPAddress.ID
+				from Node, NodeHasIPAddress, IPAddress
+				where Node.ID = NodeHasIPAddress.NodeID
+				and NodeHasIPAddress.IPAddressID = IPAddress.ID
+				and Node.ObjectClassID = 1
+				and Node.Name = 'dasourwebp1'
+
+
+			</Query>
+			<Parent ObjectClass="Node">
+				<Query>
+					select IPAddress.ID, Node.ID
+					from Node, NodeHasIPAddress, IPAddress
+					where Node.ID = NodeHasIPAddress.NodeID
+					and NodeHasIPAddress.IPAddressID = IPAddress.ID
+					and Node.ObjectClassID = 1
+					and Node.Name = 'dasourwebp1'
+				</Query>
+			</Parent>
+			<Property Name="IPAddress">
+				<Query>
+					/*select IPAddress.ID, IPAddress.[Value]
+					from IPAddress*/
+					select IPAddress.ID, IPAddress.[Value]
+					from Node, NodeHasIPAddress, IPAddress
+					where Node.ID = NodeHasIPAddress.NodeID
+					and NodeHasIPAddress.IPAddressID = IPAddress.ID
+					and Node.ObjectClassID = 1
+					and Node.Name = 'dasourwebp1'
+
+				</Query>
+			</Property>
+		</Map>
+	</ObjectClass>
+
+</DataSource>

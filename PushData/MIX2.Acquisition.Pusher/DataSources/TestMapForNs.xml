@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="TestXml" Period="3.0:0:0">
+
+  <!--ObjectClass Domain="IPNetworking" Name="Node" FactoryType="MIX2.Acquisition.Xml.ObjectFactory" Period="0.0:5:0">
+		<Map>
+
+			<Namespace Ns="http://y" Prefix="y"/>
+			<Namespace Ns="http://x" Prefix="x"/>
+			<Namespace Ns="http://r" Prefix="r"/>
+
+			<Query>
+				y:Devices/x:Device
+			</Query>
+			<Property Name="HostName">
+				<Query>
+					y:IPHostname/@someAtt
+				</Query>
+			</Property>
+			<Property Name="IPAddress">
+				<Query>
+					y:IPv4Address
+				</Query>
+			</Property>
+			<Property Name="MACAddress">
+				<Query>
+					x:MacAddress
+				</Query>
+			</Property>
+		</Map>
+	</ObjectClass>
+
+	<ObjectClass Domain="IPNetworking" Name="Node" FactoryType="MIX2.Acquisition.Xml.ObjectFactory" Period="0.0:5:0">
+		<Map>
+
+			<Namespace Ns="http://y" Prefix="y"/>
+			<Namespace Ns="http://x" Prefix="x"/>
+			<Namespace Ns="http://r" Prefix="r"/>
+
+			<Query>
+				y:Devices/x:Device
+			</Query>
+			<Property Name="HostName">
+				<Query>
+					y:IPHostname/@someAtt
+				</Query>
+			</Property>
+			<Property Name="IPAddress">
+				<Query>
+					y:IPv4Address
+				</Query>
+			</Property>
+			<Property Name="MACAddress">
+				<Query>
+					x:MacAddress
+				</Query>
+			</Property>
+		</Map>
+	</ObjectClass-->
+
+	<ObjectClass Domain="IPNetworking" Name="Node" FactoryType="MIX2.Acquisition.Xml.ObjectFactory" Period="0.0:5:0">
+		<Map>
+
+			<Namespace Ns="http://y" Prefix="y"/>
+			<Namespace Ns="http://x" Prefix="x"/>
+			<Namespace Ns="http://r" Prefix="r"/>
+
+			<Query>
+				y:Devices/x:Device
+			</Query>
+			<Property Name="HostName">
+				<Query>
+					y:IPHostname/@someAtt
+				</Query>
+			</Property>
+			<Property Name="IPAddress">
+				<Query>
+					y:IPv4Address
+				</Query>
+			</Property>
+			<Property Name="MACAddress">
+				<Query>
+					x:MacAddress
+				</Query>
+			</Property>
+		</Map>
+	</ObjectClass>
+
+</DataSource>

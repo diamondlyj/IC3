@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DataSource Name="BigFix" Period="3.0:0:0">
+  
+  <ObjectClass Domain="IPNetworking" Name="Node" Period="0.6:0:0" FactoryType="MIX2.Acquisition.ObjectFactoryOnTables">
+
+	  <Map>
+		<Query>
+		  select BinID from BinValue
+		</Query>
+	    
+		<Property Name="HostName">
+		  <Query>
+			  select BinID, HostName from BinValue
+		  </Query>
+		</Property>
+	  </Map>
+  </ObjectClass>
+
+</DataSource>
