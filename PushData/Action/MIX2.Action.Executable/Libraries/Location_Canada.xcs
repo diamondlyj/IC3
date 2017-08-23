@@ -1,0 +1,120 @@
+﻿namespace:: mix2:: cataloging :: location{
+
+	inCanada: filter {
+		subject.inLocation[
+			
+			'(?i)Canada' 
+			| '(?i)Mis[s]*is[s]*auga' 
+			| '(?i)Ontario' 
+			| '(?i)Qu[eé]bec' 
+			| '(?i)Toronto'
+			
+		]( subj ){
+			subj.yield[1];
+		}
+		other( subj ){
+			subj.yield[0];
+		}
+	}
+
+	locateInCanada{
+		subject.inLocation[ '(?i)Qu[eé]bec' ]( obj ){
+			obj.doCategorization[ "North America.Canada.Québec" ]( obj ){
+				obj.doPoliticalCategorization["Canada.Québec"];
+			}																	
+		}
+		other( obj ){
+			obj.inLocation[ '(?i)Ontario' | '(?i)Mississauga' | '(?i)Toronto' ]( obj ){
+				obj.inLocation[ '(?i)Mississauga' ]( obj ){
+					obj.doCategorization[ "North America.Canada.Ontario.Greater Toronto.Mississauga" ]( obj ){
+						obj.doPoliticalCategorization["Canada.Ontario.Mississauga"];
+					}																	
+				}
+				other( obj ){
+					/*
+					There are many cities and towns called Toronto around the world.
+					But unless otherwise specified, the most likely place indicated is the captial of Onatrio in Canada.
+					*/
+					obj.inLocation[ '(?i)Toronto' ]( obj ){
+						obj.inLocation[ '(?i)Canada' | '(?i)Ontario' ]( obj ){																				
+							obj.doCategorization[ "North America.Canada.Ontario.Greater Toronto.Toronto" ]( obj ){
+								obj.doPoliticalCategorization["Canada.Ontario.Toronto"];
+							}
+						}
+						other( obj ){
+							obj.inLocation[ '(?i)Australia' | '(?i)South\sWales' ]( obj ){																				
+								obj.doCategorization[ "Australia.Toronto" ]( obj ){
+									obj.doPoliticalCategorization["Australia.New South Wales.Toronto"];
+								}
+							}
+							other( obj ){
+								obj.inLocation[ '(?i)England' | 'UK' | '(?i)United\sKingdom' ]( obj ){																				
+									obj.doCategorization[ "Europe.United Kingdom.England.Toronto" ]( obj ){
+										obj.doPoliticalCategorization["European Union.United Kingdom.England.Toronto"];
+									}
+								}
+								other( obj ){
+									obj.inLocation[ '(?i)Illinois' | 'IL' ]( obj ){																				
+										obj.doCategorization[ "North America.United States.Illinois.Toronto" ]( obj ){
+											obj.doPoliticalCategorization["United States.Illinois.Toronto"];
+										}
+									}
+									other( obj ){
+										obj.inLocation[ '(?i)Iowa' | 'IA' ]( obj ){																				
+											obj.doCategorization[ "North America.United States.Iowa.Toronto" ]( obj ){
+												obj.doPoliticalCategorization["United States.Iowa.Toronto"];
+											}
+										}	
+										other( obj ){
+											obj.inLocation[ '(?i)Kansas' | 'KS' ]( obj ){																				
+												obj.doCategorization[ "North America.United States.Kansas.Toronto" ]( obj ){
+													obj.doPoliticalCategorization["United States.Kansas.Toronto"];
+												}
+											}
+											other( obj ){
+												obj.inLocation[ '(?i)Missouri' | 'MO' ]( obj ){																				
+													obj.doCategorization[ "North America.United States.Missouri.Toronto" ]( obj ){
+														obj.doPoliticalCategorization["United States.Missouri.Toronto"];
+													}
+												}
+												other( obj ){
+													obj.inLocation[ '(?i)Ohio' | 'OH' ]( obj ){																				
+														obj.doCategorization[ "North America.United States.Ohio.Toronto" ]( obj ){
+															obj.doPoliticalCategorization["United States.Ohio.Toronto"];
+														}
+													}
+													other( obj ){
+														obj.inLocation[ '(?i)South\sDakota' | 'SD' ]( obj ){																				
+															obj.doCategorization[ "North America.United States.South Dakota.Toronto" ]( obj ){
+																obj.doPoliticalCategorization["United States.South Dakota.Toronto"];
+															}
+														}
+														other( obj ){
+															obj.guessGeographicLocation[ "North America.Canada.Ontario.Greater Toronto.Toronto" ]( obj ){
+																obj.guessPoliticalLocation["Canada.Ontario.Toronto"];
+															}																													
+														}
+													}																																																																	
+												}																											
+											}
+										}																																																																						
+									}																																																																						
+								}
+							}
+						}																					
+					}
+					other( obj ){
+						obj.doCategorization[ "North America.Canada.Ontario.[unknown]" ]( obj ){
+							obj.doPoliticalCategorization["Canada.Ontario.[unknown]"];
+						}			
+					}																				
+				}																				
+			}
+			other( obj ){
+				obj.doCategorization[ "North America.Canada" ]( obj ){
+					obj.doPoliticalCategorization["Canada.[unknown]"];
+				}			
+			}																				
+		}		
+	}
+}

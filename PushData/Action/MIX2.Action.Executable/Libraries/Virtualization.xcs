@@ -1,0 +1,270 @@
+﻿namespace:: mix2:: cataloging:: virtualization{
+
+	categorize{
+		input["Cataloging"]( obj ){
+			obj.is["Node"]( obj ){ 
+				obj.categorizeNode;
+			}
+		}
+	}
+	
+	categorizeNode{
+		subject.hasRelation["HostedNode"]( node ){
+			node.doCategorization["Host"];				
+		}
+		other( node ){
+			node.hasRelation["HostSystem"]( node ){
+				node.doCategorization["Virtual"];											
+			}
+			other( node ){
+				node.categorizeBySerialNumber;
+			}
+		}
+	}
+	
+	categorizeBySerialNumber{
+		subject.hasProperty["SerialNumber"]( node ){
+			node.property["SerialNumber"]( serialNumber ){
+				serialNumber.hasValue['(?i)^vmware']( serialNumber ){
+					serialNumber.object.doCategorization["Virtual"];
+				}
+				other( serialNumber ){				
+					serialNumber.object( node ){
+						node.hasVirtualMachineAdapter( node ){
+							node.doCategorization["Virtual"];
+						}
+						other( node ){
+							node.categorizeByNodeInfo;
+						}
+					}
+				}
+			}
+		}
+		other( node ){
+			node.hasVirtualMachineAdapter( node ){
+				node.doCategorization["Virtual"];
+			}
+			other( node ){
+				node.categorizeByNodeInfo;
+			}
+		}
+	}	
+	
+	hasVirtualMachineAdapter: filter{
+	
+		/* If the node has an adapter manufactured by VMWare it's by all likelyhood a virtualized node */
+		
+		subject.hasRelation["NetworkAdapter"]( node ){
+			node.relative["NetworkAdapter"]( adapter ){
+				adapter.hasProperty["Manufacturer"]( adapter ){
+					adapter.property["Manufacturer"]( manufacturer ){
+						manufacturer.hasValue['^VMWare']( manufacturer ){
+							manufacturer.yield[1];
+						}
+						other( manufacturer ){
+							manufacturer.yield[0];
+						}
+					}
+				}
+				other( adapter ){
+					adapter.yield[0];
+				}
+			}
+		}
+		other( node ){
+			node.yield[0];
+		}
+	
+	}
+	
+	categorizeByNodeInfo{
+		subject.hasRelation["NodeInformation"]( node ){
+			node.relative["NodeInformation"]( nodeInfo ){
+			
+				/*Is it a physical switch?*/
+								
+				nodeInfo.mix2::cataloging::type::isPhysicalSwitch:all( nodeInfo ){
+					nodeInfo.back.doCategorization["Non-Virtual.Networking Device"];					
+				}
+				other( nodeInfo ){								
+				
+					/* Is it a rack server? */
+					
+					nodeInfo.mix2::cataloging::type::isRackServer( nodeInfo ){
+						nodeInfo.back.doCategorization["Non-Virtual.Rack Server"];					
+					}
+					other( nodeInfo ){								
+											
+						/* Is it a laptop? */
+						
+						nodeInfo.mix2::cataloging::type::isLaptop( nodeInfo ){
+							nodeInfo.back.doCategorization["Non-Virtual.Laptop"];					
+						}
+						other( nodeInfo ){								
+												
+							/* Not a specific non-virtual product. Can we guess that it's a non-virtual product? */
+							
+							nodeInfo.isNonVirtualProduct( nodeInfo ){
+								nodeInfo.back.doCategorization["Non-Virtual.[unknown]"];
+							}					
+							other( nodeInfo ){
+							
+								/* So it's not non-virtual. De we know if it is virtual? */
+								
+								nodeInfo.isVirtualProduct( nodeInfo ){
+									nodeInfo.back.doCategorization["Virtual"];
+								}					
+								other( nodeInfo ){						
+									
+									/* Heck, we don't know much at all! But at least, as Rumsfeld might say: It's an known unknown! */
+									
+									nodeInfo.back.doCategorization["[unknown]"];
+									
+									
+								}																					
+							}					
+						}
+					}				
+				}
+			}
+		}
+		other( node ){
+		
+			/* All our current logic beyond SerilaNumber is based on the Manufacturer and Model. */
+			/* I we don't have that info, into the unknown it goes. */
+			
+			node.doCategorization["[unknown]"];											
+		}
+	}
+
+	doCategorization{
+		subject, predicate, "Virtualization." ( obj, category, catalog ){
+			obj.categorize[ catalog.append[ category] ];
+		}
+	}
+
+	isNonVirtualProduct: filter{
+		subject( nodeInfo ){
+			nodeInfo.hasProperty["Manufacturer"]( nodeInfo ){
+				nodeInfo.property["Manufacturer"]( manufacturer ){
+					manufacturer.hasValue[ '(?i)^Dell(\sInc.|\sComputer\sCorporation)*$' ]( manufacturer )
+					{
+					
+						/* Does the model name indicate one of Dell's non-virtual products (e.e. PowerEdge server)? */
+						/* Note that this may be a product that can act as a virtual host */
+						
+						manufacturer.object( nodeInfo ){
+							nodeInfo.hasProperty["Model"]( nodeInfo ){
+								nodeInfo.property["Model"]( model ){
+									model.hasValue									
+									[ 
+										'(?i)^PowerEdge'
+																												
+									]( model ){																			
+										model.yield[1];
+									}
+									other( model ){
+										model.yield[0];
+									}
+								}
+							}
+							other( nodeInfo ){
+								nodeInfo.yield[0];											
+							}
+						}														
+					}
+					other( manufacturer ){
+						manufacturer.hasValue[ '(?i)^Compaq' | '(?i)^HP$' | '(?i)^Hewlett[\-\s]Packard' ]( manufacturer )
+						{
+													
+							manufacturer.object( nodeInfo ){
+								nodeInfo.hasProperty["Model"]( nodeInfo ){
+									nodeInfo.property["Model"]( model ){
+										model.hasValue									
+										[ 
+											'(?i)^ProLiant'																			
+																						
+										]( model ){																					
+											model.yield[1];
+										}
+										other( model ){
+											model.yield[0];
+										}
+									}
+								}
+								other( nodeInfo ){
+									nodeInfo.yield[0];											
+								}
+							}														
+						}
+						other( manufacturer ){
+							manufacturer.yield[0];							
+						}
+					}
+					
+				}
+			}
+			other( nodeInfo ){
+				nodeInfo.yield[0];											
+			}			
+		}
+	}
+		
+	
+	isVirtualProduct: filter{
+		subject.hasProperty["Manufacturer"]( nodeInfo ){
+
+			/* Is the manufacturer specified? If it is, is it one that does virtualization? */
+		
+			nodeInfo.property["Manufacturer"]( manufacturer ){
+				manufacturer.hasValue[ '(?i)vmware' ]( manufacturer ){
+				
+					/* So it's by VMWare, a company that does virtualization. */
+					/* Is it one of their virtual machine models? */
+				
+					manufacturer.object( nodeInfo ){
+						nodeInfo.hasProperty["Model"]( nodeInfo ){
+							nodeInfo.property["Model"]( model ){
+								model.hasValue[ '(?i)virtual\splatform' ]( model ){											
+									model.yield[1];
+								}
+								other( model ){
+									model.yield[0];
+								}
+							}
+						}
+						other( nodeInfo ){
+							nodeInfo.yield[0];											
+						}
+					}							
+				}
+				other( manufacturer ){												
+					manufacturer.yield[0];							
+				}
+			}
+		}
+		other( nodeInfo ){
+			nodeInfo.yield[0];
+		}		
+	}			
+}
+
+/*
+namespace:: industry{
+	virtualization{
+		manufacturer::vmware;
+	}
+}
+
+namespace:: manufacturer{
+	vmware{
+		'(?i)vmware'
+	}
+}
+
+namespace:: mix2::vmware::virtualMachine{
+	model{
+		'virtual platform';
+	}
+} 
+*/

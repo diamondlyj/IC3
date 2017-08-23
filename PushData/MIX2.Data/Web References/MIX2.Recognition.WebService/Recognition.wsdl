@@ -1,0 +1,818 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://mix.intuitivelabs.net/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://mix.intuitivelabs.net/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://mix.intuitivelabs.net/">
+      <s:element name="RegisterSource">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Nickname" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegisterSourceResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RegisterSourceResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExchangeToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="OldToken" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SourceGUID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExchangeTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExchangeTokenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifyToken">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SourceGUID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="VerifyTokenResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="VerifyTokenResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExchangeKey">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="NewKey" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SourceGUID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ExchangeKeyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ExchangeKeyResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSignatureTemplate">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ObjectClass" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetSignatureTemplateResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetSignatureTemplateResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmulateClientDecrypt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="IV" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmulateClientDecryptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmulateClientDecryptResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmulateClientEncrypt">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Text" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Key" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EmulateClientEncryptResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EmulateClientEncryptResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetEmulationKey">
+        <s:complexType />
+      </s:element>
+      <s:element name="GetEmulationKeyResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GetEmulationKeyResult">
+              <s:complexType mixed="true">
+                <s:sequence>
+                  <s:any />
+                </s:sequence>
+              </s:complexType>
+            </s:element>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendObject">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Object" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Token" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="SourceGUID" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="SendObjectResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="SendObjectResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="RegisterSourceSoapIn">
+    <wsdl:part name="parameters" element="tns:RegisterSource" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSourceSoapOut">
+    <wsdl:part name="parameters" element="tns:RegisterSourceResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:ExchangeToken" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:ExchangeTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenSoapIn">
+    <wsdl:part name="parameters" element="tns:VerifyToken" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenSoapOut">
+    <wsdl:part name="parameters" element="tns:VerifyTokenResponse" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeKeySoapIn">
+    <wsdl:part name="parameters" element="tns:ExchangeKey" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeKeySoapOut">
+    <wsdl:part name="parameters" element="tns:ExchangeKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetSignatureTemplateSoapIn">
+    <wsdl:part name="parameters" element="tns:GetSignatureTemplate" />
+  </wsdl:message>
+  <wsdl:message name="GetSignatureTemplateSoapOut">
+    <wsdl:part name="parameters" element="tns:GetSignatureTemplateResponse" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientDecryptSoapIn">
+    <wsdl:part name="parameters" element="tns:EmulateClientDecrypt" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientDecryptSoapOut">
+    <wsdl:part name="parameters" element="tns:EmulateClientDecryptResponse" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientEncryptSoapIn">
+    <wsdl:part name="parameters" element="tns:EmulateClientEncrypt" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientEncryptSoapOut">
+    <wsdl:part name="parameters" element="tns:EmulateClientEncryptResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetEmulationKeySoapIn">
+    <wsdl:part name="parameters" element="tns:GetEmulationKey" />
+  </wsdl:message>
+  <wsdl:message name="GetEmulationKeySoapOut">
+    <wsdl:part name="parameters" element="tns:GetEmulationKeyResponse" />
+  </wsdl:message>
+  <wsdl:message name="SendObjectSoapIn">
+    <wsdl:part name="parameters" element="tns:SendObject" />
+  </wsdl:message>
+  <wsdl:message name="SendObjectSoapOut">
+    <wsdl:part name="parameters" element="tns:SendObjectResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSourceHttpGetIn">
+    <wsdl:part name="Nickname" type="s:string" />
+    <wsdl:part name="Key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSourceHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeTokenHttpGetIn">
+    <wsdl:part name="OldToken" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeTokenHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenHttpGetIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeKeyHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="IV" type="s:string" />
+    <wsdl:part name="NewKey" type="s:string" />
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeKeyHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="GetSignatureTemplateHttpGetIn">
+    <wsdl:part name="ObjectClass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSignatureTemplateHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientDecryptHttpGetIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="IV" type="s:string" />
+    <wsdl:part name="Text" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientDecryptHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientEncryptHttpGetIn">
+    <wsdl:part name="Text" type="s:string" />
+    <wsdl:part name="Key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientEncryptHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="GetEmulationKeyHttpGetIn" />
+  <wsdl:message name="GetEmulationKeyHttpGetOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="SendObjectHttpGetIn">
+    <wsdl:part name="Object" type="s:string" />
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendObjectHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSourceHttpPostIn">
+    <wsdl:part name="Nickname" type="s:string" />
+    <wsdl:part name="Key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="RegisterSourceHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeTokenHttpPostIn">
+    <wsdl:part name="OldToken" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeTokenHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenHttpPostIn">
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="VerifyTokenHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeKeyHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="IV" type="s:string" />
+    <wsdl:part name="NewKey" type="s:string" />
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="ExchangeKeyHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="GetSignatureTemplateHttpPostIn">
+    <wsdl:part name="ObjectClass" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="GetSignatureTemplateHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientDecryptHttpPostIn">
+    <wsdl:part name="Key" type="s:string" />
+    <wsdl:part name="IV" type="s:string" />
+    <wsdl:part name="Text" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientDecryptHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientEncryptHttpPostIn">
+    <wsdl:part name="Text" type="s:string" />
+    <wsdl:part name="Key" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="EmulateClientEncryptHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="GetEmulationKeyHttpPostIn" />
+  <wsdl:message name="GetEmulationKeyHttpPostOut">
+    <wsdl:part name="Body" />
+  </wsdl:message>
+  <wsdl:message name="SendObjectHttpPostIn">
+    <wsdl:part name="Object" type="s:string" />
+    <wsdl:part name="Token" type="s:string" />
+    <wsdl:part name="SourceGUID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="SendObjectHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="RecognitionSoap">
+    <wsdl:operation name="RegisterSource">
+      <wsdl:input message="tns:RegisterSourceSoapIn" />
+      <wsdl:output message="tns:RegisterSourceSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeToken">
+      <wsdl:input message="tns:ExchangeTokenSoapIn" />
+      <wsdl:output message="tns:ExchangeTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <wsdl:input message="tns:VerifyTokenSoapIn" />
+      <wsdl:output message="tns:VerifyTokenSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeKey">
+      <wsdl:input message="tns:ExchangeKeySoapIn" />
+      <wsdl:output message="tns:ExchangeKeySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSignatureTemplate">
+      <wsdl:input message="tns:GetSignatureTemplateSoapIn" />
+      <wsdl:output message="tns:GetSignatureTemplateSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientDecrypt">
+      <wsdl:input message="tns:EmulateClientDecryptSoapIn" />
+      <wsdl:output message="tns:EmulateClientDecryptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientEncrypt">
+      <wsdl:input message="tns:EmulateClientEncryptSoapIn" />
+      <wsdl:output message="tns:EmulateClientEncryptSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmulationKey">
+      <wsdl:input message="tns:GetEmulationKeySoapIn" />
+      <wsdl:output message="tns:GetEmulationKeySoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendObject">
+      <wsdl:input message="tns:SendObjectSoapIn" />
+      <wsdl:output message="tns:SendObjectSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="RecognitionHttpGet">
+    <wsdl:operation name="RegisterSource">
+      <wsdl:input message="tns:RegisterSourceHttpGetIn" />
+      <wsdl:output message="tns:RegisterSourceHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeToken">
+      <wsdl:input message="tns:ExchangeTokenHttpGetIn" />
+      <wsdl:output message="tns:ExchangeTokenHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <wsdl:input message="tns:VerifyTokenHttpGetIn" />
+      <wsdl:output message="tns:VerifyTokenHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeKey">
+      <wsdl:input message="tns:ExchangeKeyHttpGetIn" />
+      <wsdl:output message="tns:ExchangeKeyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSignatureTemplate">
+      <wsdl:input message="tns:GetSignatureTemplateHttpGetIn" />
+      <wsdl:output message="tns:GetSignatureTemplateHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientDecrypt">
+      <wsdl:input message="tns:EmulateClientDecryptHttpGetIn" />
+      <wsdl:output message="tns:EmulateClientDecryptHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientEncrypt">
+      <wsdl:input message="tns:EmulateClientEncryptHttpGetIn" />
+      <wsdl:output message="tns:EmulateClientEncryptHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmulationKey">
+      <wsdl:input message="tns:GetEmulationKeyHttpGetIn" />
+      <wsdl:output message="tns:GetEmulationKeyHttpGetOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendObject">
+      <wsdl:input message="tns:SendObjectHttpGetIn" />
+      <wsdl:output message="tns:SendObjectHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="RecognitionHttpPost">
+    <wsdl:operation name="RegisterSource">
+      <wsdl:input message="tns:RegisterSourceHttpPostIn" />
+      <wsdl:output message="tns:RegisterSourceHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeToken">
+      <wsdl:input message="tns:ExchangeTokenHttpPostIn" />
+      <wsdl:output message="tns:ExchangeTokenHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <wsdl:input message="tns:VerifyTokenHttpPostIn" />
+      <wsdl:output message="tns:VerifyTokenHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeKey">
+      <wsdl:input message="tns:ExchangeKeyHttpPostIn" />
+      <wsdl:output message="tns:ExchangeKeyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSignatureTemplate">
+      <wsdl:input message="tns:GetSignatureTemplateHttpPostIn" />
+      <wsdl:output message="tns:GetSignatureTemplateHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientDecrypt">
+      <wsdl:input message="tns:EmulateClientDecryptHttpPostIn" />
+      <wsdl:output message="tns:EmulateClientDecryptHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientEncrypt">
+      <wsdl:input message="tns:EmulateClientEncryptHttpPostIn" />
+      <wsdl:output message="tns:EmulateClientEncryptHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetEmulationKey">
+      <wsdl:input message="tns:GetEmulationKeyHttpPostIn" />
+      <wsdl:output message="tns:GetEmulationKeyHttpPostOut" />
+    </wsdl:operation>
+    <wsdl:operation name="SendObject">
+      <wsdl:input message="tns:SendObjectHttpPostIn" />
+      <wsdl:output message="tns:SendObjectHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="RecognitionSoap" type="tns:RecognitionSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterSource">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/RegisterSource" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeToken">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/ExchangeToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/VerifyToken" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeKey">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/ExchangeKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSignatureTemplate">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/GetSignatureTemplate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientDecrypt">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/EmulateClientDecrypt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientEncrypt">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/EmulateClientEncrypt" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmulationKey">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/GetEmulationKey" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendObject">
+      <soap:operation soapAction="http://mix.intuitivelabs.net/SendObject" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RecognitionSoap12" type="tns:RecognitionSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="RegisterSource">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/RegisterSource" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeToken">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/ExchangeToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/VerifyToken" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeKey">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/ExchangeKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSignatureTemplate">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/GetSignatureTemplate" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientDecrypt">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/EmulateClientDecrypt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientEncrypt">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/EmulateClientEncrypt" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmulationKey">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/GetEmulationKey" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendObject">
+      <soap12:operation soapAction="http://mix.intuitivelabs.net/SendObject" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RecognitionHttpGet" type="tns:RecognitionHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="RegisterSource">
+      <http:operation location="/RegisterSource" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeToken">
+      <http:operation location="/ExchangeToken" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <http:operation location="/VerifyToken" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeKey">
+      <http:operation location="/ExchangeKey" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSignatureTemplate">
+      <http:operation location="/GetSignatureTemplate" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientDecrypt">
+      <http:operation location="/EmulateClientDecrypt" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientEncrypt">
+      <http:operation location="/EmulateClientEncrypt" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmulationKey">
+      <http:operation location="/GetEmulationKey" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendObject">
+      <http:operation location="/SendObject" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="RecognitionHttpPost" type="tns:RecognitionHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="RegisterSource">
+      <http:operation location="/RegisterSource" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeToken">
+      <http:operation location="/ExchangeToken" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="VerifyToken">
+      <http:operation location="/VerifyToken" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ExchangeKey">
+      <http:operation location="/ExchangeKey" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSignatureTemplate">
+      <http:operation location="/GetSignatureTemplate" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientDecrypt">
+      <http:operation location="/EmulateClientDecrypt" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EmulateClientEncrypt">
+      <http:operation location="/EmulateClientEncrypt" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetEmulationKey">
+      <http:operation location="/GetEmulationKey" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:content part="Body" type="text/xml" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SendObject">
+      <http:operation location="/SendObject" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Recognition">
+    <wsdl:port name="RecognitionSoap" binding="tns:RecognitionSoap">
+      <soap:address location="http://services.mix.phactori.pvt/Recognition.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RecognitionSoap12" binding="tns:RecognitionSoap12">
+      <soap12:address location="http://services.mix.phactori.pvt/Recognition.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RecognitionHttpGet" binding="tns:RecognitionHttpGet">
+      <http:address location="http://services.mix.phactori.pvt/Recognition.asmx" />
+    </wsdl:port>
+    <wsdl:port name="RecognitionHttpPost" binding="tns:RecognitionHttpPost">
+      <http:address location="http://services.mix.phactori.pvt/Recognition.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

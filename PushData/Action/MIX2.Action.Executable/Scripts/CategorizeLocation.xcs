@@ -1,0 +1,7 @@
+﻿import[ 
+	"Libraries\Location.xcs"
+	| "Libraries\NodeType.xcs" 
+	| "Libraries\UserType.xcs" 
+];
+
+sequence >> mix2::cataloging::location::categorize;

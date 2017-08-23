@@ -1,0 +1,99 @@
+﻿sequence >> input["Cataloging"] > filterNodes > print;
+sequence >> selectUserReference > findUser > relateToUser > print;
+
+selectUserReference{
+	data.object["NodeInformation"].property["Owner"].value;
+}
+
+findUser{
+	subject, data.object["User"]( s, p ){
+		p.property["AccountName"].value[
+			s.value['.*\\\\.*']( v ){
+				v.toString.strip['.*\\\\'];
+			}
+			other( v ){
+				v.toString;
+			}
+		].object;
+	}
+}
+
+relateToUser{
+	subject.back, subject( s, p ){
+		s.relative["Node"].isHealthy[0.8];
+	}	
+}
+
+
+filterNodes{
+	subject.weaken[0.2];
+}
+
+
+
+
+data{
+	object["Node"]{
+		meta{
+			property["State"]{
+				value[0.5];
+			}
+		}
+		signature[ a0000000-0000-0000-0000-000000000001 ]{
+			property["HostName"]{
+				value["COMP-PHILIPGLASS"];
+			}
+		}
+	}
+
+	object["NodeInformation"]{
+		signature{
+			property["Owner"]{
+				value["DOMAIN\philipglass"];
+			}
+		}
+		network{
+			relation["Node"]{
+				link[a0000000-0000-0000-0000-000000000001];
+			}
+		}
+	}
+
+	object["Node"]{
+		signature[ a0000000-0000-0000-0000-000000000002 ]{
+			property["HostName"]{
+				value["COMP-JANEAUSTIN"];
+			}
+		}
+	}
+
+	object["NodeInformation"]{
+		signature{
+			property["Owner"]{
+				value["janeaustin"];
+			}
+		}
+		network{
+			relation["Node"]{
+				link[a0000000-0000-0000-0000-000000000002];
+			}
+		}
+	}
+
+	object["User"]{
+		signature{
+			property["AccountName"]{
+				value["philipglass"];
+			}
+		}
+	}
+
+	object["User"]{
+		signature{
+			property["AccountName"]{
+				value["janeaustin"];
+			}
+		}
+	}
+
+}

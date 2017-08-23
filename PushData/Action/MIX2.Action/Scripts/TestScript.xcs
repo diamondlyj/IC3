@@ -1,0 +1,13 @@
+﻿/* sequence >> world["Node"] > myFunction > splice["."] > object > categorize["a.t.fa"] > print; */
+
+/*
+sequence >> world["Node"|"User"] > print;
+
+myFunction{
+	subject.property["HostName"]( prop ){																																																																																																																																																											
+		prop.value["Hopscotch"]( val ){
+			val.slice["s"];
+		}
+	}
+}
+*/

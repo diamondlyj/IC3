@@ -1,0 +1,203 @@
+﻿namespace:: mix2:: cataloging :: location{
+
+	categorize{
+		world["User"]( obj ){
+			obj.is["User"]( user ){
+				user.categorizeByLocation;
+			}
+		}
+	}
+	
+	categorizeByLocation{
+		subject( user ){
+			user.mix2::cataloging::type::isHumanBeing( user ){
+				user.hasProperty["Location"]( user ){
+					user.property["Location"]( location ){
+						location.hasValue[ '(?i)Isando' | '(?i)Elandsfontein' | '(?i)South\sAfrica']( location ){
+							location.hasValue[ '(?i)Isando' ]( location ){
+								location.object.doCategorization[ "Africa.South Africa.Johannesburg.Isando" ];
+							}
+							other( location ){
+								location.hasValue[ '(?i)Elandsfontein' ]( location ){
+									location.object.doCategorization[ "Africa.South Africa.Johannesburg.Elandsfontein" ];
+								}
+								other( location ){
+									location.object.doCategorization[ "Africa.South Africa.[unknown]" ];											
+								}
+							}
+						}	
+						other( location ){
+							location.hasValue[ '(?i)Japan' ]( location ){
+								location.object.doCategorization[ "Asia.Japan" ];
+							}											
+							other( location ){
+								location.hasValue[ '(?i)Australia' ]( location ){
+									location.object.doCategorization[ "Australia" ];
+								}								
+								other( location ){						
+									location.hasValue[ '(?i)Puerto\s*Rico' ]( location ){
+										location.object.doCategorization[ "Caribbean.Puerto Rico" ];
+									}
+									other( location ){						
+										location.hasValue[ '(?i)Austria' ]( location ){
+											location.object.doCategorization[ "Europe.Austria" ];
+										}
+										other( location ){
+											location.hasValue[ '(?i)France' | '(?i)Paris' | '(?i)Bezon']( location ){
+												location.hasValue[ '(?i)Paris']( location ){																			
+													location.object.doCategorization[ "Europe.France.Paris" ];
+												}
+												other( location ){
+													location.hasValue[ '(?i)Bezon']( location ){																			
+														location.object.doCategorization[ "Europe.France.Bezon" ];
+													}
+													other( location ){
+														location.object.doCategorization[ "Europe.France.[unknown]" ];										
+													}
+												}
+											}
+											other( location ){															
+												location.hasValue[ '(?i)Italy' ]( location ){
+													location.object.doCategorization[ "Europe.Italy" ];
+												}
+												other( location ){											
+													location.hasValue[ '(?-i)UK' | '(?i)Oxford' ]( location ){
+														location.hasValue[ '(?i)Oxford' ]( location ){
+															location.object.inUnitedStates( user ){
+																user.doCategorization[ "North America.United States.North Carolina.Oxford" ];
+															}
+															other( user ){
+																user.doCategorization[ "Europe.United Kingdom.England.Oxford" ];
+															}
+														}
+														other( location ){
+															location.object.doCategorization[ "Europe.United Kingdom.[unknown]" ];
+														}
+													}
+													other( location ){
+														location.hasValue[ '(?i)Mexico' ]( location ){
+															location.hasValue[ '(?i)New' ]( location ){												
+																location.object.doCategorization[ "North America.United States.New Mexico" ];
+															}
+															other( location ){
+																location.object.doCategorization[ "North America.Mexico" ];
+															}												
+														}
+														other( location ){	
+															location.hasValue[ '(?i)Canada$' ]( location ){
+																location.object.doCategorization[ "North America.Canada" ];													
+															}
+															other( location ){
+																location.hasValue[  
+																	'(?-i)NC' 
+																	| '(?-i)NJ' 
+																	| '(?-i)NY' 
+																	| '(?i)United\sStates' 
+																	| '(?-i)US' 
+																	| '(?-i)USA' 
+																]( location ){
+																	location.hasValue[ '(?-i)NJ' ]( location ){														
+																		location.object.doCategorization[ "North America.United States.New Jersey" ];
+																	}
+																	other( location ){
+																		location.hasValue[ '(?-i)NY' ]( location ){														
+																			location.object.doCategorization[ "North America.United States.New York" ];
+																		}
+																		other( location ){
+																			location.hasValue[ '(?-i)NC' ]( location ){														
+																				location.object.doCategorization[ "North America.United States.North Carolina" ];
+																			}
+																			other( location ){
+																				location.object.doCategorization[ "North America.United States.[unknown]" ];														
+																			}
+																		}
+																	}
+																}
+																other( location ){
+																	location.hasValue[ '(?i)Argentina' ]( location ){
+																		location.object.doCategorization[ "South America.Argentina" ];
+																	}
+																	other( location ){
+																		location.hasValue[ '(?i)Venezuela' ]( location ){
+																			location.object.doCategorization[ "South America.Venezuela" ];
+																		}
+																		other( location ){
+																			location.object.doCategorization["[unknown]"];
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}					
+				}
+				other( user ){
+					user.doCategorization["[unknown]"];
+				}
+			}
+		}
+	}	
+	
+	doCategorization{
+		subject, predicate( subj, category ){
+			subj.categorize[ "Location.".append[ category ] ];
+		}
+	}
+	
+	inUnitedStates: filter{
+		subject.is["User"]( obj ){
+			obj.hasProperty["Location"]( user ){
+				user.property["Location"]( location ){
+					location.hasValue['US']( location ){
+						location.yield[1];
+					}
+					other( location ){
+						location.object.inUnitedStatesByLdap( user ){
+							user.yield[1];
+						}
+						other( user ){
+							user.yield[0.5];
+						}
+					}
+
+				}
+			}
+			other( user ){
+				user.inUnitedStatesByLdap( user ){
+					user.yield[1];
+				}
+				other( user ){
+					user.yield[0.5];
+				}
+			}
+		}
+		other( obj ){
+			obj.yield[0.5];
+		}				
+	}	
+
+	inUnitedStatesByLdap: filter{
+		subject( user ){
+			user.hasProperty["LDAPName"]( user ){
+				user.property["LDAPName"]( ldapName ){
+					ldapName.hasValue['(?i)OU\=(?-i)US']( ldapName ){
+						ldapName.yield[1];
+					}
+					other( ldapName ){
+						ldapName.yield[0.5];
+					}
+				}
+			}
+			other( user ){
+				user.yield[0.5];
+			}
+		}
+	}
+}

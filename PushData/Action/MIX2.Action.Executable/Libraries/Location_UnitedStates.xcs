@@ -1,0 +1,73 @@
+﻿namespace:: mix2:: cataloging :: location{
+	
+	inUnitedStates: filter {
+		subject.inLocation[
+			'(?-i)AZ'
+			| '(?i)Arizona' 
+			| '(?-i)NC' 
+			| '(?i)North\sCarolina' 																		
+			| '(?-i)NJ' 
+			| '(?i)New\sJersey' 
+			| '(?-i)NY' 
+			| '(?i)New\sYork' 
+			| '(?i)United\sStates' 
+			| '(?-i)US' 
+			| '(?-i)USA'																				 
+			| '(?i)Phoenix'	
+		]( subj ){
+			subj.yield[1];
+		}
+		other( subj ){
+			subj.yield[0];
+		}
+	}
+	
+	locateInUnitedStates{
+		subject.inLocation[ '(?-i)AZ' | '(?i)Arizona' ]( obj ){																		
+			obj.inLocation[ '(?i)Phoenix' ]( obj ){														
+				obj.doCategorization[ "North America.United States.Arizona.Phoenix" ]( obj ){
+					obj.doPoliticalCategorization["United States.Arizone.Phoenix"];
+				}																													
+			}
+			other( obj ){
+				obj.doCategorization[ "North America.United States.Arizona.[unknown]" ]( obj ){
+					obj.doPoliticalCategorization["United States.Arizone.[unknown]"];
+				}																																																
+			}
+		}
+		other( obj ){																											
+			obj.inLocation[ '(?-i)NJ' ]( obj ){														
+				obj.doCategorization[ "North America.United States.New Jersey" ]( obj ){
+					obj.doPoliticalCategorization["United States.New Jersey"];
+				}										
+			}
+			other( obj ){
+				obj.inLocation[ '(?-i)NY' ]( obj ){														
+					obj.doCategorization[ "North America.United States.New York" ]( obj ){
+						obj.doPoliticalCategorization["United States.New York"];
+					}										
+				}
+				other( obj ){
+					obj.inLocation[ '(?-i)NC' ]( obj ){														
+						obj.doCategorization[ "North America.United States.North Carolina" ]( obj ){
+							obj.doPoliticalCategorization["United States.North Carolina.[unknown"];
+						}										
+					}
+					other( obj ){
+						obj.inLocation[ '(?i)Phoenix' ]( obj ){																					
+							obj.guessGeographicLocation[ "North America.United States.Arizona.Phoenix" ]( obj ){
+								obj.guessPoliticalLocation["United States.Arizona.Phoenix"];
+							}
+						}
+						other( obj ){
+							obj.doCategorization[ "North America.United States.[unknown]" ]( obj ){
+								obj.doPoliticalCategorization["United States.[unknown]"];
+							}																						
+						}
+					}
+				}
+			}
+		}
+	}
+}
+

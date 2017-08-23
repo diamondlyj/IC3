@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="MIX2 Action 1.11" Language="1033" Version="1.11" Manufacturer="IntuitiveLabs" UpgradeCode="155e0112-9c2d-4208-8114-6249eb01d755">
+    <!--Version 1.10 Product ID: 7cb85598-cbf9-430f-8084-c6d1a145c38b-->
+		<Package InstallerVersion="200" Compressed="yes" Description="Runs MIX2's Xcellence scripts." Platform ="x64"/>
+
+		<Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id ="ProgramFiles64Folder">
+				<Directory Id="MIX2" Name="MIX2">
+          <Directory Id="Action" Name="Action 1.11">
+            <!-- TODO: Remove the comments around this Component element and the ComponentRef below in order to add resources to this installer. -->
+					  <Component Id="MainComponent" Guid="8ff8f00f-5ca6-47a9-a64e-322f7d71510d" Win64="yes" >
+						  <!-- TODO: Insert files, registry keys, and other resources here. -->
+              
+              <File Id="MIX2.Action.WindowsService.exe"
+                Source="../MIX2.Action.WindowsService/bin/$(var.BUILD)/ActionService.exe" KeyPath="yes"></File>
+              <ServiceInstall
+                            Id="ServiceInstaller"
+                            Type="ownProcess"
+                            Vital="yes"
+                            Name="MIX2Action"
+                            DisplayName="MIX2 Action 1.11"
+                            Description="Reads the action queue of MIX2 and runs the local Xcellence scripts."
+                            Start="auto"
+                            Account="LocalSystem"
+                            ErrorControl="ignore"
+                            Interactive="no"
+              />
+              <ServiceControl Id="StartService" Stop="uninstall" Remove="uninstall" Name="MIX2Action" Wait="yes" />
+              
+              <File Id="exectute.exe"
+                Source="../MIX2.Action.Executable/bin/$(var.BUILD)/execute.exe"></File>
+              <File Id="MIX2.Action.dll"
+                Source="../MIX2.Action/bin/$(var.BUILD)/MIX2.Action.dll"></File>
+              <File Id="Xcellence.Scripting.dll"
+                Source="../Xcellence/Xcellence.Scripting/bin/$(var.BUILD)/Xcellence.Scripting.dll"></File>
+              <File Id="execute.exe.config"
+                Source="../MIX2.Action.Executable/execute.exe.config"></File>
+              <File Id="ActionService.exe.config"
+                Source="../MIX2.Action.WindowsService/ActionService.exe.config"></File>
+            </Component>
+            <Directory Id="Test" Name="Test">
+              <Component Id="Scripts" Win64="yes">
+                <File Id="Scripts.TestScript"
+                  Source="../MIX2.Action.Executable/Test/TestScript.xcs"></File>
+              </Component>
+              <!--Place script references here-->
+            </Directory>
+          </Directory>
+        </Directory>
+			</Directory>
+		</Directory>
+
+		<Feature Id="ProductFeature" Title="MIX2.Action" Level="1">
+			<!-- TODO: Remove the comments around this ComponentRef element and the Component above in order to add resources to this installer. -->
+			<ComponentRef Id="MainComponent"  />
+      <ComponentRef Id="Scripts"  />
+      <!-- Note: The following ComponentGroupRef is required to pull in generated authoring from project references. -->
+			<ComponentGroupRef Id="Product.Generated" />
+		</Feature>
+
+    <Binary Id="MyBin" SourceFile="../MIX2.Action.Setup.CustomActions/bin/$(var.BUILD)/MIX2.Action.Setup.CustomActions.CA.dll"/>
+    
+    <CustomAction Id="CreateCountersAction" Execute="deferred" Return="check" DllEntry="CreateCounters" BinaryKey="MyBin"/>
+    
+    <CustomAction Id="SetCustomActionDataValue" Return="check"
+                     Property="CreateCountersAction" Value="INSTALLLOCATION=[INSTALLLOCATION]; AnotherValue='Just a value'" />
+
+    <InstallExecuteSequence>
+      <Custom Action="SetCustomActionDataValue" Before="CreateCountersAction">NOT Installed</Custom>      
+      <Custom Action="CreateCountersAction" Before="InstallFinalize">NOT Installed</Custom>
+    </InstallExecuteSequence>
+	</Product>
+</Wix>

@@ -1,0 +1,107 @@
+﻿import["Test\importTest.xcs"];
+/* import["Scripts\NodeType.xcs"]; */
+
+/*
+sequence >> myFunction["Node"] > print;
+sequence >> myNamespace::myFunction > print;
+sequence >> someFunction > print;
+sequence >> outside::numbers > getFunction > print;
+sequence >> getFunction > print;
+sequence >> select > print; 
+*/
+
+/* sequence >> myNamespace::myFunction > print; */
+
+/* sequence >> select["x"]; */
+
+
+/* sequence >> compare > print; */
+
+compare{
+	data["Object"].expresses[ data["Template"] ];
+}
+
+data["Object"]{
+	object{
+		signature{
+			property["Name"]{
+				value["Microsoft Office"]				
+			}
+		}
+	}
+}
+
+data["Template"]{
+	object{
+		signature{
+			property["Name"]{
+				value['fdsffsd']				
+			}
+		}
+	}
+}
+
+select{
+	world["Node"], predicate( a, b ){
+		b.tuple[ a.property.value ].print, b;
+	}
+}
+
+getFunction{
+	list[10|20|30], subject( a, b ){
+		b.tuple[ b.add[ a ] ];
+	}
+}
+
+/*
+getFunction2{
+	subject, list["a"|"b"];
+}
+*/
+
+myFunction{
+	world["Node"] (obj){
+		obj.take [3]( b ){
+			b.take[1];
+		}
+		
+		other( b ){
+			b; /* .yield["fig"]; */
+		}
+		
+	}
+}
+
+
+someFunction{
+	world["Node"|"NetworkAddressingService"].property.value;
+}
+otherFunction{
+	subject.value;
+}
+
+/*
+namespace :: myNamespace{
+	myFunction{
+		0( a ){
+			a.add[1]( b ){
+				b.myFunction( c ){
+					c.take[10]( d ){
+						d;
+					}
+					other( d ){
+						d.take[5]( f ){
+							f.multiply[10];
+						}
+						other( f ){
+							f.take[5]( g ){
+								g.multiply[100];
+							}
+						}
+					}
+				}
+			}
+		}		
+	}
+}
+*/

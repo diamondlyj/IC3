@@ -1,0 +1,33 @@
+﻿import[ 
+	"Libraries\NodeType.xcs" 
+	|"Libraries\UserType.xcs" 
+	| "Libraries\Virtualization.xcs" 
+	| "Libraries\Manufacturer.xcs" 
+	| "Libraries\OrganizationalUnit.xcs"
+];
+
+sequence >> mix2::cataloging::manufacturer::categorize; 
+sequence >> mix2::cataloging::virtualization::categorize; 
+sequence >> mix2::cataloging::organizationalUnit::categorize;
+sequence >> mix2::cataloging::type::categorize; 
+
+namespace:: mix2:: cataloging:: type
+{
+	categorize{
+		input["Cataloging"]( obj ){
+			obj.is["Node"]( obj ){
+				obj.categorizeNode;
+			}
+			other( obj ){
+				obj.is["User"]( obj ){
+					obj.categorizeUser;
+				}
+				other( obj ){
+					obj.is[ "Group" | "Application" | "Subnet" ]( obj ){		
+						obj.categorizeType;
+					}
+				}
+			}
+		}
+	}
+}

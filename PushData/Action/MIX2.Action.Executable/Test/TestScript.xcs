@@ -1,0 +1,17 @@
+﻿/* sequence >> doSomeMath > print; */
+
+import["Test\Software121512.xcs"]; 
+
+sequence >>mix2:: cataloging:: validSoftware:: categorizeBySWVendor; 
+
+
+doSomeMath{
+	list[1|2|3|4]( x ){
+		x.greaterThan[2]( a ){
+			a.add[1];
+		}
+		other( a ){
+			a.raise[3];
+		}
+	}
+}

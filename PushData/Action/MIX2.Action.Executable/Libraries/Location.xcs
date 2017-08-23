@@ -1,0 +1,332 @@
+﻿import[
+	"Custom\CustomLocation.xcs"
+	| "Libraries\Location_Canada.xcs"
+	| "Libraries\Location_China.xcs"
+	| "Libraries\Location_Europe.xcs"
+	| "Libraries\Location_UnitedStates.xcs"
+];
+
+namespace:: mix2:: cataloging :: location{
+
+	categorize{
+		input["Cataloging"]( obj ){			
+			obj.is["User"]( obj ){
+				obj.mix2::cataloging::type::isHumanBeing( obj ){
+					obj.categorizeByLocation;
+				}
+			}
+			other( obj ){
+				obj.categorizeByLocation;	
+			}
+		}
+	}
+	
+	categorizeByLocation{
+		subject( obj ){
+			obj.inLocation[ '(?i)Isando' | '(?i)Elandsfontein' | '(?i)South\sAfrica']( obj ){
+				obj.inLocation[ '(?i)Isando' ]( obj ){
+					obj.doCategorization[ "Africa.South Africa.Johannesburg.Isando" ]( obj ){
+						obj.doPoliticalCategorization["South Africa.Gauteng"];
+					}
+				}
+				other( obj){
+					obj.inLocation[ '(?i)Elandsfontein' ]( obj ){
+						obj.doCategorization[ "Africa.South Africa.Johannesburg.Elandsfontein" ]( obj ){
+							obj.doPoliticalCategorization["South Africa.Gauteng"];
+						}
+					}
+					other( obj ){
+						obj.doCategorization[ "Africa.South Africa.[unknown]" ]( obj ){
+							obj.doPoliticalCategorization["SouthAfrica"];
+						}
+					}
+				}
+			}	
+			other( obj ){
+				obj.inChina( obj ){
+					obj.locateInChina;
+				}
+				other( obj ){
+					obj.inLocation[ '(?i)Japan' ]( obj ){
+						obj.doCategorization[ "Asia.Japan" ]( obj ){
+							obj.doPoliticalCategorization["Japan"];
+						}
+					}
+					other( obj ){																		
+						obj.inLocation[ '(?i)Singapore' ]( obj ){
+							obj.doCategorization[ "Asia.Singapore" ]( obj ){
+								obj.doPoliticalCategorization["Singapore"];
+							}
+						}																									
+						other( obj ){																		
+							obj.inLocation[ '(?i)Taiwan' | '(?i)Taipei']( obj ){
+								obj.inLocation[ '(?i)Taiwan' | '(?i)Taipei']( obj ){
+									obj.doCategorization[ "Asia.Taiwan.Taipei" ]( obj ){
+										obj.doPoliticalCategorization["Taiwan.Taipei"];
+									}
+								}
+								other( obj ){
+									obj.doCategorization[ "Asia.Taiwan.[unknown]" ]( obj ){
+										obj.doPoliticalCategorization["Taiwan.[unknown]]"];
+									}
+								}
+							}																		
+							other( obj ){
+								obj.inLocation[ '(?i)Australia' | '(?i)Sidney' | '(?i)Canberra']( obj ){
+									obj.inLocation[ '(?i)Sidney' | '(?i)Canberra' ]( obj ){
+										obj.inLocation[ '(?i)Australia' | '(?i)Canberra' ]( obj ){
+											obj.inLocation[ '(?i)Sydney' ]( obj ){											
+												obj.doCategorization[ "Australia.Sidney" ]( obj ){
+													obj.doPoliticalCategorization["Australia.Sidney"];
+												}
+											}
+											other( obj ){
+												obj.doCategorization[ "Australia.Canberra" ]( obj ){
+													obj.doPoliticalCategorization["Australia.Canberra"];
+												}												
+											}												
+										}
+										other( obj ){
+											obj.guessGeographicLocation[ "Australia.Sidney" ]( obj ){
+												obj.guessPoliticalLocation["Australia.Sidney"];
+											}											
+										}
+									
+									}
+									other( obj ){
+										obj.doCategorization[ "Australia.[unknown]" ]( obj ){
+											obj.doPoliticalCategorization["Australia.[unknown]"];
+										}
+									}										
+								}
+								other( obj ){						
+									obj.inLocation[ '(?i)Puerto\s*Rico' ]( obj ){
+										obj.doCategorization[ "Caribbean.Puerto Rico" ]( obj ){
+											obj.doPoliticalCategorization["United States.Puerto Rico"];
+										}
+									}
+									other( obj ){						
+										obj.inLocation[ '(?i)Austria' ]( obj ){
+											obj.locateInAustria;
+										}
+										other( obj ){
+											obj.inLocation[ '(?i)France' | '(?i)Paris' | '(?i)Bezon']( obj ){
+												obj.locateInFrance;
+											}
+											other( obj ){															
+												obj.inLocation[ '(?i)Italy' ]( obj ){
+													obj.locateInItaly;
+												}
+												other( obj ){
+													obj.inUK( obj ){
+														obj.locateInUK;
+													}
+													other( obj ){
+														obj.inLocation[ '(?i)Mexico' ]( obj ){
+															obj.inLocation[ '(?i)New' ]( obj ){												
+																obj.doCategorization[ "North America.United States.New Mexico" ]( obj ){
+																	obj.doPoliticalCategorization["United States.New Mexico"];
+																}										
+															}
+															other( obj ){
+																obj.doCategorization[ "North America.Mexico" ]( obj ){
+																	obj.doPoliticalCategorization["Mexico"];
+																}										
+															}												
+														}
+														other( obj ){	
+															obj.inCanada( obj ){
+																obj.locateInCanada;
+															}
+															other( obj ){
+																obj.inUnitedStates( obj ){
+																	obj.locateInUnitedStates;
+																}
+																other( obj ){
+																	obj.inLocation[ '(?i)Argentina' ]( obj ){
+																		obj.doCategorization[ "South America.Argentina" ]( obj ){
+																			obj.doPoliticalCategorization["Argentina"];
+																		}										
+																	}
+																	other( obj ){																		
+																		obj.inLocation[ '(?i)New\s*Zealand' | 'NZ' | '(?i)Auckland']( obj ){
+																			obj.inLocation[ '(?i)Auckland']( obj ){
+																				obj.doCategorization[ "Pacific.New Zealand.Auckland" ]( obj ){
+																					obj.doPoliticalCategorization["New Zealand.Auckland"];
+																				}																				
+																			}
+																			other( obj ){
+																				obj.doCategorization[ "Pacific.New Zealand.[unknown]" ]( obj ){
+																					obj.doPoliticalCategorization["New Zealand.[unknown]"];
+																				}
+																			}										
+																		}
+																		other( obj ){
+																			obj.inLocation[ '(?i)Venezuela' | '(?i)Caracas']( obj ){
+																				obj.inLocation[ '(?i)Caracas']( obj ){
+																					obj.doCategorization[ "South America.Venezuela.Caracas" ]( obj ){
+																						obj.doPoliticalCategorization["Venezuela.Caracas"];
+																					}										
+																				}
+																				other( obj ){
+																					obj.doCategorization[ "South America.Venezuela.[unknown]" ]( obj ){
+																						obj.doPoliticalCategorization["Venezuela.[unknown]"];
+																					}
+																				}
+																			}
+																			other( obj ){
+																				obj.doCategorization["[unknown]"]( obj ){
+																					obj.doPoliticalCategorization["[unknown]"];
+																				}										
+																			}
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}					
+		}
+	}	
+	
+	doCategorization{
+		subject, predicate( subj, category ){
+			subj.is["NodeInformation"], category( subj, category ){
+				subj.relative["Node"], category( node, category){
+					node.categorize[ "Location (geographic).".append[ category ] ];
+				}
+			}
+			other( subj, category ){
+				subj.categorize[ "Location (geographic).".append[ category ] ];			
+			}
+		}
+	}
+	
+	doPoliticalCategorization{
+		subject, predicate( subj, category ){
+			subj.is["NodeInformation"], category( subj, category ){
+				subj.relative["Node"], category( node, category){
+					node.categorize[ "Location (political).".append[ category ] ];
+				}
+			}
+			other( subj, category ){
+				subj.categorize[ "Location (political).".append[ category ] ];			
+			}
+		}
+	}
+	
+	guessGeographicLocation{
+		subject, predicate( obj, category ){		
+			obj, category, category.mix2::cataloging::custom::location::geographic::overrideGuess( obj, category, override ){
+				override.equals[ category ], obj( override, obj ){
+					override.recordGeographicGuess[ obj ];					
+				}
+				other( override, obj ){
+					override.skipRecordingGeographicGuess[ obj ];
+				}
+			}
+		}
+	}
+	
+	skipRecordingGeographicGuess{
+		predicate.doCategorization[ subject ];
+	}
+	
+	recordGeographicGuess{		
+		predicate.doCategorization[ subject ]( obj ){
+			obj.doInferenceCategorization[ "Surmised.Location" ];		
+		}
+	}
+	
+	doInferenceCategorization{
+		subject.categorize[ "Inferrence.".append[ predicate ] ];
+	}
+	
+	guessPoliticalLocation{
+		subject, predicate( obj, category ){
+			obj.doPoliticalCategorization[ category.mix2::cataloging::custom::location::political::overrideGuess ];
+		}		
+	}	
+	
+	inLocation: filter{
+		subject.hasProperty["Location"], predicate( obj, pred ){
+			obj.property["Location"], pred( location, pred ){
+				location.hasValue[ pred ], pred( location, pred ){
+					location.yield[1];
+				}
+				other( location, pred ){										
+					location.object, pred( obj, pred ){
+						obj.inLdapOrganization[ pred ]( obj ){
+							obj.yield[1];
+						}
+						other( obj ){
+							obj.yield[0.5];
+						}
+					}
+				}
+			}
+		}
+		other( obj, pred ){
+			obj.inLdapOrganization[ pred ]( obj ){
+				obj.yield[1];
+			}
+			other( obj ){
+				obj.yield[0.5];
+			}
+		}
+	}		
+	
+	inLdapOrganization: filter{
+		subject, predicate( obj, pred ){
+			obj.hasProperty["LDAPName"], pred( obj, pred ){
+				obj.property["LDAPName"], pred( ldapName, pred ){
+					ldapName.hasLdapOrgValue[ pred ]( ldapName ){
+						ldapName.yield[1];
+					}
+					other( ldapName ){
+						ldapName.yield[0.5];
+					}
+				}
+			}
+			other( obj, pred ){
+				obj.is["NodeInformation"], pred( obj, pred ){
+					obj.relative["Node"], pred( obj, pred ){
+						obj.hasProperty["LDAPName"], pred( obj, pred ){
+							obj.property["LDAPName"], pred( ldapName, pred ){
+								ldapName.hasLdapOrgValue[ pred ]( ldapName ){
+									ldapName.yield[1];
+								}
+								other( ldapName ){
+									ldapName.yield[0.5];
+								}
+							}
+						}
+					}
+				}
+				other( obj ){
+					obj.yield[0.5];
+				}
+			}
+		}
+	}
+	
+	hasLdapOrgValue: filter{
+		subject, predicate( ldapName, pred ){
+			ldapName.hasValue['(?i)OU\='.append[pred]]( ldapName ){
+				ldapName.yield[1];
+			}
+			other( ldapName ){
+				ldapName.yield[0.5];
+			}
+		}
+	}	
+}

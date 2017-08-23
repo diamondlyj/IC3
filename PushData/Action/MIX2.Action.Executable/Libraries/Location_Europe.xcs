@@ -1,0 +1,104 @@
+﻿namespace:: mix2:: cataloging :: location{
+
+	/*
+	--------AUSTRIA--------
+	*/
+	locateInAustria{
+		subject.doCategorization[ "Europe.Austria" ]( obj ){
+			obj.doPoliticalCategorization["European Union.Austria"];
+		}
+	}	
+
+
+	/*
+	--------FRANCE--------
+	*/
+	locateInFrance{
+		subject.inLocation[ '(?i)Paris']( obj ){																			
+			obj.doCategorization[ "Europe.France.Paris" ]( obj ){
+				obj.doPoliticalCategorization["European Union.France.Île-de-France.Paris"];
+			}
+		}
+		other( obj ){
+			obj.inLocation[ '(?i)Bezon']( obj ){																			
+				obj.doCategorization[ "Europe.France.Bezons" ]( obj ){
+					obj.doPoliticalCategorization["European Union.France.Île-de-France.Val-d'Oise"];
+				}
+			}
+			other( obj ){
+				obj.doCategorization[ "Europe.France.[unknown]" ]( obj ){
+					obj.doPoliticalCategorization["European Union.France.[unknown]"];
+				}										
+			}
+		}
+	}
+
+
+	/*
+	--------ITALY--------
+	*/
+	locateInItaly{
+		subject.doCategorization[ "Europe.Italy" ]( obj ){
+			obj.doPoliticalCategorization["European Union.Italy"];
+		}										
+	}
+
+
+	/*
+	--------UK--------
+	*/
+	inUK: filter {
+		subject.inLocation[
+		
+			'(?-i)UK' 
+			| '(?i)Oxford' 
+			| '(?i)London'
+					
+		]( subj ){
+			subj.yield[1];
+		}
+		other( subj ){
+			subj.yield[0];
+		}
+	}
+	
+	locateInUK{
+		subject.inLocation[ '(?i)Oxford' ]( obj ){
+			obj.inLocation['(?-i)US'|'(?i)United\sStates']( obj ){
+				obj.doCategorization[ "North America.United States.North Carolina.Oxford" ]( obj ){
+					obj.doPoliticalCategorization["United States.North Carolina.Oxford"];
+				}										
+			}
+			other( obj ){
+				obj.guessGeographicLocation[ "Europe.United Kingdom.England.Oxford" ]( obj ){
+					obj.guessPoliticalLocation["European Union.United Kingdom.England.Oxford"];
+				}
+			}
+		}
+		other( obj ){
+			obj.inLocation[ '(?i)London' ]( obj ){
+			
+				/* This can be in Canada too, or Kiribati */
+				
+				obj.inLocation['(?-i)US'|'(?i)United\sStates']( obj ){
+					obj.doCategorization[ "North America.United States.[unknown]" ]( obj ){
+					
+						obj.doPoliticalCategorization["United States.[unknown]"];
+					
+					}										
+				}
+				other( obj ){
+					obj.guessGeographicLocation[ "Europe.United Kingdom.England.Oxford" ]( obj ){
+						obj.guessPoliticalLocation["European Union.United Kingdom.England.Oxford"];
+					}
+				}
+			}
+			other( obj ){
+				obj.doCategorization[ "Europe.United Kingdom.[unknown]" ]( obj ){
+					obj.doPoliticalCategorization["European Union.United Kingdom"];
+				}										
+			}
+		}
+
+	}
+}

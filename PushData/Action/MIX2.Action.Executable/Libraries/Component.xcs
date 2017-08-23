@@ -1,0 +1,29 @@
+﻿ 
+ 
+namespace:: mix2::cataloging::component{
+	categorize{
+		world["Node"]( node ){
+			node.categorizeRelative;			
+		}
+	}
+	
+	categorizeRelative{
+		subject.relative( rel ){
+			rel.property(prop){
+				prop.categorizeProperty;
+			}
+		}
+	}
+	
+	categorizeProperty{
+		subject.back, subject.name, subject.value( node, propName, val ){
+			node, val.toString[16].slice['\.'].splice[" "]( node, category ){
+				category.print;
+				/* node.categorize[ "Component.".append[category] ]; */
+			} 
+		}
+		/*
+		propName.toString.append[ ".".append[
+		*/
+	}
+}

@@ -1,0 +1,80 @@
+﻿namespace:: mix2:: cataloging:: type
+{
+	categorizeUser{
+		subject.hasProperty["Surname"]( user ){
+			user.hasProperty["GivenNames"]( user ){
+				user.doCategorization["User.Human Being"];
+			}
+			other( user ){
+				user.doCategorization["User.[unknown]"];
+			}
+		}
+		other( user ){
+			user.hasProperty["GivenNames"]( user ){
+				user.doCategorization["User.[unknown]"];
+			}
+			other( user ){
+				user.hasProperty["AccountName"]( user ){
+					user.property["AccountName"]( aname ){
+						aname.hasValue['\$$']( aname ){							
+							aname.object.doCategorization["User.Artificial Entity"];						
+						}
+						other( aname ){
+							aname.object.doCategorization["User.[unknown]"];						
+						}
+					}
+				}
+				other( user ){
+					user.doCategorization["User.[unknown]"];
+				}				
+			}				
+		}		
+	}
+	
+	isHumanBeing: filter{
+		subject.hasProperty: all[ "Surname" | "GivenNames"]( user ){						
+			user.property["Surname"]( surname ){
+				 surname.hasValue: none[ '(?i)Service' | '(?i)Account' | '(?i)Computer']( surname ){
+					surname.object( user ){
+						user.property["GivenNames"]( givenNames ){
+							 givenNames.hasValue: none[ '(?i)Service' | '(?i)Account' | '(?i)Computer']( givenNames ){
+								givenNames.yield[1];
+							 }
+							other( givenNames ){
+								givenNames.yield[0];
+							}
+						}
+					}
+				}
+				other( surname ){
+					surname.yield[0];
+				}
+			}		
+		}
+		other( user ){
+			user.hasProperty["GivenNames"]( user ){
+				user.yield[0.5];
+			}
+			other( user ){
+				user.hasProperty["AccountName"]( user ){
+					user.property["AccountName"]( aname ){
+						aname.hasValue['\$$']( aname ){							
+							aname.yield[0];						
+						}
+						other( aname ){
+							aname.hasValue[ '(?i)Service' | '(?i)Account' | '(?i)Computer']( aname ){
+								aname.yield[0];
+							}
+							other( aname ){						
+								aname.yield[0.5];						
+							}
+						}
+					}
+				}
+				other( user ){
+					user.yield[0.5];
+				}				
+			}				
+		}			
+	}
+}

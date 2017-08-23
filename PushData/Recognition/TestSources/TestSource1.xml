@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Devices xmlns="http://y" xmlns:x="http://x" xmlns:r="http://r">
+	<r:Device>
+		<x:DisplayName>Some Device A</x:DisplayName>
+		<IPv4Address>111.111.111.1</IPv4Address>
+		<IPHostname>A</IPHostname>
+		<MacAddress>0002F6740F1F</MacAddress>
+	</r:Device>
+	<x:Device>
+		<x:DisplayName>Some Device B</x:DisplayName>
+		<IPv4Address>111.111.111.2</IPv4Address>
+		<IPHostname>B</IPHostname>
+		<MacAddress>0061B04F65AA</MacAddress>
+	</x:Device>
+	<x:Device>
+		<DisplayName>Some Device C</DisplayName>
+		<IPv4Address>111.111.111.3</IPv4Address>
+		<IPHostname someAtt="Hopscotch">c.c.c</IPHostname>
+		<x:MacAddress>002447978605</x:MacAddress>
+	</x:Device>
+
+</Devices>

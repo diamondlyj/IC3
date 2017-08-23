@@ -1,0 +1,70 @@
+﻿namespace:: mix2:: cataloging:: manufacturer{
+
+	categorize{
+		input["Cataloging"]( obj){
+			obj.relative["NodeInformation"]( nodeInfo ){
+				nodeInfo.categorizeByManufacturer;			
+			}
+		}
+	}	
+	categorizeByManufacturer{
+		subject.hasProperty["Manufacturer"]( nodeInfo ){
+			nodeInfo.property["Manufacturer"]( manufacturer ){
+				
+				/* Those manufacturers that we know the variants of, we compile into a standardized value */
+				
+				manufacturer.hasValue[ '(?i)^Dell(\sInc.|\sComputer\sCorporation)*$' ]( manufacturer ){
+					manufacturer.back.doCategorization["Dell"];
+				}
+				other( manufacturer ){
+					manufacturer.hasValue[ '(?i)^Compaq' | '(?i)^HP$' | '(?i)^Hewlett[\-\s]Packard' ]( manufacturer ){
+						manufacturer.back.doCategorization["HP"];
+					}
+					other( manufacturer ){
+						manufacturer.hasValue[ '(?i)Itautec' ]( manufacturer ){
+							manufacturer.back.doCategorization["Itautec"];
+						}										
+						other( manufacturer ){
+							manufacturer.hasValue[ '(?i)Juniper\sNetworks' ]( manufacturer ){
+								manufacturer.back.doCategorization["Juniper"];
+							}					
+							other( manufacturer ){
+								manufacturer.hasValue[ '(?i)Lenovo' ]( manufacturer ){
+									manufacturer.back.doCategorization["Lenovo"];
+								}					
+								other( manufacturer ){
+									manufacturer.hasValue[ '(?i)Toshiba' ]( manufacturer ){
+										manufacturer.back.doCategorization["Toshiba"];
+									}
+									other( manufacturer ){
+										manufacturer.hasValue[ '(?i)vmware' ]( manufacturer ){
+											manufacturer.back.doCategorization["VMWare"];
+										}
+										other( manufacturer ){
+											manufacturer.categorizeOther;					
+										}				
+									}				
+								}				
+							}
+						}
+					}
+				}				
+			}
+		}
+		other( nodeInfo ){
+			nodeInfo.doCategorization["[unknown]"];
+		}
+	}
+	
+	categorizeOther{
+		subject.back, subject.value( nodeInfo, val ){
+			nodeInfo.doCategorization[ val ];
+		}
+	}
+	
+	doCategorization{
+		subject.relative["Node"], predicate, "Manufacturer."( node, category, catalog ){
+			node.categorize[ catalog.append[ category ] ];
+		}
+	}
+}

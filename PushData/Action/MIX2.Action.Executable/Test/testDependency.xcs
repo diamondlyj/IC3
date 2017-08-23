@@ -1,0 +1,162 @@
+﻿/* sequence >> compare > back > print; */
+
+sequence >> testRelate > setWeight > object > print;
+
+
+test1{
+	"curbit.orbit"( w ){
+		w.slice['orb'].splice["organo."];
+	}
+}
+
+testRelate{	
+	world["Node"].relative["OperatingSystem"].property["Name"].value.extractOS.findManufacturer.doRelate;
+}
+
+extractOS{
+	subject.extract[ "Microsoft" | "Linux" ];
+}
+
+
+findManufacturer{
+	subject, world["Manufacturer"]( s, w){
+		w.property["Name"].value[ s.toString ].object;
+	}
+}
+	
+
+doRelate{
+	subject.back, subject ( s, p ){
+		s.relate[ p ];
+	}
+}
+
+
+setWeight{
+	subject.weight( w ){
+		w.set[0.5|0.89];
+	}
+}
+
+doMore{
+	subject.add[predicate];
+}
+
+compare{
+	data["Object"].expresses[ data["Template"] ];
+}
+
+
+data["Object"]{
+	object["Node"]{
+		signature[ a0000000-0000-0000-0000-000000000001 ]{
+			property["HostName"]{
+				value["MAC_XYZ"]			
+			}
+		}
+		network{
+			relation["NetworkAdapter"]{
+				link[ c0000000-0000-0000-0000-000000000004 ]{
+					weight[1];
+				}
+			}
+			relation["Node"]{
+				link[ b0000000-0000-0000-0000-000000000003 ]{
+					weight[0.5 | 0.8];
+				}
+			}
+		}	
+	}
+
+	object["Node"]{
+		signature[ a0000000-0000-0000-0000-000000000002 ]{
+			property["HostName"]{
+				value["DELUVIAN"]			
+			}
+		}
+		network{
+			relation["NetworkAdapter"]{
+				link[ c0000000-0000-0000-0000-000000000006 ]{
+					weight[1];
+				}
+			}
+
+			relation["Node"]{
+				link[ b0000000-0000-0000-0000-000000000003 ]{
+					weight[0.7];
+				}
+			}
+		}	
+	}
+
+	object["Node"]{
+		signature[ b0000000-0000-0000-0000-000000000003 ]{
+			property["HostName"]{
+				value["SWITCH_XYZ"]				
+			}
+		}
+		network{
+			relation["Node"]{
+				link[ a0000000-0000-0000-0000-000000000001 | a0000000-0000-0000-0000-000000000002 ]{
+					weight[0.3];
+				}
+			}
+		}
+	}
+
+	object["NetworkAdapter"]{
+		signature[ c0000000-0000-0000-0000-000000000004 ]{
+			property["Manufacturer"]{
+				value["Xerxes"];		
+			}
+		}
+		network{
+			relation["Node"]{
+				link[ a0000000-0000-0000-0000-000000000001 ]{
+					weight[0.7];
+				}
+			}
+		}	
+	}
+
+	object["NetworkAdapter"]{
+		signature[ c0000000-0000-0000-0000-000000000006 ]{
+			property["Manufacturer"]{
+				value["Trilobite"];		
+			}
+		}
+		network{
+			relation["Node"]{
+				link[ a0000000-0000-0000-0000-000000000002 ]{
+					weight[0.7];
+				}
+			}
+		}	
+	}
+
+	object["Manufacturer"]{
+		signature[ e0000000-0000-0000-0000-000000000005 ]{
+			property["Name"]{
+				value["Xerxes"];	
+			}
+		}
+	}
+
+	object["Manufacturer"]{
+		signature[ e0000000-0000-0000-0000-000000000007 ]{
+			property["Name"]{
+				value["Trilobite"];	
+			}
+		}
+	}
+}
+
+data["Template"]{
+	object{
+		signature{
+			property["Name"]{
+				value['Microsoft Office']				
+			}
+		}
+	}
+}

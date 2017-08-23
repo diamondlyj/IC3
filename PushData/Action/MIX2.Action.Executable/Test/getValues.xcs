@@ -1,0 +1,10 @@
+﻿sequence >> getValues;
+
+getValues{
+	world["NodeInformation"].property["Type"].value.distinct.print;
+}
+
+testSelection{
+	world["NodeInformation"].property["Type"].value['(?i)lunch\sbox'].print;
+	
+}

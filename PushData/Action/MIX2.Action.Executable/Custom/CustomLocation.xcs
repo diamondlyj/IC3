@@ -1,0 +1,25 @@
+﻿namespace:: mix2:: cataloging:: custom:: location:: geographic{
+	overrideGuess{
+		subject( category ){
+			category.equals["Europe.United Kingdom.England.Oxford"]( category ){
+				category.yield["North America.United States.North Carolina.Oxford"];
+			}
+			other( category){
+				category;
+			}
+		}
+	}
+}
+
+namespace:: mix2:: cataloging:: custom:: location:: political{
+	overrideGuess{
+		subject( category ){
+			category.equals["European Union.United Kingdom.England.Oxford"]( category ){
+				category.yield["United States.North Carolina.Oxford"];
+			}
+			other( category){
+				category;
+			}
+		}
+	}
+}

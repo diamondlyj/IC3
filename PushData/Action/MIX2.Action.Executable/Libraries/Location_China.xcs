@@ -1,0 +1,73 @@
+﻿namespace:: mix2:: cataloging :: location{
+
+	inChina: filter {
+		subject.inLocation[
+		
+			'(?i)China' 
+			| '(?i)Hong\s*Kong' 
+			| '(?i)Shanghai' 
+			| '(?i)Chengdu' 
+			| '(?i)Guangzhou' 
+			| '(?i)Guang\sZhou' 
+			| '(?i)Shenszhen' 
+			| '(?i)Shens\sZhen' 
+			| '(?i)Beijing'
+			
+		]( subj ){
+			subj.yield[1];
+		}
+		other( subj ){
+			subj.yield[0];
+		}
+	}
+	
+	locateInChina{
+	
+		subject.inLocation[ '(?i)Beijing' ]( obj ){
+			obj.doCategorization[ "Asia.China.Beijing" ]( obj ){
+				obj.doPoliticalCategorization["China.Beijing"];
+			}
+		}
+		other( obj ){					
+			obj.inLocation[ '(?i)Hong\s*Kong' ]( obj ){
+				obj.doCategorization[ "Asia.China.Hong Kong" ]( obj ){
+					obj.doPoliticalCategorization["China.Hong Kong"];
+				}
+			}
+			other( obj ){
+				obj.inLocation[ '(?i)Chengdu' ]( obj ){
+					obj.doCategorization[ "Asia.China.Chengdu" ]( obj ){
+						obj.doPoliticalCategorization["China.Sichuan.Chengdu"];
+					}
+				}
+				other( obj ){
+					obj.inLocation[ '(?i)Guangzhou' | '(?i)Guang\sZhou' ]( obj ){
+						obj.doCategorization[ "Asia.China.Guangzhou" ]( obj ){
+							obj.doPoliticalCategorization["China.Guangdon.Guangzhou"];
+						}
+					}
+					other( obj ){
+						obj.inLocation[ '(?i)Shanghai' ]( obj ){
+							obj.doCategorization[ "Asia.China.Shanghai" ]( obj ){
+								obj.doPoliticalCategorization["China.Shanghai"];
+							}
+						}
+						other( obj ){
+							obj.inLocation[ '(?i)Shenzhen' | '(?i)Shen\sZhen' ]( obj ){
+								obj.doCategorization[ "Asia.China.Shenzhen" ]( obj ){
+									obj.doPoliticalCategorization["China.Guangdon.Shenzhen"];
+								}
+							}
+							other( obj ){
+								obj.doCategorization[ "Asia.China.[unknown]" ]( obj ){
+									obj.doPoliticalCategorization["China.[unknown]"];
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

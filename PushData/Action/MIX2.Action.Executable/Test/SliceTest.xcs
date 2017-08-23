@@ -1,0 +1,16 @@
+﻿sequence >> getSoftware > print;
+
+getSoftware{
+	world["Node"]( node ){
+		node.extractOctets;
+	}
+}
+
+
+extractOctets{
+	subject.property["IPAddress"].value( val ){
+		val, val.toString( v, str ){
+			str.iterate[10];
+		}
+	}
+}

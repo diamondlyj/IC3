@@ -1,0 +1,490 @@
+﻿namespace:: mix2:: cataloging:: type
+{
+	categorizeType{
+		subject, subject.class(a, b){
+			a.categorize[ b.prepend["Type."] ];
+		}
+	}
+	
+	notImplemented{
+		subject.property["HostName"], "NOT IMPLEMENTED"( a, b ){
+			b.tuple[ a.value ].print;
+		}
+	}
+	
+	categorizeNode{
+		/* subject.property["HostName"].value["KA4A87B"].object.categorizeByNodeInfo; */	
+		subject.categorizeByNodeInfo;
+	}
+	
+	categorizeByNodeInfo{
+	
+		/*Does it have NodeInformation? We are interesed in the Type property.*/
+		
+		subject.hasRelation["NodeInformation"]( obj ){
+			obj.relative["NodeInformation"]( rel ){						
+				rel.hasProperty["Type"]( rel ){
+				
+					rel.categorizeByType[ "Node.[unknown]" ];
+					
+				}
+				other( rel ){
+				
+					/* Aright, so it didn't really have Type despite haveing NodeInformation. */
+					/* Let's see we can categorize it by it's OS.*/
+					
+					rel.back( obj ){
+						obj.categorizeByOS[ "Node.[unknown]" ];
+					}
+				}
+			}
+		}
+		other( obj ){
+		
+			/* No NodeInformation, hence no Type. Let's move on to OS! */
+			
+			obj.categorizeByOS[ "Node.[unknown]" ];
+		}		
+	}
+	
+	categorizeByType{
+		
+		subject.property["Type"], predicate( prop, default ){
+			prop.hasValue['(?i)desktop' | '(?i)client' | '(?i)notebook' | '(?i)portable'], default( prop, default ){
+							
+				prop.back.categorizeByOS["Node.Client.[unknown]"];							
+			
+			}
+			other( prop, default ){
+				prop.hasValue['(?i)switch'], default( prop, default ){
+				
+					/*Here we could veryfy if it really is an XYZ by checking other information*/
+					
+					prop.hasValue['SAN']( prop ){
+						prop.back.doCategorization["Node.Storage.SAN Switch"];
+					}
+					other( prop ){					
+						prop.back.doCategorization["Node.Networking.Switch"];
+					}				
+				}
+				other( prop, default ){
+					prop.hasValue['(?i)router'], default( prop, default ){
+						prop.back.doCategorization["Node.Networking.Router"];															
+					}
+					other( prop, default ){
+						prop.hasValue['(?i)firewall'], default( prop, default ){
+							prop.back.doCategorization["Node.Networking.Firewall"];															
+						}
+						other(prop, default ){
+							prop.hasValue['(?i)san\sswitch'], default( prop, default ){
+								prop.back.doCategorization["Node.Networking.Firewall"];
+							}
+							other( prop, default ){						
+								prop.hasValue['(?i)printer'], default( prop, default ){
+									prop.back.doCategorization["Node.Printer"];
+								}
+								other( prop, default){							
+									prop.hasValue['(?i)mini' | '(?i)tower' | '(?i)lunch\sbox'], default( prop, default ){
+									
+										/* Now we have to check the OS and see if it is a server or a client */
+										/* if there is no OS, we will place in unknown clients*/
+										
+										prop.back.categorizeByOS ["Node.Client.[unknown]"];								
+									}
+									other( prop, default ){
+										prop.hasValue['(?i)SSL[\s]*VPN'], default( prop, default ){																					
+											prop.back.doCategorization["Node.Networking.VPN Appliance"];
+										}
+										other( prop, default ){
+											prop.back.categorizeByOS[ default ];									
+										}					
+									}					
+								}	
+							}						
+						}
+					}
+				}
+			}
+		}	
+	}
+	
+	categorizeByOS{
+		subject.hasRelation[ "OperatingSystem" ], predicate( obj, default ){
+			obj.relative["OperatingSystem"], default( rel, default ){
+				rel.hasProperty["Name"], default( rel, default ){
+					rel.property["Name"], default( prop, default ){
+					
+						prop.hasValue['(?i)ONTAP'], default( prop, default ){
+						
+							/* ONTAP is NetAps custom OS for their SAN Filers*/
+							prop.back.doCategorization["Node.Storage.SAN Filer"];
+						}
+						other( prop, default ){
+					
+							/* If the name contains ENTERPRISE or SERVER, we can assume its a server */
+							/* we make this assumption even if the Type is "Client" (which is just a claim from a source) */						
+							/* At some point we can look at Type versus OS discrepancies */
+							/* Otherwise we assume its a client */
+													
+							prop.hasValue['(?i)enterprise', '(?i)server'], default( prop, default ){
+								prop.byOSVendor["Node.Server"];
+							}
+							other( prop, default ){
+								prop.byOSVendor["Node.Client"];
+							}
+						}
+					}
+				}
+			}
+		}
+		other( obj, default ){
+			obj.categorizeBySoftware[ default ];
+		}			
+	}
+
+	byOSVendor{
+		subject.hasValue['(?i)unix'], predicate( prop, category ){		
+			prop.back.doCategorization[ category.append[".Unix"] ];
+		}
+		other( prop, category ){
+			prop.hasValue['(?i)linux'], category( prop, category ){
+				prop.back.doCategorization[ category.append[".Linux"] ];
+			}
+			other( prop, category ){
+				prop.hasValue['(?i)windows'], category( prop, category ){
+					prop.back.doCategorization[ category.append[".Windows"] ];
+				}
+				other( prop, category ){				
+					prop.hasValue['(?i)Mac'], category( prop, category ){
+						prop.back.doCategorization[ category.append[".Mac"] ];
+					}
+					other( prop, category ){
+					
+						/*Here we could have a function to look at other stuff, like look at software*/
+						/*Remmeber to check the category ( "Node.Client" or "Node.Server" )*/
+						
+						prop.back.doCategorization[ category.append[ ".[unknown]" ]  ];
+					}												
+				}												
+			}												
+		}
+	}												
+	
+	categorizeBySoftware{
+		subject.hasRelation[ "InstalledSoftware" ], predicate( obj, default ){
+			obj.doCategorization[ default ];
+		}
+		other( obj, default ){
+			obj.doCategorization[ default ];
+		}
+	}
+	
+	isLaptop: filter{
+		subject( nodeInfo ){
+			nodeInfo.hasProperty["Manufacturer"]( nodeInfo ){
+				nodeInfo.property["Manufacturer"]( manufacturer ){
+					manufacturer.hasValue[ '(?i)^IBM$' | '(?i)^Lenovo' ]( manufacturer )
+					{
+					
+						/* IBM or Lenovo. Could be a ThinkPad. Let's check the model. */
+						
+						manufacturer.object( nodeInfo ){
+							nodeInfo.hasProperty["Model"]( nodeInfo ){
+								nodeInfo.property["Model"]( model ){
+									model.hasValue									
+									[ 
+										'(?i)^266894U$' |																				
+										'(?i)^2672$' | 
+										'(?i)^26722BU$' |
+										'(?i)^26723KU$' |
+										'(?i)^26724UU$' |
+										'(?i)^267258U$' |
+										'(?i)^26725UU$' |										
+										'(?i)^26727KU$' |										
+										'(?i)^2672B25$' |										
+										'(?i)^2672BAU$' |										
+										'(?i)^2672BU8$' |										
+										'(?i)^2672C2U$' |										
+										'(?i)^2672CBU$' |										
+										'(?i)^2672J6U$' |										
+										'(?i)^2672JAU$' |										
+										'(?i)^2672JHU$' |										
+										'(?i)^2672KU4$'	|										
+										'(?i)^2672A3U$' |
+										'(?i)^2672B1U$' |
+										'(?i)^2672B2U$' |
+										'(?i)^2672BBU$' |
+										'(?i)^2672C1U$' |
+										'(?i)^2672C36$' |								
+										'(?i)^2672CAU$' |
+										'(?i)^2672CXU$' |
+										'(?i)^2672J7U$' |
+										'(?i)^2672JBU$' |
+										'(?i)^2672JXU$' |
+										'(?i)^2672KBU$' |
+										'(?i)^2672KDU$' |									
+										'(?i)^2672L2U$' |
+										'(?i)^2672LU0$' |									
+										'(?i)^2672M3U$' |
+										'(?i)^2672M5U$' |
+										'(?i)^2672N7U$' |
+										'(?i)^2672NU8$' |
+										'(?i)^2672PBU$' |
+										'(?i)^2672PXU$' |
+										'(?i)^2672NU3$' |
+										'(?i)^2672P7U$' |
+										'(?i)^2672PUU$' |
+										'(?i)^2672qu4$' |
+										'(?i)^2672QU0$' |
+										'(?i)^2672REU$' |								
+										'(?i)^2672RHU$' |
+										'(?i)^2672W1M$' |
+										'(?i)^2672W19$' |
+										'(?i)^2672W35$' |										
+										'(?i)^2672Y11$' |
+										'(?i)^2672Y18$' |									
+										'(?i)^2672Y1Z$' |
+										'(?i)^267227U$' |
+										'(?i)^267238U$' |
+										'(?i)^26723UU$' |
+										'(?i)^2672516$' |
+										'(?i)^26725KU$' |
+										'(?i)^26725ZU$' |
+										'(?i)^26728BU$' |
+										'(?i)^2672M2U$' |
+										'(?i)^2672M4U$' |
+										'(?i)^2673$' |
+										'(?i)^2673BU6$' |
+										'(?i)^2673EU8$' |
+										'(?i)^2673K11$' |
+										'(?i)^2673M4U$' |
+										'(?i)^2673N7U$' |
+										'(?i)^2673PBU$' |
+										'(?i)^2673PXU$' |
+										'(?i)^2673Y11$' |
+										'(?i)^2673CBU$' |
+										'(?i)^2673P32$' |
+										'(?i)^2673PU2$' |
+										'(?i)^2673W1P$' |
+										'(?i)^26734U7$' |
+										'(?i)^26735ku$' |
+										'(?i)^267358U$' |
+										'(?i)^2884$' |
+										'(?i)^28842NU$' |
+										'(?i)^28843UU$' |
+										'(?i)^28844LU$' |
+										'(?i)^28845KU$' |
+										'(?i)^288468U$' |
+										'(?i)^28846LU$' |
+										'(?i)^2884BNU$' |
+										'(?i)^2884BSU$' |
+										'(?i)^2884CWU$' |
+										'(?i)^2884JUU$' |
+										'(?i)^288425U$' |
+										'(?i)^28842WU$' |
+										'(?i)^28843WU$' |
+										'(?i)^28844WU$' |
+										'(?i)^28845LU$' |
+										'(?i)^28846KU$' |
+										'(?i)^2884B5U$' |
+										'(?i)^2884BRU$' |
+										'(?i)^2884CRU$' |
+										'(?i)^2884JGU$' |
+										'(?i)^2884NRU$' |
+										'(?i)^2885$' |
+										'(?i)^2885PWU$' |
+										'(?i)^2885RGU$' |
+										'(?i)^28854LU$' |
+										'(?i)^28854WU$' |
+										'(?i)^2890$' |
+										'(?i)^2891GU0$' |
+										'(?i)^2884K4U$' |
+										'(?i)^2885M2U$' |
+										'(?i)^2884M2U$' |
+										'(?i)^2885K4U$' |
+										'(?i)^2891$' |
+										'(?i)^2673B22$' |
+										'(?i)^2673M3U$' |
+										'(?i)^2884A2U$' |
+										'(?i)^2884M5U$'
+
+																		
+										
+									]( model ){
+									
+										/* We know these models are laptops (ThinkPad). */
+										
+										model.yield[1];
+									}
+									other( model ){									
+										model.yield[0];
+									}
+								}
+							}
+							other( nodeInfo ){
+								nodeInfo.yield[0];											
+							}
+						}														
+					}
+					other( manufacturer ){
+						manufacturer.hasValue[ '(?i)^Toshiba' ]( manufacturer )
+						{
+						
+							/* Toshiba. Could be a Tecra. Let's check the model name. */
+							
+							manufacturer.object( nodeInfo ){
+								nodeInfo.hasProperty["Model"]( nodeInfo ){
+									nodeInfo.property["Model"]( model ){
+										model.hasValue[ '(?i)^Tecra' ]( model ){
+										
+											/* We know these models are laptops (Tecra). */
+											
+											model.yield[1];
+										}
+										other( model ){									
+											model.yield[0];
+										}
+									}
+								}
+								other( nodeInfo ){
+									nodeInfo.yield[0];											
+								}
+							}														
+						}
+						other( manufacturer ){
+							manufacturer.yield[0];							
+						}
+					}
+					
+				}
+			}
+			other( nodeInfo ){
+				nodeInfo.yield[0];											
+			}			
+		}
+	}
+	
+	isPhysicalSwitch: filter{
+		subject( nodeInfo ){
+			nodeInfo.hasProperty["Manufacturer"]( nodeInfo ){
+				nodeInfo.property["Manufacturer"]( manufacturer ){
+					manufacturer.hasValue[ '(?i)cisco' ]( manufacturer )
+					{
+					
+						/* Cisco. Probably a physical switch. Let's check the model. */
+						
+						manufacturer.object( nodeInfo ){
+							nodeInfo.hasProperty["Model"]( nodeInfo ){
+								nodeInfo.property["Model"]( model ){
+									model.hasValue[ '(?i)cisco\scatalyst' ]( model ){
+									
+										/* We know these models are physical switches. */
+										
+										model.yield[1];
+									}
+									other( model ){
+										model.yield[0];
+									}
+								}
+							}
+							other( nodeInfo ){
+								nodeInfo.yield[0];											
+							}
+						}														
+					}
+					other( manufacturer ){
+						manufacturer.yield[0];							
+					}
+					
+				}
+			}
+			other( nodeInfo ){
+				nodeInfo.yield[0];											
+			}			
+		}
+	}
+		
+	isRackServer: filter{
+		subject( nodeInfo ){
+			nodeInfo.hasProperty["Manufacturer"]( nodeInfo ){
+				nodeInfo.property["Manufacturer"]( manufacturer ){
+					manufacturer.hasValue[ '(?i)^Dell(\sInc.|\sComputer\sCorporation)*$' ]( manufacturer )
+					{
+					
+						/* Check Dell's rack server models. */
+						
+						manufacturer.object( nodeInfo ){
+							nodeInfo.hasProperty["Model"]( nodeInfo ){
+								nodeInfo.property["Model"]( model ){
+									model.hasValue									
+									[ 
+										'(?i)^PowerEdge\s2950'
+																												
+									]( model ){																			
+										model.yield[1];
+									}
+									other( model ){
+										model.yield[0];
+									}
+								}
+							}
+							other( nodeInfo ){
+								nodeInfo.yield[0];											
+							}
+						}														
+					}
+					other( manufacturer ){
+						manufacturer.hasValue[ '(?i)^Compaq' | '(?i)^HP$' | '(?i)^Hewlett[\-\s]Packard' ]( manufacturer )
+						{
+						
+							/* Check HP's rack server models. */
+							
+							manufacturer.object( nodeInfo ){
+								nodeInfo.hasProperty["Model"]( nodeInfo ){
+									nodeInfo.property["Model"]( model ){
+										model.hasValue									
+										[ 
+											'(?i)^ProLiant DL380'																			
+																						
+										]( model ){																					
+											model.yield[1];
+										}
+										other( model ){
+											model.yield[0];
+										}
+									}
+								}
+								other( nodeInfo ){
+									nodeInfo.yield[0];											
+								}
+							}														
+						}
+						other( manufacturer ){
+							manufacturer.yield[0];							
+						}
+					}
+					
+				}
+			}
+			other( nodeInfo ){
+				nodeInfo.yield[0];											
+			}			
+		}
+	}
+	
+	
+	
+	doCategorization{
+		subject, predicate, "Type." ( obj, category, catalog ){
+			obj.categorize[ catalog.append[ category] ];
+		}
+	}
+	
+	/*
+	doCategorization{
+		subject.property["HostName"], predicate, "Type." ( prop, category, catalog ){
+			catalog.append[ category ].tuple[ prop.value ].print;
+		}
+	}
+	*/
+}

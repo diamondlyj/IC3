@@ -1,0 +1,24 @@
+﻿namespace:: mix2:: cataloging:: organizationalUnit{
+	categorize{
+		input["Cataloging"]( obj ){
+			obj.hasProperty["LDAPName"]( obj ){
+				obj.categorizeByLdap;
+			}
+		}
+	}	
+	categorizeByLdap{
+		subject, subject.property["LDAPName"]( obj, ldapName ){
+			obj.doCategorization[ ldapName.value.toString.extractCategory ];
+		}
+	}
+	
+	extractCategory{
+		subject.extract['(?i)(?<=(ou\=))(\w[\s-_]*)+'].reverse.splice["."];
+	}
+	
+	doCategorization{
+		subject, predicate( obj, pred ){
+			obj.categorize[ "Organizational Unit.".append[ pred ] ];
+		}
+	}
+}

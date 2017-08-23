@@ -1,0 +1,427 @@
+namespace:: mix2:: cataloging:: validSoftware
+{
+
+	
+	
+
+	categorizeBySWVendor
+		{
+		subject.property ["Name"] (swName)
+			{
+			swName.hasValue[ '(?i)^Microsoft' ]( swName )
+				{
+				swName.doIdentifyTypeMicrosoft;
+				}
+			other (swName)
+				{
+				swName.hasValue[ '(?i)^Adobe' ]( swName )
+					{
+					swName.doIdentifyTypeAdobe;
+
+					}
+				other (swName)
+ 					{
+					swName.hasValue[ '(?i)Rational' | '(?i)MQSeries' | '(?i)Lotus'| '(?i)DB2' | '(?i)Tivoli']( swName )
+						{
+						swName.doIdentifyTypeIBM;
+						}
+					
+					other (swName)
+						{
+						swName.hasValue[ '(?-i)^CA' ]( swName )
+							{
+							swName.doIdentifyTypeCA;
+							}
+
+ 			   			other (swName)
+   							{
+   							swName.hasValue[ '(?i)Attachmate' | '(?i)Reflection' ]( swName )
+   								{
+   								swName.doIdentifyTypeWRQ;
+	   							}
+								other (swName)
+									{
+									swName.hasValue[ '(?i)Docent' ]( swName )
+										{
+										swName.doCategorizationByName ["Docent."];
+										}
+										other (swName)
+											{
+											swName.hasValue[ '(?i)Filemaker' ]( swName )
+												{
+												swName.doCategorizationByName ["Filemaker."];
+												}
+
+											other (swName)
+												{
+												swName.hasValue[ '(?i)matlab' ]( swName )
+													{
+													swName.doCategorizationByName ["MathWorks."];
+													}
+												other (swName)
+													{
+													swName.hasValue[ '(?i)Radia Administrator' |'(?i)Radia Client'|'(?i)Radia Control Panel']( swName )
+														{
+														swName.doCategorizationByName ["Radia."];
+														}
+													other (swName)
+														{
+														swName.hasValue[ '(?i)Rumba' ]( swName )
+															{
+															swName.doCategorizationByName ["Rumba."];
+															}
+
+											  			other (swName)
+											  				{
+											 				swName.hasValue[ '(?i)Snagit' ]( swName )
+ 																{
+							 									swName.doCategorizationByName ["Snagit."];
+ 																}
+ 				
+															other (swName)
+																{
+																swName.hasValue[ '(?i)Mentor Graphis' ]( swName )
+																	{
+																	swName.doCategorizationByName ["MentorGraphics."];
+																	}
+																
+																other (swName)
+																	{
+																	swName.hasValue[ '(?i)Corel'| '(?i)iGrafix' | '(?i)Wordperfect' | '(?i)Quatro' ]( swName )
+																		{
+																		swName.doCategorizationByName ["Corel."];
+																		}
+																		other (swName)
+																			{
+																			swName.hasValue[ '(?i)VMWare' ]( swName )
+																				{
+																				swName.doCategorizationByName ["VMWare."];
+																				}
+			
+   																				other (swName)
+																					{
+																					swName.hasValue ['(?i)AT&T']( swName )
+																						{
+																						swName.doCategorizationByName ["ATT."];
+																						}
+
+																					}
+																			}  
+																		}
+																	}
+																}
+															}
+														}
+													}
+												}
+										}
+   								}
+
+
+
+
+
+						}
+					}
+
+				}
+			}
+		}
+	
+
+	isValidSoftware: filter
+		{
+		subject.hasProperty["Name"]( obj)
+				{
+				obj.property["Name"]( nameProp )
+					{				
+					nameProp.hasValue:none
+						[ '(?i)hotfix'|"SP1"| "SP2"| "SP3" | '(?i)help'| '(?i)runtime'| '(?i)setup'
+						| '(?i)redistributable' |'(?i)pack' |'(?i)update'  |'(?i)distiller'|'(?i)elements' 
+						| '(?i)atmosphere'|'(?i)bridge' | '(?i)Backup - Agent' | '(?i)DSM Agent' 
+						| '(?i)Log Agent' | '(?i)System Agent' | '(?i)CA Messaging'
+						| '(?i).Net Framework' | '(?i)Imaging Component' | '(?i)Journal Viewer' | '(?i)MDAC'
+						| '(?i)Microsoft Baseline' | '(?i)Microsoft Remote' | '(?i)Outlook Express'
+						| '(?i)Visio Viewer' | '(?i)WebFldrs' | '(?i)Windows Installer' | '(?i)Windows Scripting'
+						| '(?i)ADOMD' | '(?i)APIs' | '(?i)BizTalk' | '(?i)ClearType' 
+						| '(?i)Device Emulator' | '(?i)Easy Assist' | '(?i)InfoPath'
+						| '(?i)IntelliPoint' | '(?i)Internet Information Services'
+						| '(?i)Microsoft ASP' | '(?i)Microsoft Dynamics' | '(?i)Microsoft Expression'
+						| '(?i)MSDE' | '(?i)powertoy'
+						| '(?i)Add-in' | '(?i)analysis services' | '(?i)block diagrams' | '(?i)borders and backgrounds'
+						| '(?i)callouts and connectors' | '(?i)database wizard' | '(?i)developer tools'
+						| '(?i)graphics filter' | '(?i)Headers and Libraries' | '(?i)layout wizard'
+						| '(?i)management objects' | '(?i)native client' | '(?i)network diagram'
+						| '(?i)Reference Assemblies' | '(?i)resource kit' | '(?i)Silverlight' | '(?i)tools'
+						| '(?i)web components'
+						| '(?i)Arclib library' | '(?i)Backup Agent' | '(?i)Client Agent' | '(?i)Flash Player'
+						| '(?i)Inspiration Browser' | '(?i)NSM - Agent' | '(?i)Performance Agent' | '(?i)WMI Agent'
+						] ( nameProp )
+						{
+						nameProp.yield[1];
+						}  
+					other( nameProp  )
+						{
+						nameProp.yield[0];											
+						}
+					}	
+
+				}
+
+		other (obj)
+			{
+			obj.yield[0];	 										
+			}
+		}
+
+		
+	doCategorization
+		{
+		subject.object, predicate, "Software."( software, category, catalog )
+			{				
+			software.relative ["Node"], category, catalog (node, category, catalog)
+				{
+				node.categorize[ catalog.append [ category ] ];
+				}				
+			
+			}
+		}
+
+	doIdentifyTypeMicrosoft
+		{
+		subject (swName)
+			{
+			swName.hasValue[ '(?i)^Microsoft SQL' ]( swName )
+				{
+				swName.doCategorizationByName ["Microsoft.SQL."];
+				}
+			other (swName)
+				{
+				swName.hasValue[ '(?i)^Microsoft Office' ]( swName )
+					{
+					swName.doCategorizationByName ["Microsoft.Office."];
+					}
+				other (swName)
+					{
+					swName.hasValue[ '(?i)^Microsoft Virtual' ]( swName )
+						{
+						swName.doCategorizationByName ["Microsoft.Virtual."];
+						}
+					other (swName)
+						{
+						swName.hasValue[ '(?i)^Microsoft Dynamics' ]( swName )
+							{
+							swName.doCategorizationByName ["Microsoft.Dynamics."];
+							}
+						other (swName)
+							{
+							swName.hasValue[ '(?i)^Microsoft Visual' ]( swName )
+								{
+								swName.doCategorizationByName ["Microsoft.Visual."];
+								}
+							other (swName)
+								{
+								swName.hasValue[ '(?i)^Microsoft' ]( swName )
+
+									{
+									swName.doCategorizationByName ["Microsoft.[other]."];
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		
+		}	
+
+	doIdentifyTypeAdobe
+		{
+		subject (swName)
+			{
+			swName.hasValue[ '(?i)^Adobe Reader' ]( swName )
+				{
+				swName.doCategorizationByName ["Adobe.Reader."];
+				}
+			other (swName)
+				{
+				swName.hasValue[ '(?i)^Adobe Acrobat' ]( swName )
+					{
+					swName.doCategorizationByName ["Adobe.Acrobat."];
+					}
+				other (swName)
+					{
+					swName.hasValue[ '(?i)^Adobe Creative Suite' ]( swName )
+						{
+						swName.doCategorizationByName ["Adobe.Creative Suite."];
+						}
+					other (swName)
+						{
+						swName.hasValue[ '(?i)^Adobe Illustrator' ]( swName )
+							{
+							swName.doCategorizationByName ["Adobe.Illustrator."];
+							}
+						other (swName)
+							{
+							swName.hasValue[ '(?i)^Adobe PageMaker' ]( swName )
+								{
+								swName.doCategorizationByName ["Adobe.PageMaker."];
+								}
+							other (swName)
+								{
+								swName.hasValue[ '(?i)^Adobe Photoshop' ]( swName )
+									{
+									swName.doCategorizationByName ["Adobe.Photoshop."];
+									}
+								other (swName)
+									{
+									swName.doCategorizationByName ["Adobe.[other]."];
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+	doIdentifyTypeIBM
+		{
+		subject (swName)
+			{
+			swName.hasValue[ '(?i)^Rational' ]( swName )
+				{
+				swName.doCategorizationByName ["IBM.Rational."];
+				}
+			other (swName)
+				{
+				swName.hasValue[ '(?i)^MQSeries' ]( swName )
+					{
+					swName.doCategorizationByName ["IBM.MQSeries."];
+					}
+				other (swName)
+					{
+					swName.hasValue[ '(?i)^Lotus' ]( swName )
+						{
+						swName.doCategorizationByName ["IBM.Lotus."];
+						}
+					other (swName)
+						{
+						swName.hasValue[ '(?i)^DB2' ]( swName )
+							{
+							swName.doCategorizationByName ["IBM.."];
+							}
+						other (swName)
+							{
+							swName.hasValue[ '(?i)^Tivoli' ]( swName )
+								{
+								swName.doCategorizationByName ["IBM.Tivoli."];
+								}
+							other (swName)
+									{
+									swName.doCategorizationByName ["IBM.[other]."];
+									}
+				
+							}
+						}
+					}
+				}
+			}
+		
+		}	
+
+
+
+	doIdentifyTypeCA
+		{
+		subject (swName)
+			{
+			swName.hasValue[ '(?i)^CA Anti-Virus' ]( swName )
+				{
+				swName.doCategorizationByName ["ComputerAssociates.CA Anti-Virus."];
+				}
+			other (swName)
+				{
+				swName.hasValue[ '(?i)^CA ARCserve Backup' ]( swName )
+					{
+					swName.doCategorizationByName ["ComputerAssociates.CA ARCserve Backup."];
+					}
+				other (swName)
+					{
+					swName.hasValue[ '(?i)^CA BrightStor ARCserve Backup' ]( swName )
+						{
+						swName.doCategorizationByName ["ComputerAssociates.CA BrightStor ARCserve Backup."];
+						}
+					other (swName)
+						{
+						swName.hasValue[ '(?i)^CA License Software' ]( swName )
+							{
+							swName.doCategorizationByName ["ComputerAssociates.CA License Software."];
+							}
+						other (swName)
+							{
+							swName.hasValue[ '(?i)^CA Unicenter DSM' ]( swName )
+								{
+								swName.doCategorizationByName ["ComputerAssociates.CA Unicenter DSM."];
+								}
+							other (swName)
+								{
+								swName.hasValue[ '(?i)^CA Unicenter NSM' ]( swName )
+									{
+									swName.doCategorizationByName ["ComputerAssociates.CA Unicenter NSM."];
+									}
+								other (swName)
+									{
+									swName.doCategorizationByName ["ComputerAssociates.[other]."];
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+
+
+
+	doIdentifyTypeWRQ
+		{
+		subject (swName)
+			{
+			swName.hasValue[ '(?i)^Attachmate' ]( swName )
+				{
+				swName.doCategorizationByName ["WRQ.Attachmate."];
+				}
+			other (swName)
+				{
+				swName.hasValue[ '(?i)^Reflection' ]( swName )
+					{
+					swName.doCategorizationByName ["WRQ.Reflection."];
+					}
+				other (swName)
+					{
+					swName.doCategorizationByName ["WRQ.[other]."];
+					}
+				}
+			}
+		
+		}	
+
+
+		
+
+
+
+	doCategorizationByName
+		{
+		subject, subject.value, predicate  (prop, val, cat)
+			{
+			prop.doCategorization [cat.append [val.toString]];
+			}
+		}
+
+		
+
+}
