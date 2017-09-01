@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<meta charset="utf-8" />
+</head>
+<body>
+
+    <script>
+        function testBlob() {
+            var csvData = new Blob(["test,test"], { type: 'text/csv;charset=utf-8;' });
+            console.log(csvData);
+
+            fileName = "test.csv";
+
+            //IE11 & Edge
+            if (navigator.msSaveBlob) {
+                navigator.msSaveBlob(csvData, fileName);
+            } else {
+                //In FF link must be added to DOM to be clicked
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(csvData);
+                link.setAttribute('download', fileName);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        }
+    </script>
+    <div style="cursor:pointer;" onclick="testBlob();">test</div>
+</body>
+</html>

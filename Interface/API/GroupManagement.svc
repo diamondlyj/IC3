@@ -1,0 +1,1 @@
+﻿<%@ ServiceHost Language="C#" Debug="true" Service="AIV1Portal.GroupManagement" CodeBehind="GroupManagement.svc.cs" %>

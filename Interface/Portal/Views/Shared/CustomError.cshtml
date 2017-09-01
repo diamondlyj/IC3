@@ -1,0 +1,22 @@
+﻿@model List<string>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>CustomError</title>
+</head>
+<body>
+    <div>
+        @foreach(string str in Model)
+        {
+            <div>@str</div>
+        }
+    </div>
+</body>
+</html>

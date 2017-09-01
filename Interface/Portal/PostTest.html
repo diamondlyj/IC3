@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Lol</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+    <div style="cursor:pointer;" onclick="exportData();">test</div>
+    <script>
+
+        function exportData() {
+            var filter = '{"Category":["Type.User"],"PropertyValue":[]}';
+           // var filter = filter;
+            var guid = "B887F47B-FEE6-4F68-AB0F-EF6A736A3648";
+            var url = "https://localhost:10443/Token/Cache";
+            var method = "POST";
+            var async = true;
+            var request = new XMLHttpRequest();
+            request.onload = function () {
+                //var csvData = new Blob([request.responseText], { type: 'text/csv;charset=utf-8;' });
+                //console.log(csvData);
+
+                //fileName = "test.csv";
+                
+                ////IE11 & Edge
+                //if (navigator.msSaveBlob) {
+                //    navigator.msSaveBlob(csvData, fileName);
+                //} else {
+                //    //In FF link must be added to DOM to be clicked
+                //    var link = document.createElement('a');
+                //    link.href = window.URL.createObjectURL(csvData);
+                //    link.setAttribute('download', fileName);
+                //    document.body.appendChild(link);
+                //    link.click();
+                //    document.body.removeChild(link);
+                //}
+                window.location = url + guid;
+
+            }
+            
+            request.onreadystatechange = processRequest;
+            function processRequest(e) {
+               // var response = request.responseText;
+               // alert(request.responseText);
+                //if (request.readyState == 4 && request.status == 200) {
+                //    window.location = "download.php?filename=export.csv";
+                //}
+            }
+            request.open(method, url, async);
+            request.setRequestHeader("Content-Type", "application/json","Token",guid);
+            request.send(filter);
+        }
+    </script> 
+   
+</body>
+</html>
